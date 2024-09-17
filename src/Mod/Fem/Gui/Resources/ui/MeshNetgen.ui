@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>GmshMesh</class>
- <widget class="QWidget" name="GmshMesh">
+ <class>NetgenMesh</class>
+ <widget class="QWidget" name="NetgenMesh">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,11 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>FEM Mesh by Gmsh</string>
+   <string>FEM Mesh by Netgen</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="gb01_mesh_params">
+    <widget class="QGroupBox" name="gpb_mesh_params">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -23,7 +23,7 @@
       </size>
      </property>
      <property name="title">
-      <string>FEM Mesh Parameters</string>
+      <string>Mesh Parameters</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_9">
       <item>
@@ -31,24 +31,24 @@
         <property name="fieldGrowthPolicy">
          <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
         </property>
-        <item row="1" column="0">
-         <widget class="QLabel" name="l_dimension">
+        <item row="0" column="0">
+         <widget class="QLabel" name="lbl_fineness">
           <property name="text">
-           <string>Element dimension:</string>
+           <string>Fineness:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cb_fineness"/>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="l_max">
+          <property name="text">
+           <string>Maximal Size:</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QComboBox" name="cb_dimension"/>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="l_max">
-          <property name="text">
-           <string>Max element size (0.0 = Auto):</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
          <widget class="Gui::QuantitySpinBox" name="qsb_max_size">
           <property name="enabled">
            <bool>true</bool>
@@ -63,7 +63,7 @@
            </size>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignLeft|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="keyboardTracking">
            <bool>true</bool>
@@ -78,18 +78,18 @@
            <double>1.000000000000000</double>
           </property>
           <property name="value">
-           <double>0.000000000000000</double>
+           <double>1000.000000000000</double>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
+        <item row="2" column="0">
          <widget class="QLabel" name="l_min">
           <property name="text">
-           <string>Min element size (0.0 = Auto):</string>
+           <string>Minimal Size:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
+        <item row="2" column="1">
          <widget class="Gui::QuantitySpinBox" name="qsb_min_size">
           <property name="enabled">
            <bool>true</bool>
@@ -104,7 +104,7 @@
            </size>
           </property>
           <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           <set>Qt::AlignLeft|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="keyboardTracking">
            <bool>true</bool>
@@ -123,13 +123,67 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QComboBox" name="cb_order"/>
-        </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="I_order">
+        <item row="6" column="0">
+         <widget class="QCheckBox" name="ckb_second_order">
           <property name="text">
-           <string>Element order:</string>
+           <string>Second Order</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Growth Rate:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_growth_rate">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <double>0.010000000000000</double>
+          </property>
+          <property name="maximum">
+           <double>1.000000000000000</double>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Curvature Safety:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_curvature_safety">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Segments Per Edge:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QDoubleSpinBox" name="dsb_seg_per_edge">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="singleStep">
+           <double>0.100000000000000</double>
           </property>
          </widget>
         </item>
@@ -139,7 +193,7 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="gb03_run_gmsh">
+    <widget class="QGroupBox" name="gb03_run_netgen">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -147,7 +201,7 @@
       </size>
      </property>
      <property name="title">
-      <string>Gmsh</string>
+      <string>Netgen</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_8">
       <item>
@@ -190,7 +244,7 @@
            </spacer>
           </item>
           <item row="7" column="0">
-           <widget class="QPushButton" name="pb_get_gmsh_version">
+           <widget class="QPushButton" name="pb_get_netgen_version">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -198,7 +252,7 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>Gmsh version</string>
+             <string>Netgen version</string>
             </property>
            </widget>
           </item>

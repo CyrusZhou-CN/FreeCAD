@@ -378,8 +378,9 @@ Application::Application(bool GUIenabled)
             std::bind(&Gui::Application::slotRelabelDocument, this, sp::_1));
         App::GetApplication().signalShowHidden.connect(
             std::bind(&Gui::Application::slotShowHidden, this, sp::_1));
+        App::GetApplication().signalFinishRestoreDocument.connect(
+            std::bind(&Gui::Application::slotFinishRestoreDocument, this, sp::_1));
         // NOLINTEND
-
         // install the last active language
         ParameterGrp::handle hPGrp = App::GetApplication().GetUserParameter().GetGroup("BaseApp");
         hPGrp = hPGrp->GetGroup("Preferences")->GetGroup("General");
@@ -976,6 +977,47 @@ void Application::slotShowHidden(const App::Document& Doc)
 #endif
 
     signalShowHidden(*doc->second);
+}
+
+void Application::slotFinishRestoreDocument([[maybe_unused]] const App::Document& Doc) {
+    // Quietly gnore the doc parameter and check across all documents.
+    std::vector<App::Document *> docs;
+    for (auto doc: App::GetApplication().getDocuments()) {
+        if (doc->testStatus(App::Document::RecomputeOnRestore)) {
+            docs.push_back(doc);
+            doc->setStatus(App::Document::RecomputeOnRestore, false);
+        }
+    }
+    // Certain tests want to use very old .FCStd files.  We should not prompt during those tests, so this
+    // allows them to 'FreeCAD.ConfigSet("SuppressRecomputeRequiredDialog", "True")`
+    const std::map<std::string, std::string>& Map = App::Application::Config();
+    auto value = Map.find("SuppressRecomputeRequiredDialog");
+    bool skip = value not_eq Map.end() and not value->second.empty();   // Any non empty string is true.
+    if (docs.empty() || skip )
+        return;
+    WaitCursor wc;
+    wc.restoreCursor();
+    auto res = QMessageBox::warning(getMainWindow(), QObject::tr("Recomputation required"),
+                                    QObject::tr("Some document(s) require recomputation for migration purposes. "
+                                                "It is highly recommended to perform a recomputation before "
+                                                "any modification to avoid compatibility problems.\n\n"
+                                                "Do you want to recompute now?"),
+                                    QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+    if (res != QMessageBox::Yes)
+        return;
+    bool hasError = false;
+    for (auto doc: App::Document::getDependentDocuments(docs, true)) {
+        try {
+            doc->recompute({}, false, &hasError);
+        } catch (Base::Exception &e) {
+            e.ReportException();
+            hasError = true;
+        }
+    }
+    if (hasError)
+        QMessageBox::critical(getMainWindow(), QObject::tr("Recompute error"),
+                              QObject::tr("Failed to recompute some document(s).\n"
+                                          "Please check report view for more details."));
 }
 
 void Application::slotActiveDocument(const App::Document& Doc)
