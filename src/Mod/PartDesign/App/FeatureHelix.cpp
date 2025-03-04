@@ -91,7 +91,7 @@ Helix::Helix()
     ADD_PROPERTY_TYPE(Angle, (0.0), group, App::Prop_None,
         QT_TRANSLATE_NOOP("App::Property", "The angle of the cone that forms a hull around the helix.\n"
             "Non-zero values turn the helix into a conical spiral.\n"
-            "Positive values make the radius grow, nevatige shrink."));
+            "Positive values make the radius grow, negative shrinks."));
     Angle.setConstraints(&floatAngle);
     ADD_PROPERTY_TYPE(Growth, (0.0), group, App::Prop_None,
         QT_TRANSLATE_NOOP("App::Property", "The growth of the helix' radius per turn.\n"
@@ -126,6 +126,8 @@ short Helix::mustExecute() const
 
 App::DocumentObjectExecReturn* Helix::execute()
 {
+    if (onlyHaveRefined()) { return App::DocumentObject::StdReturn; }
+
     // Validate and normalize parameters
     HelixMode mode = static_cast<HelixMode>(Mode.getValue());
     if (mode == HelixMode::pitch_height_angle) {
@@ -253,7 +255,7 @@ App::DocumentObjectExecReturn* Helix::execute()
         if (SC.State() == TopAbs_IN) {
             result.Reverse();
         }
- 
+
         fix.LimitTolerance(result, Precision::Confusion() * size * Tolerance.getValue() ); // significant precision reduction due to helical approximation - needed to allow fusion to succeed
 
         AddSubShape.setValue(result);
@@ -268,6 +270,8 @@ App::DocumentObjectExecReturn* Helix::execute()
                 return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Error: Result has multiple solids"));
             }
 
+                // store shape before refinement
+            this->rawShape = result;
             Shape.setValue(getSolid(result));
             return App::DocumentObject::StdReturn;
         }
@@ -290,6 +294,8 @@ App::DocumentObjectExecReturn* Helix::execute()
                 return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Error: Result has multiple solids"));
             }
 
+            // store shape before refinement
+            this->rawShape = boolOp;
             boolOp = refineShapeIfActive(boolOp, RefineErrorPolicy::Warn);
             Shape.setValue(getSolid(boolOp));
         }
@@ -319,6 +325,8 @@ App::DocumentObjectExecReturn* Helix::execute()
                 return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Error: Result has multiple solids"));
             }
 
+            // store shape before refinement
+            this->rawShape = boolOp;
             boolOp = refineShapeIfActive(boolOp, RefineErrorPolicy::Warn);
             Shape.setValue(getSolid(boolOp));
         }
@@ -395,8 +403,7 @@ TopoDS_Shape Helix::generateHelixPath(double breakAtTurn)
     bool turned = axisOffset < 0;
     // since the factor does not only change the radius but also the path position, we must shift its offset back
     // using the square of the factor
-    double noAngle = angle == 0. ? 1. : 0.; // alternative to the legacy use of an auxiliary path
-    double startOffset = 10000.0 * std::fabs(noAngle * (profileCenter * axisVector) - baseVector * axisVector);
+    double startOffset = 10000.0 * std::fabs((angle <= 0. ? 1. : 0.) * (profileCenter * axisVector) - baseVector * axisVector);
 
     if (radius < Precision::Confusion()) {
         // in this case ensure that axis is not in the sketch plane

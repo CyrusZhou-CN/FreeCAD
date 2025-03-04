@@ -360,6 +360,11 @@ class TestPostProcessorFactory(unittest.TestCase):
         self.assertTrue(post is not None)
         self.assertTrue(hasattr(post, "_buildPostList"))
 
+    def test040(self):
+        """Test that the __name__ of the postprocessor is correct."""
+        post = PostProcessorFactory.get_post_processor(self.job, "linuxcnc")
+        self.assertEqual(post.script_module.__name__, "linuxcnc_post")
+
 
 class TestPostProcessorClass(unittest.TestCase):
     """Test new post structure objects."""
@@ -383,21 +388,21 @@ class TestPostProcessorClass(unittest.TestCase):
 
     def test010(self):
         """Test the export function."""
-        post = PostProcessorFactory.get_post_processor(job, "linuxcnc")
+        post = PostProcessorFactory.get_post_processor(self.job, "linuxcnc")
         sections = post.export()
         for sec in sections:
             print(sec[0])
 
     def test020(self):
         """Test the export function with splitting."""
-        post = PostProcessorFactory.get_post_processor(job, "linuxcnc")
+        post = PostProcessorFactory.get_post_processor(self.job, "linuxcnc")
         sections = post.export()
         for sec in sections:
             print(sec[0])
 
     def test030(self):
         """Test the export function with splitting."""
-        post = PostProcessorFactory.get_post_processor(job, "generic")
+        post = PostProcessorFactory.get_post_processor(self.job, "generic")
         sections = post.export()
         for sec in sections:
             print(sec[0])
@@ -475,7 +480,7 @@ class TestPostProcessorClass(unittest.TestCase):
 #    #
 #    PATHTESTS_LOCATION = "Mod/CAM/CAMTests"
 #    #
-#    # The following code tries to re-use an open FreeCAD document
+#    # The following code tries to reuse an open FreeCAD document
 #    # as much as possible.  It compares the current document with
 #    # the document for the next test.  If the names are different
 #    # then the current document is closed and the new document is
