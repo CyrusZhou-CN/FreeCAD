@@ -877,13 +877,8 @@ Document::Document(const char* documentName)
                       "Additional tag to save the name of the company");
     ADD_PROPERTY_TYPE(UnitSystem, (""), 0, Prop_None, "Unit system to use in this project");
     // Set up the possible enum values for the unit system
-    int num = static_cast<int>(Base::UnitSystem::NumUnitSystemTypes);
-    std::vector<std::string> enumValsAsVector;
-    for (int i = 0; i < num; i++) {
-        QString item = Base::UnitsApi::getDescription(static_cast<Base::UnitSystem>(i));
-        enumValsAsVector.emplace_back(item.toStdString());
-    }
-    UnitSystem.setEnums(enumValsAsVector);
+
+    UnitSystem.setEnums(Base::UnitsApi::getDescriptions());
     // Get the preferences/General unit system as the default for a new document
     ParameterGrp::handle hGrpu =
         App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/Units");
@@ -2465,7 +2460,7 @@ bool Document::afterRestore(const std::vector<DocumentObject*>& objArray, bool c
             // partial document touched, signal full reload
             return false;
         }
-        else if (!d->touchedObjs.count(obj)) {
+        else if (!d->touchedObjs.contains(obj)) {
             obj->purgeTouched();
         }
 
@@ -3065,7 +3060,7 @@ int Document::recompute(const std::vector<App::DocumentObject*>& objs,
             for (size_t i = 0; i < topoSortedObjects.size(); ++i) {
                 auto obj = topoSortedObjects[i];
                 obj->setStatus(ObjectStatus::Recompute2, false);
-                if (!filter.count(obj) && obj->isTouched()) {
+                if (!filter.contains(obj) && obj->isTouched()) {
                     if (passes > 0) {
                         FC_ERR(obj->getFullName() << " still touched after recompute");
                     }

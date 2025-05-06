@@ -1072,12 +1072,12 @@ void Application::slotActiveDocument(const App::Document& Doc)
             "User parameter:BaseApp/Preferences/Units");
         if (!hGrp->GetBool("IgnoreProjectSchema")) {
             int userSchema = Doc.UnitSystem.getValue();
-            Base::UnitsApi::setSchema(static_cast<Base::UnitSystem>(userSchema));
+            Base::UnitsApi::setSchema(userSchema);
             getMainWindow()->setUserSchema(userSchema);
             Application::Instance->onUpdate();
         }
         else {  // set up Unit system default
-            Base::UnitsApi::setSchema((Base::UnitSystem)hGrp->GetInt("UserSchema", 0));
+            Base::UnitsApi::setSchema(hGrp->GetInt("UserSchema", 0));
             Base::UnitsApi::setDecimals(hGrp->GetInt("Decimals", Base::UnitsApi::getDecimals()));
         }
         signalActiveDocument(*doc->second);
@@ -2602,7 +2602,7 @@ App::Document* Application::reopen(App::Document* doc)
         if (name == v.first->FileName.getValue()) {
             doc = const_cast<App::Document*>(v.first);
         }
-        if (untouchedDocs.count(v.second)) {
+        if (untouchedDocs.contains(v.second)) {
             if (!v.second->isModified()) {
                 continue;
             }
