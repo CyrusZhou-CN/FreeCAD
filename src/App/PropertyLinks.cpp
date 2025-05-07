@@ -288,7 +288,7 @@ void PropertyLinkBase::updateElementReferences(DocumentObject* feature, bool rev
                 prop->updateElementReference(feature, reverse, true);
             }
             catch (Base::Exception& e) {
-                e.ReportException();
+                e.reportException();
                 FC_ERR("Failed to update element reference of " << propertyName(prop));
             }
             catch (std::exception& e) {
@@ -788,14 +788,14 @@ void PropertyLink::Restore(Base::XMLReader& reader)
         DocumentObject* object = document ? document->getObject(name.c_str()) : nullptr;
         if (!object) {
             if (reader.isVerbose()) {
-                Base::Console().Warning("Lost link to '%s' while loading, maybe "
+                Base::Console().warning("Lost link to '%s' while loading, maybe "
                                         "an object was not loaded correctly\n",
                                         name.c_str());
             }
         }
         else if (parent == object) {
             if (reader.isVerbose()) {
-                Base::Console().Warning("Object '%s' links to itself, nullify it\n", name.c_str());
+                Base::Console().warning("Object '%s' links to itself, nullify it\n", name.c_str());
             }
             object = nullptr;
         }
@@ -2878,7 +2878,7 @@ void PropertyLinkSubList::Restore(Base::XMLReader& reader)
             }
         }
         else if (reader.isVerbose()) {
-            Base::Console().Warning("Lost link to '%s' while loading, maybe "
+            Base::Console().warning("Lost link to '%s' while loading, maybe "
                                     "an object was not loaded correctly\n",
                                     name.c_str());
         }
@@ -5849,7 +5849,7 @@ void PropertyXLinkContainer::_onBreakLink(DocumentObject* obj)
         onBreakLink(obj);
     }
     catch (Base::Exception& e) {
-        e.ReportException();
+        e.reportException();
         FC_ERR("Exception on breaking link property " << getFullName());
     }
     catch (std::exception& e) {

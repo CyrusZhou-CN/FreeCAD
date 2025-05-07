@@ -286,13 +286,13 @@ ViewProviderFemPostObject::~ViewProviderFemPostObject()
         deleteColorBar();
     }
     catch (Base::Exception& e) {
-        Base::Console().DestructorError(
+        Base::Console().destructorError(
             "ViewProviderFemPostObject",
             "ViewProviderFemPostObject destructor threw an exception: %s\n",
             e.what());
     }
     catch (...) {
-        Base::Console().DestructorError(
+        Base::Console().destructorError(
             "ViewProviderFemPostObject",
             "ViewProviderFemPostObject destructor threw an unknown exception");
     }
@@ -674,7 +674,7 @@ void ViewProviderFemPostObject::setRangeOfColorBar(float min, float max)
         m_colorBar->setRange(min, max);
     }
     catch (const Base::ValueError& e) {
-        e.ReportException();
+        e.reportException();
     }
 }
 

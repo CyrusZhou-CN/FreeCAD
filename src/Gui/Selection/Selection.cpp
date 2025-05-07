@@ -154,7 +154,7 @@ void SelectionObserver::_onSelectionChanged(const SelectionChanges& msg) {
             return;
         onSelectionChanged(msg);
     } catch (Base::Exception &e) {
-        e.ReportException();
+        e.reportException();
         FC_ERR("Unhandled Base::Exception caught in selection observer: ");
     } catch (std::exception &e) {
         FC_ERR("Unhandled std::exception caught in selection observer: " << e.what());
@@ -545,7 +545,7 @@ void SelectionSingleton::notify(SelectionChanges &&Chng)
             }
             catch (const boost::exception&) {
                 // reported by code analyzers
-                Base::Console().Warning("notify: Unexpected boost exception\n");
+                Base::Console().warning("notify: Unexpected boost exception\n");
             }
         }
         NotificationQueue.pop_front();
@@ -698,7 +698,7 @@ void SelectionSingleton::slotSelectionChanged(const SelectionChanges& msg)
         }
         catch (const boost::exception&) {
             // reported by code analyzers
-            Base::Console().Warning("slotSelectionChanged: Unexpected boost exception\n");
+            Base::Console().warning("slotSelectionChanged: Unexpected boost exception\n");
         }
     }
     else {
@@ -708,7 +708,7 @@ void SelectionSingleton::slotSelectionChanged(const SelectionChanges& msg)
         }
         catch (const boost::exception&) {
             // reported by code analyzers
-            Base::Console().Warning("slotSelectionChanged: Unexpected boost exception\n");
+            Base::Console().warning("slotSelectionChanged: Unexpected boost exception\n");
         }
     }
 }

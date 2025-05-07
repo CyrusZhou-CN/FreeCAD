@@ -434,7 +434,7 @@ std::string CDxfWrite::getPlateFile(std::string fileSpec)
     std::stringstream outString;
     Base::FileInfo fi(fileSpec);
     if (!fi.isReadable()) {
-        Base::Console().Message("dxf unable to open %s!\n", fileSpec.c_str());
+        Base::Console().message("dxf unable to open %s!\n", fileSpec.c_str());
     }
     else {
         string line;
@@ -2912,7 +2912,7 @@ bool CDxfRead::ReadEntitiesSection()
                 }
             }
             catch (const Base::Exception& e) {
-                e.ReportException();
+                e.reportException();
             }
             catch (...) {
                 ImportError("CDxfRead::ReadEntity raised unknown exception\n");
