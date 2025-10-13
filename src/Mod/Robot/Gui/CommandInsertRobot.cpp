@@ -20,10 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QMessageBox>
-#endif
+
 
 #include <Gui/Application.h>
 #include <Gui/Command.h>
@@ -45,7 +43,7 @@ CmdRobotInsertKukaIR500::CmdRobotInsertKukaIR500()
     sAppModule = "Robot";
     sGroup = QT_TR_NOOP("Robot");
     sMenuText = QT_TR_NOOP("Kuka IR500");
-    sToolTipText = QT_TR_NOOP("Insert a Kuka IR500 into the document.");
+    sToolTipText = QT_TR_NOOP("Inserts a Kuka IR500 into the document");
     sWhatsThis = "Robot_InsertKukaIR500";
     sStatusTip = sToolTipText;
     sPixmap = "Robot_CreateRobot";
@@ -96,7 +94,7 @@ CmdRobotInsertKukaIR16::CmdRobotInsertKukaIR16()
     sAppModule = "Robot";
     sGroup = QT_TR_NOOP("Robot");
     sMenuText = QT_TR_NOOP("Kuka IR16");
-    sToolTipText = QT_TR_NOOP("Insert a Kuka IR16 into the document.");
+    sToolTipText = QT_TR_NOOP("Inserts a Kuka IR16 robot into the scene");
     sWhatsThis = "Robot_InsertKukaIR16";
     sStatusTip = sToolTipText;
     sPixmap = "Robot_CreateRobot";
@@ -144,7 +142,7 @@ CmdRobotInsertKukaIR210::CmdRobotInsertKukaIR210()
     sAppModule = "Robot";
     sGroup = QT_TR_NOOP("Robot");
     sMenuText = QT_TR_NOOP("Kuka IR210");
-    sToolTipText = QT_TR_NOOP("Insert a Kuka IR210 into the document.");
+    sToolTipText = QT_TR_NOOP("Inserts a Kuka IR210 robot into the scene");
     sWhatsThis = "Robot_InsertKukaIR210";
     sStatusTip = sToolTipText;
     sPixmap = "Robot_CreateRobot";
@@ -191,7 +189,7 @@ CmdRobotInsertKukaIR125::CmdRobotInsertKukaIR125()
     sAppModule = "Robot";
     sGroup = QT_TR_NOOP("Robot");
     sMenuText = QT_TR_NOOP("Kuka IR125");
-    sToolTipText = QT_TR_NOOP("Insert a Kuka IR125 into the document.");
+    sToolTipText = QT_TR_NOOP("Inserts a Kuka IR125 robot into the scene");
     sWhatsThis = "Robot_InsertKukaIR125";
     sStatusTip = sToolTipText;
     sPixmap = "Robot_CreateRobot";
@@ -238,8 +236,8 @@ CmdRobotAddToolShape::CmdRobotAddToolShape()
 {
     sAppModule = "Robot";
     sGroup = QT_TR_NOOP("Robot");
-    sMenuText = QT_TR_NOOP("Add tool");
-    sToolTipText = QT_TR_NOOP("Add a tool shape to the robot");
+    sMenuText = QT_TR_NOOP("Tool");
+    sToolTipText = QT_TR_NOOP("Adds a tool shape to the robot");
     sWhatsThis = "Robot_AddToolShape";
     sStatusTip = sToolTipText;
     sPixmap = "Robot_CreateRobot";

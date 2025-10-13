@@ -20,40 +20,38 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 #include <memory>
+#include <ranges>
 #include <string>
 #include <QAction>
 #include <QMenu>
 #include <Inventor/draggers/SoDragger.h>
 #include <Inventor/nodes/SoPickStyle.h>
 #include <Inventor/nodes/SoTransform.h>
-#endif
 
 #include <App/GeoFeature.h>
+#include <App/DocumentObjectGroup.h>
+#include <Base/Tools.h>
 #include <Base/Placement.h>
 #include <Base/Vector3D.h>
 #include <Base/Converter.h>
-#include "Gui/ViewParams.h"
 
 #include "Application.h"
 #include "BitmapFactory.h"
 #include "Control.h"
 #include "Document.h"
 #include "Inventor/Draggers/SoTransformDragger.h"
+#include "Inventor/Draggers/Gizmo.h"
 #include "Inventor/SoFCPlacementIndicatorKit.h"
+#include "Inventor/So3DAnnotation.h"
 #include "SoFCUnifiedSelection.h"
 #include "TaskTransform.h"
 #include "View3DInventorViewer.h"
 #include "ViewProviderDragger.h"
 #include "Utilities.h"
+#include "ViewParams.h"
+#include "ViewProviderLink.h"
 
-#include <ViewProviderLink.h>
-#include <App/DocumentObjectGroup.h>
-#include <Base/Tools.h>
-#include <Inventor/So3DAnnotation.h>
 
 using namespace Gui;
 
@@ -96,6 +94,12 @@ void ViewProviderDragger::setTransformOrigin(const Base::Placement& placement)
 void ViewProviderDragger::resetTransformOrigin()
 {
     setTransformOrigin({});
+}
+
+
+void ViewProviderDragger::setGizmoContainer(Gui::GizmoContainer* gizmoContainer)
+{
+    this->gizmoContainer = gizmoContainer;
 }
 
 void ViewProviderDragger::onChanged(const App::Property* property)
@@ -141,34 +145,63 @@ ViewProvider* ViewProviderDragger::startEditing(int mode)
 
 bool ViewProviderDragger::forwardToLink()
 {
-    // Trying to detect if the editing request is forwarded by a link object,
-    // usually by doubleClicked(). If so, we route the request back. There shall
-    // be no risk of infinite recursion, as ViewProviderLink handles
-    // ViewProvider::Transform request by itself.
-    ViewProviderDocumentObject* vpParent = nullptr;
-    std::string subname;
+    // typically we want to transform the selected object, but if the selected object is in the link,
+    // we want to transform the link instead.
+    //
+    // To achieve that, we use the sub object path and look for the first link in the chain, and
+    // we forward the request there.
+    const auto findFirstLinkViewProvider = [this]() -> ViewProvider* {
+        ViewProviderDocumentObject* vpParent = nullptr;
+        std::string subname;
 
-    auto doc = Application::Instance->editDocument();
-    if (!doc) {
-        return false;
+        auto doc = Application::Instance->editDocument();
+        if (!doc) {
+            return nullptr;
+        }
+
+        doc->getInEdit(&vpParent, &subname);
+        if (!vpParent) {
+            return nullptr;
+        }
+
+        for (const auto subObjects = vpParent->getObject()->getSubObjectList(subname.c_str());
+             const auto subObject : std::views::reverse(subObjects)) {
+
+            // we don't want to try to edit objects in other documents
+            if (subObject->getDocument() != getObject()->getDocument()) {
+                return nullptr;
+            }
+
+            if (auto subObjectViewProvider = Application::Instance->getViewProvider(subObject);
+                subObjectViewProvider && subObjectViewProvider->isDerivedFrom<ViewProviderLink>()) {
+                return subObjectViewProvider;
+            }
+        }
+
+        return nullptr;
+    };
+
+    if (ViewProvider* subObjectViewProvider = findFirstLinkViewProvider();
+        subObjectViewProvider && subObjectViewProvider != this) {
+        forwardedViewProvider = subObjectViewProvider->startEditing(Transform);
     }
-
-    doc->getInEdit(&vpParent, &subname);
-    if (!vpParent) {
-        return false;
-    }
-
-    if (vpParent == this) {
-        return false;
-    }
-
-    if (!vpParent->isDerivedFrom<ViewProviderLink>()) {
-        return false;
-    }
-
-    forwardedViewProvider = vpParent->startEditing(ViewProvider::Transform);
 
     return forwardedViewProvider != nullptr;
+}
+
+App::PropertyPlacement* ViewProviderDragger::getPlacementProperty() const
+{
+    auto object = getObject();
+
+    if (auto linkExtension = object->getExtensionByType<App::LinkBaseExtension>(true)) {
+        if (auto linkPlacementProp = linkExtension->getLinkPlacementProperty()) {
+            return linkPlacementProp;
+        }
+
+        return linkExtension->getPlacementProperty();
+    }
+
+    return getObject()->getPropertyByName<App::PropertyPlacement>("Placement");
 }
 
 bool ViewProviderDragger::setEdit(int ModNum)
@@ -183,8 +216,8 @@ bool ViewProviderDragger::setEdit(int ModNum)
 
     transformDragger = new SoTransformDragger();
     transformDragger->setAxisColors(Gui::ViewParams::instance()->getAxisXColor(),
-                               Gui::ViewParams::instance()->getAxisYColor(),
-                               Gui::ViewParams::instance()->getAxisZColor());
+                                    Gui::ViewParams::instance()->getAxisYColor(),
+                                    Gui::ViewParams::instance()->getAxisZColor());
     transformDragger->draggerSize.setValue(ViewParams::instance()->getDraggerScale());
 
     transformDragger->addStartCallback(dragStartCallback, this);
@@ -211,7 +244,11 @@ void ViewProviderDragger::setEditViewer(Gui::View3DInventorViewer* viewer, int M
 {
     Q_UNUSED(ModNum);
 
-    if (transformDragger && viewer) {
+    if (!viewer) {
+        return;
+    }
+
+    if (transformDragger) {
         transformDragger->setUpAutoScale(viewer->getSoRenderManager()->getCamera());
 
         auto originPlacement = App::GeoFeature::getGlobalPlacement(getObject()) * getObjectPlacement().inverse();
@@ -219,6 +256,12 @@ void ViewProviderDragger::setEditViewer(Gui::View3DInventorViewer* viewer, int M
 
         viewer->getDocument()->setEditingTransform(mat);
         viewer->setupEditingRoot(transformDragger, &mat);
+    }
+
+    if (gizmoContainer) {
+        auto originPlacement = App::GeoFeature::getGlobalPlacement(getObject())
+            * getObjectPlacement().inverse();
+        gizmoContainer->attachViewer(viewer, originPlacement);
     }
 }
 
@@ -254,7 +297,7 @@ void ViewProviderDragger::dragMotionCallback(void* data, [[maybe_unused]] SoDrag
 
 void ViewProviderDragger::updatePlacementFromDragger(DraggerComponents components)
 {
-    const auto placement = getObject()->getPropertyByName<App::PropertyPlacement>("Placement");
+    const auto placement = getPlacementProperty();
 
     if (!placement) {
         return;
@@ -379,7 +422,7 @@ void ViewProviderDragger::updateTransformFromDragger()
 
 Base::Placement ViewProviderDragger::getObjectPlacement() const
 {
-    if (auto placement = getObject()->getPropertyByName<App::PropertyPlacement>("Placement")) {
+    if (auto placement = getPlacementProperty()) {
         return placement->getValue();
     }
 

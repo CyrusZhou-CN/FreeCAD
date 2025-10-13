@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Base/Console.h>
 #include <Base/Interpreter.h>
@@ -71,7 +70,7 @@ PyMOD_INIT_FUNC(Surface)
     }
 
     PyObject* mod = Surface::initModule();
-    Base::Console().log("Loading Surface module... done\n");
+    Base::Console().log("Loading Surface module… done\n");
     Base::Interpreter().addType(&Surface::BlendPointPy::Type, mod, "BlendPoint");
     Base::Interpreter().addType(&Surface::BlendCurvePy::Type, mod, "BlendCurve");
 

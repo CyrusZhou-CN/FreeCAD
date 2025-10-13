@@ -20,11 +20,9 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <Geom_BSplineSurface.hxx>
 #include <TColgp_Array1OfPnt.hxx>
-#endif
+
 
 #include <Base/Console.h>
 #include <Base/Converter.h>
@@ -999,7 +997,7 @@ PyMOD_INIT_FUNC(ReverseEngineering)
     }
 
     PyObject* mod = Reen::initModule();
-    Base::Console().log("Loading ReverseEngineering module... done\n");
+    Base::Console().log("Loading Reverse Engineering module… done\n");
     PyMOD_Return(mod);
 }
 // clang-format on

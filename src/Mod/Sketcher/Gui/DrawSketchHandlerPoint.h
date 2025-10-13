@@ -66,7 +66,9 @@ private:
     std::list<Gui::InputHint> getToolHints() const override
     {
         using enum Gui::InputHint::UserInput;
-        return {{QObject::tr("%1 place a point", "Sketcher Point: hint"), {MouseLeft}}};
+        return {
+            {tr("%1 place a point", "Sketcher Point: hint"), {MouseLeft}},
+        };
     }
 
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
@@ -227,15 +229,15 @@ void DSHPointController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHPointController::doChangeDrawSketchHandlerMode()
+void DSHPointController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->hasFinishedEditing || secondParam->hasFinishedEditing) {
-                handler->setState(SelectMode::End);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::End);
                 // handler->finish(); // Called by the change of mode
             }
         } break;

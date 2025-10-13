@@ -110,6 +110,11 @@ class AppExport DocumentObject: public App::TransactionalObject
 {
     PROPERTY_HEADER_WITH_OVERRIDE(App::DocumentObject);
 
+private:
+    // store read-only property names at freeze
+    // in order to retablish correct status at unfreeze
+    std::vector<const char*> readOnlyProperties;
+
 public:
     PropertyString Label;
     PropertyString Label2;
@@ -567,6 +572,8 @@ public:
     }
 
     bool removeDynamicProperty(const char* prop) override;
+
+    bool renameDynamicProperty(Property *prop, const char *name) override;
 
     App::Property* addDynamicProperty(const char* type,
                                       const char* name = nullptr,

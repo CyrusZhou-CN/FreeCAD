@@ -19,11 +19,9 @@
  *                                                                         *
  **************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QMetaType>
 #include <QUuid>
-#endif
+
 
 
 #include <App/Application.h>
@@ -699,6 +697,19 @@ void Material::removeUUID(QSet<QString>& uuidList, const QString& uuid)
     uuidList.remove(uuid);
 }
 
+void Material::addTag(const QString& tag)
+{
+    auto trimmed = tag.trimmed();
+    if (!trimmed.isEmpty()) {
+        _tags.insert(trimmed);
+    }
+}
+
+void Material::removeTag(const QString& tag)
+{
+    _tags.remove(tag);
+}
+
 void Material::addPhysical(const QString& uuid)
 {
     if (hasPhysicalModel(uuid)) {
@@ -1326,6 +1337,12 @@ void Material::saveGeneral(QTextStream& stream) const
     }
     if (!_reference.isEmpty()) {
         stream << "  ReferenceSource: \"" << MaterialValue::escapeString(_reference) << "\"\n";
+    }
+    if (!_tags.isEmpty()) {
+        stream << "  Tags:\n";
+        for (auto tag : _tags) {
+            stream << "    - \"" << tag << "\"\n";
+        }
     }
 }
 

@@ -20,11 +20,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 #if defined(__MINGW32__)
 #define WNT  // avoid conflict with GUID
 #endif
-#ifndef _PreComp_
+
 #include <iostream>
 
 #include <QString>
@@ -44,8 +43,8 @@
 #if defined(__clang__)
 #pragma clang diagnostic pop
 #endif
-#endif
 
+#include <chrono>
 #include "ExportOCAFGui.h"
 #include "ImportOCAFGui.h"
 #include "OCAFBrowser.h"
@@ -93,6 +92,7 @@ public:
         add_keyword_method("insert",
                            &Module::insert,
                            "insert(string,string) -- Insert the file into the given document.");
+        add_varargs_method("preScanDxf", &Module::preScanDxf, "preScanDxf(filepath) -> dict");
         add_varargs_method("readDXF",
                            &Module::readDXF,
                            "readDXF(filename,[document,ignore_errors,option_source]): Imports a "
@@ -111,6 +111,26 @@ public:
     }
 
 private:
+    Py::Object preScanDxf(const Py::Tuple& args)
+    {
+        char* filepath_char = nullptr;
+        if (!PyArg_ParseTuple(args.ptr(), "et", "utf-8", &filepath_char)) {
+            throw Py::Exception();
+        }
+        std::string filepath(filepath_char);
+        PyMem_Free(filepath_char);
+
+#include <Mod/Import/App/dxf/ImpExpDxf.h>
+
+        std::map<std::string, int> counts = Import::ImpExpDxfRead::PreScan(filepath);
+
+        Py::Dict result;
+        for (const auto& pair : counts) {
+            result.setItem(Py::String(pair.first), Py::Long(pair.second));
+        }
+        return result;
+    }
+
     Py::Object importOptions(const Py::Tuple& args)
     {
         char* Name {};
@@ -401,8 +421,15 @@ private:
             ImpExpDxfReadGui dxf_file(EncodedName, pcDoc);
             dxf_file.setOptionSource(defaultOptions);
             dxf_file.setOptions();
+
+            auto startTime = std::chrono::high_resolution_clock::now();
             dxf_file.DoRead(IgnoreErrors);
+            auto endTime = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<double> elapsed = endTime - startTime;
+            dxf_file.setImportTime(elapsed.count());
+
             pcDoc->recompute();
+            return dxf_file.getStatsAsPyObject();
         }
         catch (const Standard_Failure& e) {
             throw Py::RuntimeError(e.GetMessageString());
@@ -410,7 +437,6 @@ private:
         catch (const Base::Exception& e) {
             throw Py::RuntimeError(e.what());
         }
-        return Py::None();
     }
 
     Py::Object exportOptions(const Py::Tuple& args)

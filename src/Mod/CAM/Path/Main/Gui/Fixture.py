@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2015 Dan Falck <ddfalck@gmail.com>                      *
 # *                                                                         *
@@ -151,7 +150,7 @@ class CommandPathFixture:
         return {
             "Pixmap": "CAM_Datums",
             "MenuText": QT_TRANSLATE_NOOP("CAM_Fixture", "Fixture"),
-            "ToolTip": QT_TRANSLATE_NOOP("CAM_Fixture", "Creates a Fixture Offset"),
+            "ToolTip": QT_TRANSLATE_NOOP("CAM_Fixture", "Creates a fixture offset"),
         }
 
     def IsActive(self):
@@ -187,4 +186,4 @@ if FreeCAD.GuiUp:
     FreeCADGui.addCommand("CAM_Fixture", CommandPathFixture())
 
 
-FreeCAD.Console.PrintLog("Loading PathFixture... done\n")
+FreeCAD.Console.PrintLog("Loading PathFixture… done\n")

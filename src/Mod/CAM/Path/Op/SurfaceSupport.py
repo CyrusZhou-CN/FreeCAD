@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2020 russ4262 <russ4262@gmail.com>                      *
 # *                                                                         *
@@ -2652,6 +2651,7 @@ class OCL_Tool:
                 "drill": "ConeCutter",
                 "engraver": "ConeCutter",
                 "v_bit": "ConeCutter",
+                "v-bit": "ConeCutter",
                 "vbit": "ConeCutter",
                 "chamfer": "None",
             }

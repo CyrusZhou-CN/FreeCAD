@@ -20,10 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QString>
-#endif
+
 
 #include <Gui/Application.h>
 #include <Gui/BitmapFactory.h>
@@ -55,7 +53,7 @@ using namespace Gui::TaskView;
 
 TaskSketcherSolverAdvanced::TaskSketcherSolverAdvanced(ViewProviderSketch* sketchView)
     : TaskBox(Gui::BitmapFactory().pixmap("document-new"),
-              tr("Advanced solver control"),
+              tr("Advanced Solver Controls"),
               true,
               nullptr)
     , sketchView(sketchView)
@@ -101,10 +99,17 @@ void TaskSketcherSolverAdvanced::setupConnections()
             qOverload<int>(&QSpinBox::valueChanged),
             this,
             &TaskSketcherSolverAdvanced::onSpinBoxMaxIterValueChanged);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    connect(ui->checkBoxSketchSizeMultiplier,
+            &QCheckBox::checkStateChanged,
+            this,
+            &TaskSketcherSolverAdvanced::onCheckBoxSketchSizeMultiplierStateChanged);
+#else
     connect(ui->checkBoxSketchSizeMultiplier,
             &QCheckBox::stateChanged,
             this,
             &TaskSketcherSolverAdvanced::onCheckBoxSketchSizeMultiplierStateChanged);
+#endif
     connect(ui->lineEditConvergence,
             &QLineEdit::editingFinished,
             this,
@@ -129,10 +134,17 @@ void TaskSketcherSolverAdvanced::setupConnections()
             qOverload<int>(&QSpinBox::valueChanged),
             this,
             &TaskSketcherSolverAdvanced::onSpinBoxRedundantSolverMaxIterationsValueChanged);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 7, 0)
+    connect(ui->checkBoxRedundantSketchSizeMultiplier,
+            &QCheckBox::checkStateChanged,
+            this,
+            &TaskSketcherSolverAdvanced::onCheckBoxRedundantSketchSizeMultiplierStateChanged);
+#else
     connect(ui->checkBoxRedundantSketchSizeMultiplier,
             &QCheckBox::stateChanged,
             this,
             &TaskSketcherSolverAdvanced::onCheckBoxRedundantSketchSizeMultiplierStateChanged);
+#endif
     connect(ui->comboBoxDebugMode,
             qOverload<int>(&QComboBox::currentIndexChanged),
             this,

@@ -110,8 +110,7 @@ import WorkingPlane
 from draftobjects.draft_annotation import DraftAnnotation
 from draftutils import gui_utils
 from draftutils import utils
-from draftutils.messages import _wrn
-from draftutils.translate import translate
+from draftutils.messages import _log
 
 
 class DimensionBase(DraftAnnotation):
@@ -144,8 +143,7 @@ class DimensionBase(DraftAnnotation):
         # but it is not used.
         if "Support" not in properties:
             _tip = QT_TRANSLATE_NOOP("App::Property",
-                                     "The object measured by this dimension "
-                                     "object")
+                                     "The object measured by this dimension")
             obj.addProperty("App::PropertyLink",
                             "Support",
                             "Dimension",
@@ -157,7 +155,7 @@ class DimensionBase(DraftAnnotation):
             _tip = QT_TRANSLATE_NOOP("App::Property",
                                      "The object, and specific subelements "
                                      "of it,\n"
-                                     "that this dimension object "
+                                     "that this dimension "
                                      "is measuring.\n"
                                      "\n"
                                      "There are various possibilities:\n"
@@ -199,10 +197,8 @@ class DimensionBase(DraftAnnotation):
         """Update view properties."""
         vobj.Proxy.set_text_properties(vobj, vobj.PropertiesList)
         vobj.TextColor = vobj.LineColor
-        _wrn("v0.21, " + obj.Label + ", "
-             + translate("draft", "added view property 'TextColor'"))
-        _wrn("v0.21, " + obj.Label + ", "
-             + translate("draft", "renamed 'DisplayMode' options to 'World/Screen'"))
+        _log("v0.21, " + obj.Name + ", added view property 'TextColor'")
+        _log("v0.21, " + obj.Name + ", renamed 'DisplayMode' options to 'World/Screen'")
 
 
 class LinearDimension(DimensionBase):
@@ -217,8 +213,8 @@ class LinearDimension(DimensionBase):
 
     def __init__(self, obj):
         obj.Proxy = self
-        self.set_properties(obj)
         self.Type = "LinearDimension"
+        self.set_properties(obj)
 
     def set_properties(self, obj):
         """Set basic properties only if they don't exist."""
@@ -306,14 +302,16 @@ class LinearDimension(DimensionBase):
         gui_utils.restore_view_object(
             obj, vp_module="view_dimension", vp_class="ViewProviderLinearDimension"
         )
-        self.Type = "LinearDimension"
 
-        if not getattr(obj, "ViewObject", None):
+        vobj = getattr(obj, "ViewObject", None)
+        if vobj is None:
             return
-        vobj = obj.ViewObject
-        if hasattr(vobj, "TextColor"):
-            return
-        super().update_properties_0v21(obj, vobj)
+
+        if not hasattr(vobj, "TextColor"):
+            self.update_properties_0v21(obj, vobj)
+
+    def loads(self, state):
+        self.Type = "LinearDimension"
 
     def onChanged(self, obj, prop):
         """Execute when a property is changed.
@@ -513,8 +511,8 @@ class AngularDimension(DimensionBase):
 
     def __init__(self, obj):
         obj.Proxy = self
-        self.set_properties(obj)
         self.Type = "AngularDimension"
+        self.set_properties(obj)
 
     def set_properties(self, obj):
         """Set basic properties only if they don't exist."""
@@ -583,14 +581,16 @@ class AngularDimension(DimensionBase):
         gui_utils.restore_view_object(
             obj, vp_module="view_dimension", vp_class="ViewProviderAngularDimension"
         )
-        self.Type = "AngularDimension"
 
-        if not getattr(obj, "ViewObject", None):
+        vobj = getattr(obj, "ViewObject", None)
+        if vobj is None:
             return
-        vobj = obj.ViewObject
-        if hasattr(vobj, "TextColor"):
-            return
-        super().update_properties_0v21(obj, vobj)
+
+        if not hasattr(vobj, "TextColor"):
+            self.update_properties_0v21(obj, vobj)
+
+    def loads(self, state):
+        self.Type = "AngularDimension"
 
     def transform(self, obj, pla):
         """Transform the object by applying a placement."""

@@ -21,12 +21,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <QToolBar>
 #include <qobject.h>
-#endif
+
 
 #include "Mod/Spreadsheet/App/Sheet.h"
 #include "Mod/Spreadsheet/Gui/SpreadsheetView.h"
@@ -91,9 +89,9 @@ void Workbench::activated()
                                  workbenchHelper.get(),
                                  &WorkbenchHelper::setForegroundColor);
             }
-            foregroundColor->setToolTip(QObject::tr("Set cell(s) text color"));
-            foregroundColor->setWhatsThis(QObject::tr("Sets the Spreadsheet cell(s) text color"));
-            foregroundColor->setStatusTip(QObject::tr("Set cell(s) text color"));
+            foregroundColor->setToolTip(QObject::tr("Sets the text color of cells"));
+            foregroundColor->setWhatsThis(QObject::tr("Sets the text color of spreadsheet cells"));
+            foregroundColor->setStatusTip(QObject::tr("Sets the text color of spreadsheet cells"));
             bar->addWidget(foregroundColor);
 
             QList<QtColorPicker*> bgList = Gui::getMainWindow()->findChildren<QtColorPicker*>(
@@ -111,10 +109,10 @@ void Workbench::activated()
                                  workbenchHelper.get(),
                                  &WorkbenchHelper::setBackgroundColor);
             }
-            backgroundColor->setToolTip(QObject::tr("Set cell(s) background color"));
+            backgroundColor->setToolTip(QObject::tr("Sets the background color of cells"));
             backgroundColor->setWhatsThis(
-                QObject::tr("Sets the Spreadsheet cell(s) background color"));
-            backgroundColor->setStatusTip(QObject::tr("Set cell(s) background color"));
+                QObject::tr("Sets the spreadsheet cells background color"));
+            backgroundColor->setStatusTip(QObject::tr("Sets the background color of cells"));
             bar->addWidget(backgroundColor);
 
             initialized = false;

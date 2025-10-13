@@ -152,7 +152,7 @@ class _Equipment(ArchComponent.Component):
     def __init__(self,obj):
 
         ArchComponent.Component.__init__(self,obj)
-        obj.Proxy = self
+        self.Type = "Equipment"
         self.setProperties(obj)
         from ArchIFC import IfcTypes
         if "Furniture" in IfcTypes:
@@ -190,7 +190,7 @@ class _Equipment(ArchComponent.Component):
         if not "ProductURL" in pl:
             obj.addProperty("App::PropertyString","ProductURL","Equipment",QT_TRANSLATE_NOOP("App::Property","The URL of the product page of this equipment"), locked=True)
         if not "StandardCode" in pl:
-            obj.addProperty("App::PropertyString","StandardCode","Equipment",QT_TRANSLATE_NOOP("App::Property","A standard code (MasterFormat, OmniClass,...)"), locked=True)
+            obj.addProperty("App::PropertyString","StandardCode","Equipment",QT_TRANSLATE_NOOP("App::Property","A standard code (MasterFormat, OmniClass,…)"), locked=True)
         if not "SnapPoints" in pl:
             obj.addProperty("App::PropertyVectorList","SnapPoints","Equipment",QT_TRANSLATE_NOOP("App::Property","Additional snap points for this equipment"), locked=True)
         if not "EquipmentPower" in pl:
@@ -198,7 +198,6 @@ class _Equipment(ArchComponent.Component):
         obj.setEditorMode("VerticalArea",2)
         obj.setEditorMode("HorizontalArea",2)
         obj.setEditorMode("PerimeterLength",2)
-        self.Type = "Equipment"
 
     def onDocumentRestored(self,obj):
 
@@ -207,6 +206,10 @@ class _Equipment(ArchComponent.Component):
 
         # Add features in the SketchArch External Add-on, if present
         self.addSketchArchFeatures(obj)
+
+    def loads(self,state):
+
+        self.Type = "Equipment"
 
     def onChanged(self,obj,prop):
 
@@ -306,3 +309,5 @@ class _ViewProviderEquipment(ArchComponent.ViewProviderComponent):
                 self.coords.point.setValues([[p.x,p.y,p.z] for p in obj.SnapPoints])
             else:
                 self.coords.point.deleteValues(0)
+        else:
+            ArchComponent.ViewProviderComponent.updateData(self,obj,prop)

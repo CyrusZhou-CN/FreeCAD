@@ -20,9 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <QMenu>
 #include <QTimer>
 #include <algorithm>
@@ -45,7 +43,6 @@
 #include <Inventor/nodes/SoPointSet.h>
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoShapeHints.h>
-#endif
 
 #include <App/Application.h>
 #include <App/Document.h>
@@ -393,8 +390,8 @@ void MeshFaceAddition::addFacetCallback(void* ud, SoEventCallback* n)
                  && mbe->getState() == SoButtonEvent::UP) {
             if (face->index.size() == 3) {
                 QMenu menu;
-                QAction* add = menu.addAction(MeshFaceAddition::tr("Add triangle"));
-                QAction* swp = menu.addAction(MeshFaceAddition::tr("Flip normal"));
+                QAction* add = menu.addAction(MeshFaceAddition::tr("Add Triangle"));
+                QAction* swp = menu.addAction(MeshFaceAddition::tr("Flip Normal"));
                 QAction* clr = menu.addAction(MeshFaceAddition::tr("Clear"));
                 QAction* act = menu.exec(QCursor::pos());
                 if (act == add) {

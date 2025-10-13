@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Base/Console.h>
 #include <Base/Interpreter.h>
@@ -109,7 +108,7 @@ PyMOD_INIT_FUNC(Robot)
     }
 
     PyObject* robotModule = Robot::initModule();
-    Base::Console().log("Loading Robot module... done\n");
+    Base::Console().log("Loading Robot module… done\n");
 
     // Add Types to module
     Base::Interpreter().addType(&Robot::Robot6AxisPy          ::Type,robotModule,"Robot6Axis");

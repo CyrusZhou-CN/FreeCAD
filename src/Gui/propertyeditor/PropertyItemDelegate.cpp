@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /***************************************************************************
  *   Copyright (c) 2004 Werner Mayer <wmayer[at]users.sourceforge.net>     *
  *                                                                         *
@@ -20,17 +21,12 @@
  *                                                                         *
  ***************************************************************************/
 
-
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 # include <QApplication>
 # include <QCheckBox>
 # include <QComboBox>
 # include <QModelIndex>
 # include <QPainter>
 # include <QTimer>
-#endif
 
 #include <Base/Tools.h>
 
@@ -163,10 +159,16 @@ void PropertyItemDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 bool PropertyItemDelegate::editorEvent (QEvent * event, QAbstractItemModel* model,
                                         const QStyleOptionViewItem& option, const QModelIndex& index)
 {
-    if (event && event->type() == QEvent::MouseButtonPress)
-        this->pressed = true;
-    else
-        this->pressed = false;
+    auto property = static_cast<PropertyItem*>(index.internalPointer());
+
+    if ((property && !property->isSeparator())
+        && (!event || event->type() == QEvent::MouseButtonDblClick)) {
+        // ignore double click, as it could cause editor lock with checkboxes
+        // due to the editor being close immediately after toggling the checkbox
+        // which is currently done on first click
+        return true;
+    }
+    this->pressed = event->type() == QEvent::MouseButtonPress;
     return QItemDelegate::editorEvent(event, model, option, index);
 }
 

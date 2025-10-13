@@ -20,8 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <Approx_Curve3d.hxx>
 # include <BRepAdaptor_Curve.hxx>
 # include <BRepAdaptor_Surface.hxx>
@@ -106,7 +104,6 @@
 # include <cmath>
 # include <ctime>
 # include <limits>
-#endif //_PreComp_
 
 #include <Base/Console.h>
 #include <Base/Exception.h>
@@ -4884,10 +4881,17 @@ bool GeomSurface::normal(double u, double v, gp_Dir& dir) const
 
     Tools::getNormal(s, u, v, Precision::Confusion(), dir, done);
 
-    if (done)
+    if (done) {
         return true;
+    }
 
     return false;
+}
+
+std::optional<Base::Vector3d> GeomSurface::point(double u, double v) const
+{
+    Handle(Geom_Surface) s = Handle(Geom_Surface)::DownCast(handle());
+    return Base::convertTo<Base::Vector3d>(s->Value(u, v));
 }
 
 gp_Vec GeomSurface::getDN(double u, double v, int Nu, int Nv) const
@@ -6413,10 +6417,10 @@ GeomArcOfCircle* createFilletGeometry(const Geometry* geo1, const Geometry* geo2
             if (!geo1->isDerivedFrom<GeomTrimmedCurve>() || !geo2->isDerivedFrom<GeomTrimmedCurve>()) {
                 return nullptr;// not a GeomTrimmedCurve and no coincident point.
             }
-        
+
             auto* tcurve1 = static_cast<const GeomTrimmedCurve*>(geo1);
             auto* tcurve2 = static_cast<const GeomTrimmedCurve*>(geo2);
-        
+
             try {
                 if (!tcurve1->intersectBasisCurves(tcurve2, points)) {
                     return nullptr;
@@ -6430,9 +6434,9 @@ GeomArcOfCircle* createFilletGeometry(const Geometry* geo1, const Geometry* geo2
                         "a coincident constraint between the vertices of the "
                         "curves you are intending to fillet."))
             }
-        
+
             int res = selectIntersection(points, interpoints, refPnt1, refPnt2);
-        
+
             if (res != 0) {
                 return nullptr;
             }

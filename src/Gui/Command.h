@@ -379,6 +379,8 @@ public:
     static Application*  getGuiApplication();
     /// Get a reference to the selection
     static Gui::SelectionSingleton&  getSelection();
+    /// Get pointer to the active app document
+    App::Document*  getActiveDocument() const;
     /// Get pointer to the active gui document
     Gui::Document*  getActiveGuiDocument() const;
     /** Get pointer to the named or active App document
@@ -574,11 +576,6 @@ public:
     virtual void setShortcut (const QString &);
     /// Obtain the current shortcut of this command
     virtual QString getShortcut() const;
-
-    /** @name arbitrary helper methods */
-    //@{
-    void adjustCameraPosition();
-    //@}
 
     /// Helper class to disable python console log
     class LogDisabler {

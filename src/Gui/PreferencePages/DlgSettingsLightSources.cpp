@@ -21,9 +21,6 @@
  *                                                                         *
  **************************************************************************/
 
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 #include <Inventor/events/SoEvent.h>
 #include <Inventor/nodes/SoDirectionalLight.h>
 #include <Inventor/nodes/SoEventCallback.h>
@@ -32,7 +29,6 @@
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoSphere.h>
-#endif
 
 #include "DlgSettingsLightSources.h"
 #include "ui_DlgSettingsLightSources.h"
@@ -77,7 +73,11 @@ DlgSettingsLightSources::DlgSettingsLightSources(QWidget* parent)
                 this,
                 updateLightFunction);
         connect(colorButton, &ColorButton::changed, this, updateLightFunction);
+#if QT_VERSION >= QT_VERSION_CHECK(6,7,0)
+        connect(enabledCheckbox, &QCheckBox::checkStateChanged, this, updateLightFunction);
+#else
         connect(enabledCheckbox, &QCheckBox::stateChanged, this, updateLightFunction);
+#endif
     };
 
     const auto updateLight = [&](SoDirectionalLight* light,

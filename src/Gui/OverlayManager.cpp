@@ -20,9 +20,6 @@
  *                                                                          *
  ****************************************************************************/
 
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 # include <limits>
 # include <QAction>
 # include <QApplication>
@@ -40,7 +37,6 @@
 # include <QTimerEvent>
 # include <QToolTip>
 # include <QScrollBar>
-#endif
 
 #include <QPainterPath>
 #include <QPropertyAnimation>
@@ -133,6 +129,8 @@ public:
         if (activeStyleSheet.isEmpty()) {
             activeStyleSheet = _default;
         }
+
+        activeStyleSheet = Application::Instance->replaceVariablesInQss(activeStyleSheet);
     }
 
     ParameterGrp::handle handle;
@@ -157,7 +155,7 @@ private:
         }
         else if (!overlayStyleSheet.isEmpty() && !QFile::exists(overlayStyleSheet)) {
             // User did choose one of predefined stylesheets, we need to qualify it with namespace
-                overlayStyleSheet = QStringLiteral("overlay:%1").arg(overlayStyleSheet);
+            overlayStyleSheet = QStringLiteral("overlay:%1").arg(overlayStyleSheet);
         }
 
         return overlayStyleSheet;

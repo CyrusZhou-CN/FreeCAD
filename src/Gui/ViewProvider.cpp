@@ -20,9 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
+
 # include <QApplication>
 # include <QTimer>
 # include <Inventor/SoPickedPoint.h>
@@ -34,7 +33,7 @@
 # include <Inventor/nodes/SoSeparator.h>
 # include <Inventor/nodes/SoSwitch.h>
 # include <Inventor/nodes/SoTransform.h>
-#endif
+
 
 #include <Base/BoundBox.h>
 #include <Base/Console.h>
@@ -227,12 +226,10 @@ void ViewProvider::eventCallback(void * ud, SoEventCallback * node)
                         // react only on key release
                         // Let first selection mode terminate
                         Gui::Document* doc = Gui::Application::Instance->activeDocument();
-                        auto view = static_cast<Gui::View3DInventor*>(doc->getActiveView());
-                        if (view)
-                        {
+                        const auto view = qobject_cast<Gui::View3DInventor*>(doc->getActiveView());
+                        if (view) {
                             Gui::View3DInventorViewer* viewer = view->getViewer();
-                            if (viewer->isSelecting())
-                            {
+                            if (viewer->isSelecting()) {
                                 return;
                             }
                         }
@@ -246,7 +243,7 @@ void ViewProvider::eventCallback(void * ud, SoEventCallback * node)
                     }
                 }
                 else if (press) {
-                    FC_WARN("Please release all mouse buttons before exiting editing");
+                    FC_WARN("Release all mouse buttons before exiting editing");
                 }
                 break;
             default:
@@ -915,8 +912,6 @@ std::vector< App::DocumentObject* > ViewProvider::claimChildren3D() const
 }
 
 bool ViewProvider::getElementPicked(const SoPickedPoint *pp, std::string &subname) const {
-    if(!isSelectable())
-        return false;
     auto vector = getExtensionsDerivedFromType<Gui::ViewProviderExtension>();
     for(Gui::ViewProviderExtension* ext : vector) {
         if(ext->extensionGetElementPicked(pp,subname))
@@ -1083,3 +1078,4 @@ void ViewProvider::setLinkVisible(bool visible) {
     if(ext)
         ext->setLinkVisible(visible);
 }
+

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /***************************************************************************
  *   Copyright (c) 2009 Jürgen Riegel <juergen.riegel@web.de>              *
  *                                                                         *
@@ -27,6 +28,7 @@
 #include <vector>
 #include <QScrollArea>
 
+#include <Base/Parameter.h>
 #include <Gui/QSint/include/QSint>
 #include <Gui/Selection/Selection.h>
 #include "TaskWatcher.h"
@@ -39,6 +41,7 @@ class Property;
 namespace Gui {
 class MDIView;
 class ControlSingleton;
+class ViewProviderDocumentObject;
 namespace DockWnd{
 class ComboView;
 }
@@ -138,7 +141,7 @@ public:
   * This elements get injected mostly by the ViewProvider classes of the selected
   * DocumentObjects. 
   */
-class GuiExport TaskView : public QScrollArea, public Gui::SelectionSingleton::ObserverType
+class GuiExport TaskView : public QWidget, public Gui::SelectionSingleton::ObserverType
 {
     Q_OBJECT
 
@@ -162,6 +165,10 @@ public:
     void clearActionStyle();
     void restoreActionStyle();
 
+    /// Add a persistent panel at the top of the task view, independent of the active dialog.
+    void addContextualPanel(QWidget* panel);
+    void removeContextualPanel(QWidget* panel);
+
     QSize minimumSizeHint() const override;
 
     // Restore width before opening a task panel
@@ -183,11 +190,17 @@ private:
     void saveCurrentWidth();
     void tryRestoreWidth();
     void slotActiveDocument(const App::Document&);
+    void slotInEdit(const Gui::ViewProviderDocumentObject&);
     void slotDeletedDocument(const App::Document&);
     void slotViewClosed(const Gui::MDIView*);
     void slotUndoDocument(const App::Document&);
     void slotRedoDocument(const App::Document&);
     void transactionChangeOnDocument(const App::Document&, bool undo);
+    QVBoxLayout* mainLayout;
+    QScrollArea* scrollArea;
+    QVBoxLayout* contextualPanelsLayout;
+    QVBoxLayout* dialogLayout;
+    QList<QWidget*> contextualPanels;
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -202,6 +215,8 @@ protected:
     // removes the running dialog after accept() or reject() from the TaskView
     void removeDialog();
 
+    void setShowTaskWatcher(bool show);
+
     std::vector<TaskWatcher*> ActiveWatcher;
 
     QSint::ActionPanel* taskPanel;
@@ -209,12 +224,16 @@ protected:
     TaskEditControl *ActiveCtrl;
     bool restoreWidth = false;
     int currentWidth = 0;
+    ParameterGrp::handle hGrp;
+    bool showTaskWatcher;
 
     Connection connectApplicationActiveDocument;
     Connection connectApplicationDeleteDocument;
     Connection connectApplicationClosedView;
     Connection connectApplicationUndoDocument;
     Connection connectApplicationRedoDocument;
+    Connection connectApplicationInEdit;
+    Connection connectShowTaskWatcherSetting;
 };
 
 } //namespace TaskView

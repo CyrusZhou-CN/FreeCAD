@@ -20,8 +20,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
+
 # include <QAction>
 # include <QApplication>
 # include <QHBoxLayout>
@@ -33,7 +32,7 @@
 # include <QToolBar>
 # include <QToolButton>
 # include <QStyleOption>
-#endif
+
 
 #include <boost/algorithm/string/predicate.hpp>
 
@@ -484,7 +483,12 @@ void ToolBarManager::setupConnection()
                     || hParam == hStatusBar
                     || hParam == hMenuBarRight
                     || hParam == hMenuBarLeft) {
-                timer.start(100);
+                if (blockRestore) {
+                    blockRestore = false;
+                }
+                else {
+                    timer.start(100);
+                }
             }
         });
 }
@@ -1269,8 +1273,14 @@ void ToolBarManager::setState(const QString& name, State state)
         return hPref->GetBool(name.toStdString().c_str(), defaultvalue);
     };
 
-    auto saveVisibility = [this, name](bool value) {
-        hPref->SetBool(name.toStdString().c_str(), value);
+    auto saveVisibility = [this, visibility, name](bool value,
+                                                 ToolBarItem::DefaultVisibility policy) {
+        auto show = visibility(policy == ToolBarItem::DefaultVisibility::Visible);
+
+        if (show != value) {
+            blockRestore = true;
+            hPref->SetBool(name.toStdString().c_str(), value);
+        }
     };
 
     auto showhide = [visibility](QToolBar* toolbar, ToolBarItem::DefaultVisibility policy) {
@@ -1288,10 +1298,9 @@ void ToolBarManager::setState(const QString& name, State state)
     QToolBar* tb = findToolBar(toolBars(), name);
     if (tb) {
 
+        auto policy = getToolbarPolicy(tb);
+
         if (state == State::RestoreDefault) {
-
-            auto policy = getToolbarPolicy(tb);
-
             if(policy == ToolBarItem::DefaultVisibility::Unavailable) {
                 tb->hide();
                 tb->toggleViewAction()->setVisible(false);
@@ -1303,9 +1312,6 @@ void ToolBarManager::setState(const QString& name, State state)
             }
         }
         else if (state == State::ForceAvailable) {
-
-            auto policy = getToolbarPolicy(tb);
-
             tb->toggleViewAction()->setVisible(true);
 
             // Unavailable policy defaults to a Visible toolbars when made available
@@ -1326,7 +1332,7 @@ void ToolBarManager::setState(const QString& name, State state)
         }
         else if (state == State::SaveState) {
             auto show = tb->isVisible();
-            saveVisibility(show);
+            saveVisibility(show, policy);
         }
     }
 }

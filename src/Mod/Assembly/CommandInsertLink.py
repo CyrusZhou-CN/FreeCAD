@@ -42,22 +42,14 @@ __author__ = "Ondsel"
 __url__ = "https://www.freecad.org"
 
 
-tooltip = (
-    "<p>"
-    + QT_TRANSLATE_NOOP(
-        "Assembly_InsertLink",
-        "Insert a component into the active assembly. This will create dynamic links to parts, bodies, primitives, and assemblies. To insert external components, make sure that the file is <b>open in the current session</b>",
-    )
-    + "</p><p><ul><li>"
-    + QT_TRANSLATE_NOOP("Assembly_InsertLink", "Insert by left clicking items in the list.")
-    + "</li><li>"
-    + QT_TRANSLATE_NOOP("Assembly_InsertLink", "Remove by right clicking items in the list.")
-    + "</li><li>"
-    + QT_TRANSLATE_NOOP(
-        "Assembly_InsertLink",
-        "Press shift to add several instances of the component while clicking on the view.",
-    )
-    + "</li></ul></p>"
+tooltip = QT_TRANSLATE_NOOP(
+    "Assembly_InsertLink",
+    "<p>Inserts a component into the active assembly. This will create dynamic links to parts, bodies, primitives, and assemblies. To insert external components, make sure that the file is <b>open in the current session</b></p>"
+    "<ul>"
+    "<li>Insert by left clicking items in the list.</li>"
+    "<li>Remove by right clicking items in the list.</li>"
+    "<li>Press shift to add several instances of the component while clicking on the view.</li>"
+    "</ul>",
 )
 
 
@@ -70,7 +62,7 @@ class CommandGroupInsert:
 
         return {
             "Pixmap": "Assembly_InsertLink",
-            "MenuText": QT_TRANSLATE_NOOP("Assembly_Insert", "Insert"),
+            "MenuText": QT_TRANSLATE_NOOP("Assembly_Insert", "Insert Component"),
             "ToolTip": tooltip,
             "CmdType": "ForEdit",
         }
@@ -86,7 +78,7 @@ class CommandInsertLink:
     def GetResources(self):
         return {
             "Pixmap": "Assembly_InsertLink",
-            "MenuText": QT_TRANSLATE_NOOP("Assembly_InsertLink", "Insert Component"),
+            "MenuText": QT_TRANSLATE_NOOP("Assembly_InsertLink", "Component"),
             "Accel": "I",
             "ToolTip": tooltip,
             "CmdType": "ForEdit",
@@ -378,9 +370,6 @@ class TaskAssemblyInsertLink(QtCore.QObject):
 
         addedObject = self.assembly.newObject(objType, selectedPart.Label)
 
-        if selectedPart.isDerivedFrom("Assembly::AssemblyObject"):
-            addedObject.Rigid = self.form.CheckBox_RigidSubAsm.isChecked()
-
         # set placement of the added object to the center of the screen.
         view = Gui.activeView()
         x, y = view.getSize()
@@ -420,6 +409,11 @@ class TaskAssemblyInsertLink(QtCore.QObject):
             addedObject.Placement.Base = screenCenter - bboxCenter + self.totalTranslation
 
         self.prevScreenCenter = screenCenter
+
+        # We turn it flexible after changing the position so that it uses the logic in
+        # AssemblyLink::onChanged to handle positioning correctly.
+        if selectedPart.isDerivedFrom("Assembly::AssemblyObject"):
+            addedObject.Rigid = self.form.CheckBox_RigidSubAsm.isChecked()
 
         # highlight the link
         Gui.Selection.clearSelection()
@@ -548,7 +542,7 @@ class TaskAssemblyInsertLink(QtCore.QObject):
 
                         self.decrement_counter(item)
                         del self.insertionStack[i]
-                        self.form.partList.setItemSelected(item, False)
+                        item.setSelected(False)
 
                         return True
             else:

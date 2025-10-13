@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2020 Russell Johnson (russ4262) <russ4262@gmail.com>    *
 # *                                                                         *
@@ -142,7 +141,10 @@ class TaskPanelOpPage(PathOpGui.TaskPanelPage):
         signals.append(self.form.geo2Reference.currentIndexChanged)
         signals.append(self.form.layerMode.currentIndexChanged)
         signals.append(self.form.pathOrientation.currentIndexChanged)
-        signals.append(self.form.reverseDirection.stateChanged)
+        if hasattr(self.form.reverseDirection, "checkStateChanged"):  # Qt version >= 6.7.0
+            signals.append(self.form.reverseDirection.checkStateChanged)
+        else:  # Qt version < 6.7.0
+            signals.append(self.form.reverseDirection.stateChanged)
         return signals
 
     def updateVisibility(self, sentObj=None):

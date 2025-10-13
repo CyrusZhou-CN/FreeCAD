@@ -23,8 +23,6 @@
   ***************************************************************************/
 
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <cmath>
 # include <limits>
 # include <QApplication>
@@ -33,8 +31,6 @@
 # include <QMessageBox>
 # include <QString>
 # include <algorithm>
-# include <boost/filesystem.hpp>
-#endif
 
 #include <App/Document.h>
 #include <Base/Parameter.h>
@@ -85,11 +81,14 @@ DlgSettingsGeneral::DlgSettingsGeneral( QWidget* parent )
 
     recreatePreferencePackMenu();
 
+    for(const char* option : Translator::formattingOptions) {
+        ui->UseLocaleFormatting->addItem(tr(option));
+    }
 
     ui->themesCombobox->setEnabled(true);
     Gui::Document* doc = Gui::Application::Instance->activeDocument();
     if (doc) {
-        Gui::View3DInventor* view = static_cast<Gui::View3DInventor*>(doc->getActiveView());
+        Gui::View3DInventor* view = qobject_cast<Gui::View3DInventor*>(doc->getActiveView());
         if (view) {
             Gui::View3DInventorViewer* viewer = view->getViewer();
             if (viewer->isEditing()) {
@@ -128,6 +127,8 @@ DlgSettingsGeneral::DlgSettingsGeneral( QWidget* parent )
     const auto visible = UnitsApi::isMultiUnitLength();
     ui->comboBox_FracInch->setVisible(visible);
     ui->fractionalInchLabel->setVisible(visible);
+    ui->moreThemesLabel->setEnabled(
+        Application::Instance->commandManager().getCommandByName("Std_AddonMgr") != nullptr);
 }
 
 /**
@@ -172,28 +173,7 @@ void DlgSettingsGeneral::setNumberLocale(bool force/* = false*/)
     if (localeIndex == localeFormat && (!force || localeFormat == 0)) {
         return;
     }
-
-    if (localeFormat == 0) {
-        Translator::instance()->setLocale(); // Defaults to system locale
-    }
-    else if (localeFormat == 1) {
-        QByteArray current = ui->Languages->itemData(ui->Languages->currentIndex()).toByteArray();
-        Translator::instance()->setLocale(current.constData());
-    }
-    else if (localeFormat == 2) {
-        Translator::instance()->setLocale("C");
-    }
-    else {
-        return; // Prevent localeIndex updating if localeFormat is out of range
-    }
     localeIndex = localeFormat;
-}
-
-void DlgSettingsGeneral::setDecimalPointConversion(bool on)
-{
-    if (Translator::instance()->isEnabledDecimalPointConversion() != on) {
-        Translator::instance()->enableDecimalPointConversion(on);
-    }
 }
 
 void DlgSettingsGeneral::saveUnitSystemSettings()
@@ -219,7 +199,7 @@ void DlgSettingsGeneral::saveUnitSystemSettings()
     hGrpu->SetInt("FracInch", FracInch);
 
     // Set the actual format value
-    QuantityFormat::setDefaultDenominator(FracInch);
+    UnitsApi::setDenominator(FracInch);
 
     // Set and save the Unit System
     if (ui->checkBox_projectUnitSystemIgnore->isChecked()) {
@@ -256,7 +236,6 @@ void DlgSettingsGeneral::saveSettings()
     bool force = setLanguage();
     // In case type is "Selected language", we need to force locale change
     setNumberLocale(force);
-    setDecimalPointConversion(ui->SubstituteDecimal->isChecked());
 
     ParameterGrp::handle hGrp = WindowParameter::getDefaultParameter()->GetGroup("General");
     QVariant size = ui->toolbarIconSize->itemData(ui->toolbarIconSize->currentIndex());
@@ -292,7 +271,7 @@ void DlgSettingsGeneral::loadSettings()
     ui->checkBox_projectUnitSystemIgnore->setChecked(hGrpu->GetBool("IgnoreProjectSchema", false));
 
     // Get the current user setting for the minimum fractional inch
-    FracInch = hGrpu->GetInt("FracInch", QuantityFormat::getDefaultDenominator());
+    FracInch = hGrpu->GetInt("FracInch", UnitsApi::getDenominator());
 
     // Convert fractional inch to the corresponding combobox index using this
     // handy little equation.
@@ -659,7 +638,7 @@ void DlgSettingsGeneral::recreatePreferencePackMenu()
         button->setEnabled(true);
         Gui::Document* doc = Gui::Application::Instance->activeDocument();
         if (doc) {
-            Gui::View3DInventor* view = static_cast<Gui::View3DInventor*>(doc->getActiveView());
+            Gui::View3DInventor* view = qobject_cast<Gui::View3DInventor*>(doc->getActiveView());
             if (view) {
                 Gui::View3DInventorViewer* viewer = view->getViewer();
                 if (viewer->isEditing()) {
@@ -668,7 +647,7 @@ void DlgSettingsGeneral::recreatePreferencePackMenu()
             }
         }
         if (button->isEnabled()) {
-            button->setToolTip(tr("Apply the %1 preference pack").arg(QString::fromStdString(pack.first)));
+            button->setToolTip(tr("Applies the %1 preference pack").arg(QString::fromStdString(pack.first)));
             connect(button, &QPushButton::clicked, this, [this, pack]() { onLoadPreferencePackClicked(pack.first); });
         }
         ui->PreferencePacks->setCellWidget(row, 2, button);
@@ -769,7 +748,8 @@ void DlgSettingsGeneral::onUnitSystemIndexChanged(const int index)
     }
 
     // Enable/disable the fractional inch option depending on system
-    const auto visible = UnitsApi::isMultiUnitLength();
+    const auto schema = UnitsApi::createSchema(index);
+    const auto visible = schema->isMultiUnitLength();
     ui->comboBox_FracInch->setVisible(visible);
     ui->fractionalInchLabel->setVisible(visible);
 }

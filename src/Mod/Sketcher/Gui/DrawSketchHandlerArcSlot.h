@@ -93,24 +93,42 @@ public:
 
     ~DrawSketchHandlerArcSlot() override = default;
 
-private:
     std::list<Gui::InputHint> getToolHints() const override
     {
-        return lookupArcSlotHints(state());
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint {.message = tr("%1 switch mode"), .sequences = {KeyM}};
+
+        return Gui::lookupHints<SelectMode>(state(),
+                                            {
+                                                {.state = SelectMode::SeekFirst,
+                                                 .hints =
+                                                     {
+                                                         {tr("%1 pick slot center"), {MouseLeft}},
+                                                         switchModeHint,
+                                                     }},
+                                                {.state = SelectMode::SeekSecond,
+                                                 .hints =
+                                                     {
+                                                         {tr("%1 pick slot radius"), {MouseLeft}},
+                                                         switchModeHint,
+                                                     }},
+                                                {.state = SelectMode::SeekThird,
+                                                 .hints =
+                                                     {
+                                                         {tr("%1 pick slot angle"), {MouseLeft}},
+                                                         switchModeHint,
+                                                     }},
+                                                {.state = SelectMode::SeekFourth,
+                                                 .hints =
+                                                     {
+                                                         {tr("%1 pick slot width"), {MouseLeft}},
+                                                         switchModeHint,
+                                                     }},
+                                            });
     }
 
 private:
-    struct HintEntry
-    {
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    static HintTable getArcSlotHintTable();
-    static std::list<Gui::InputHint> lookupArcSlotHints(SelectMode state);
-
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
     {
         switch (state()) {
@@ -284,7 +302,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Arc Slot parameters"));
+        return QString(tr("Arc Slot Parameters"));
     }
 
     bool canGoToNextMode() override
@@ -642,7 +660,7 @@ void DSHArcSlotControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
             if (thirdParam->isSet) {
                 radius = thirdParam->getValue();
-                if (radius < Precision::Confusion()) {
+                if (radius < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                     unsetOnViewParameter(thirdParam.get());
                     return;
                 }
@@ -661,10 +679,13 @@ void DSHArcSlotControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
             if (fifthParam->isSet) {
                 double arcAngle = Base::toRadians(fifthParam->getValue());
-                if (fmod(fabs(arcAngle), 2 * std::numbers::pi) < Precision::Confusion()) {
+                if (fmod(fabs(arcAngle), 2 * std::numbers::pi) < Precision::Confusion()
+                    && fifthParam->hasFinishedEditing) {
                     unsetOnViewParameter(fifthParam.get());
                 }
                 else {
+                    handler->arcAngle = arcAngle;
+
                     double length = (onSketchPos - handler->centerPoint).Length();
                     double angle = handler->startAngleBackup + arcAngle;
                     onSketchPos.x = handler->centerPoint.x + cos(angle) * length;
@@ -677,12 +698,13 @@ void DSHArcSlotControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
             if (sixthParam->isSet) {
                 double radius2 = sixthParam->getValue();
-                if ((fabs(radius2) < Precision::Confusion()
-                     && handler->constructionMethod()
-                         == DrawSketchHandlerArcSlot::ConstructionMethod::ArcSlot)
-                    || (fabs(handler->radius - radius2) < Precision::Confusion()
-                        && handler->constructionMethod()
-                            == DrawSketchHandlerArcSlot::ConstructionMethod::RectangleSlot)) {
+                if (((fabs(radius2) < Precision::Confusion()
+                      && handler->constructionMethod()
+                          == DrawSketchHandlerArcSlot::ConstructionMethod::ArcSlot)
+                     || (fabs(handler->radius - radius2) < Precision::Confusion()
+                         && handler->constructionMethod()
+                             == DrawSketchHandlerArcSlot::ConstructionMethod::RectangleSlot))
+                    && sixthParam->hasFinishedEditing) {
                     unsetOnViewParameter(sixthParam.get());
                 }
                 else {
@@ -777,37 +799,37 @@ void DSHArcSlotController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHArcSlotController::doChangeDrawSketchHandlerMode()
+void DSHArcSlotController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::SeekThird);
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekThird);
             }
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
 
             if (fifthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::SeekFourth);
+                handler->setNextState(SelectMode::SeekFourth);
             }
         } break;
         case SelectMode::SeekFourth: {
             auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (sixthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::End);
+                handler->setNextState(SelectMode::End);
             }
         } break;
         default:
@@ -974,32 +996,6 @@ void DSHArcSlotController::addConstraints()
             constraintSlotRadius();
         }
     }
-}
-
-DrawSketchHandlerArcSlot::HintTable DrawSketchHandlerArcSlot::getArcSlotHintTable()
-{
-    return {// Structure: {SelectMode, {hints...}}
-            {SelectMode::SeekFirst,
-             {{QObject::tr("%1 pick slot center"), {Gui::InputHint::UserInput::MouseLeft}}}},
-            {SelectMode::SeekSecond,
-             {{QObject::tr("%1 pick slot radius"), {Gui::InputHint::UserInput::MouseLeft}}}},
-            {SelectMode::SeekThird,
-             {{QObject::tr("%1 pick slot angle"), {Gui::InputHint::UserInput::MouseLeft}}}},
-            {SelectMode::SeekFourth,
-             {{QObject::tr("%1 pick slot width"), {Gui::InputHint::UserInput::MouseLeft}}}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerArcSlot::lookupArcSlotHints(SelectMode state)
-{
-    const auto arcSlotHintTable = getArcSlotHintTable();
-
-    auto it = std::find_if(arcSlotHintTable.begin(),
-                           arcSlotHintTable.end(),
-                           [state](const HintEntry& entry) {
-                               return entry.state == state;
-                           });
-
-    return (it != arcSlotHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
 }
 
 }  // namespace SketcherGui

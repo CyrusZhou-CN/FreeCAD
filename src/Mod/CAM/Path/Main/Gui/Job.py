@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2017 sliptonic <shopinthewoods@gmail.com>               *
 # *                                                                         *
@@ -132,11 +131,10 @@ class ViewProvider:
         self.axs.axisLength.setValue(1.2)
 
         # enum values for SoFCPlacementIndicatorKit
-        AXES = 1
-        LABELS = 4
-        ARROWHEADS = 8
-
-        self.axs.parts.setValue(AXES | LABELS | ARROWHEADS)
+        parts = FreeCADGui.PlacementIndicatorParts
+        self.axs.parts.setValue(
+            parts.Axes | parts.Labels | parts.ArrowHeads | parts.OriginIndicator
+        )
 
         self.sep.addChild(self.axs)
         self.switch.addChild(self.sep)
@@ -150,6 +148,15 @@ class ViewProvider:
     def onChanged(self, vobj, prop):
         if prop == "Visibility":
             self.showOriginAxis(vobj.Visibility)
+
+            # if we're currently restoring the document we do NOT want to call
+            # hideXXX as this would mark all currently hidden children as
+            # explicitly hidden by the user and prevent showing them when
+            # showing the job
+
+            if self.obj.Document.Restoring:
+                return
+
             if vobj.Visibility:
                 self.restoreOperationsVisibility()
                 self.restoreModelsVisibility()
@@ -170,7 +177,8 @@ class ViewProvider:
     def restoreOperationsVisibility(self):
         if hasattr(self, "operationsVisibility"):
             for op in self.obj.Operations.Group:
-                op.Visibility = self.operationsVisibility[op.Name]
+                if self.operationsVisibility.get(op.Name, True):
+                    op.Visibility = True
         else:
             for op in self.obj.Operations.Group:
                 op.Visibility = True
@@ -183,11 +191,12 @@ class ViewProvider:
 
     def restoreModelsVisibility(self):
         if hasattr(self, "modelsVisibility"):
-            for base in self.obj.Model.Group:
-                base.Visibility = self.modelsVisibility[base.Name]
+            for model in self.obj.Model.Group:
+                if self.modelsVisibility.get(model.Name, True):
+                    model.Visibility = True
         else:
-            for base in self.obj.Model.Group:
-                base.Visibility = True
+            for model in self.obj.Model.Group:
+                model.Visibility = True
 
     def hideStock(self):
         self.stockVisibility = self.obj.Stock.Visibility
@@ -195,7 +204,8 @@ class ViewProvider:
 
     def restoreStockVisibility(self):
         if hasattr(self, "stockVisibility"):
-            self.obj.Stock.Visibility = self.stockVisibility
+            if self.stockVisibility:
+                self.obj.Stock.Visibility = True
 
     def hideTools(self):
         self.toolsVisibility = {}
@@ -206,7 +216,8 @@ class ViewProvider:
     def restoreToolsVisibility(self):
         if hasattr(self, "toolsVisibility"):
             for tc in self.obj.Tools.Group:
-                tc.Tool.Visibility = self.toolsVisibility[tc.Tool.Name]
+                if self.toolsVisibility.get(tc.Tool.Name, True):
+                    tc.Tool.Visibility = True
 
     def showOriginAxis(self, yes):
         sw = coin.SO_SWITCH_ALL if yes else coin.SO_SWITCH_NONE
@@ -665,6 +676,26 @@ class StockFromExistingEdit(StockEdit):
         if job.Stock in solids:
             # regardless, what stock is/was, it's not a valid choice
             solids.remove(job.Stock)
+        excludeIndexes = []
+        for index, model in enumerate(solids):
+            if [ob.Name for ob in model.InListRecursive if "Tools" in ob.Name]:
+                excludeIndexes.append(index)
+            elif hasattr(model, "PathResource"):
+                excludeIndexes.append(index)
+            elif model.InList and hasattr(model.InList[0], "ToolBitID"):
+                excludeIndexes.append(index)
+            elif hasattr(model, "ToolBitID"):
+                excludeIndexes.append(index)
+            elif model.TypeId == "App::DocumentObjectGroup":
+                excludeIndexes.append(index)
+            elif hasattr(model, "StockType"):
+                excludeIndexes.append(index)
+            elif not model.ViewObject.ShowInTree:
+                excludeIndexes.append(index)
+
+        for i in sorted(excludeIndexes, reverse=True):
+            del solids[i]
+
         return sorted(solids, key=lambda c: c.Label)
 
     def setFields(self, obj):
@@ -673,17 +704,20 @@ class StockFromExistingEdit(StockEdit):
         # dropdown list. This is important because the `currentIndexChanged` signal
         # will in the end result in the stock object being recreated in `getFields`
         # method, discarding any changes made (like position in respect to origin).
-        with QtCore.QSignalBlocker(self.form.stockExisting):
+        try:
+            self.form.stockExisting.blockSignals(True)
             self.form.stockExisting.clear()
             stockName = obj.Stock.Label if obj.Stock else None
             index = -1
             for i, solid in enumerate(self.candidates(obj)):
                 self.form.stockExisting.addItem(solid.Label, solid)
                 label = "{}-{}".format(self.StockLabelPrefix, solid.Label)
-
                 if label == stockName:
                     index = i
+
             self.form.stockExisting.setCurrentIndex(index if index != -1 else 0)
+        finally:
+            self.form.stockExisting.blockSignals(False)
 
         if not self.IsStock(obj):
             self.getFields(obj)
@@ -1403,7 +1437,7 @@ class TaskPanel:
 
     def isValidDatumSelection(self, sel):
         if sel.ShapeType in ["Vertex", "Edge", "Face"]:
-            if hasattr(sel, "Curve") and type(sel.Curve) not in [Part.Circle]:
+            if hasattr(sel, "Curve") and not isinstance(sel.Curve, Part.Circle):
                 return False
             return True
 
@@ -1412,7 +1446,7 @@ class TaskPanel:
 
     def isValidAxisSelection(self, sel):
         if sel.ShapeType in ["Vertex", "Edge", "Face"]:
-            if hasattr(sel, "Curve") and type(sel.Curve) in [Part.Circle]:
+            if hasattr(sel, "Curve") and isinstance(sel.Curve, Part.Circle):
                 return False
             if hasattr(sel, "Surface") and sel.Surface.curvature(0, 0, "Max") != 0:
                 return False
@@ -1592,11 +1626,11 @@ class TaskPanel:
         self.updateSelection()
 
         # set active page
-        if activate in ["General", "Model"]:
-            self.form.setCurrentIndex(0)
-        if activate in ["Output", "Post Processor"]:
-            self.form.setCurrentIndex(1)
         if activate in ["Layout", "Stock"]:
+            self.form.setCurrentIndex(0)
+        if activate in ["General", "Model"]:
+            self.form.setCurrentIndex(1)
+        if activate in ["Output", "Post Processor"]:
             self.form.setCurrentIndex(2)
         if activate in ["Tools", "Tool Controller"]:
             self.form.setCurrentIndex(3)
@@ -1635,7 +1669,7 @@ class TaskPanel:
 
         # Check if at least on base model is present
         if len(self.obj.Model.Group) == 0:
-            self.form.setCurrentIndex(0)  # Change tab to General tab
+            self.form.setCurrentIndex(1)  # Change tab to General tab
             no_model_txt = translate("CAM_Job", "This job has no base model.")
             if _displayWarningWindow(no_model_txt) == 1:
                 self.jobModelEdit()

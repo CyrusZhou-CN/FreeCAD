@@ -20,10 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <limits>
+
 # include <BRepAlgo.hxx>
 # include <BRepFilletAPI_MakeFillet.hxx>
 # include <TopoDS.hxx>
@@ -31,7 +29,6 @@
 # include <TopTools_ListOfShape.hxx>
 # include <ShapeFix_Shape.hxx>
 # include <ShapeFix_ShapeTolerance.hxx>
-#endif
 
 #include <Base/Exception.h>
 #include <Base/Reader.h>
@@ -104,7 +101,6 @@ App::DocumentObjectExecReturn *Fillet::execute()
 
         TopTools_ListOfShape aLarg;
         aLarg.Append(baseShape.getShape());
-        bool failed = false;
         if (!BRepAlgo::IsValid(aLarg, shape.getShape(), Standard_False, Standard_False)) {
             ShapeFix_ShapeTolerance aSFT;
             aSFT.LimitTolerance(shape.getShape(),
@@ -113,20 +109,15 @@ App::DocumentObjectExecReturn *Fillet::execute()
                                 TopAbs_SHAPE);
         }
 
-        if (!failed) {
-            // store shape before refinement
-            this->rawShape = shape;
-            shape = refineShapeIfActive(shape);
-            shape = getSolid(shape);
-        }
+        // store shape before refinement
+        this->rawShape = shape;
+        shape = refineShapeIfActive(shape);
         if (!isSingleSolidRuleSatisfied(shape.getShape())) {
-            return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Result has multiple solids: that is not currently supported."));
+            return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Result has multiple solids: enable 'Allow Compound' in the active body."));
         }
-        this->Shape.setValue(shape);
 
-        if (failed) {
-            return new App::DocumentObjectExecReturn("Resulting shape is invalid");
-        }
+        shape = getSolid(shape);
+        this->Shape.setValue(shape);
         return App::DocumentObject::StdReturn;
     }
     catch (Standard_Failure& e) {
@@ -151,3 +142,5 @@ void Fillet::handleChangedPropertyType(Base::XMLReader &reader, const char * Typ
         DressUp::handleChangedPropertyType(reader, TypeName, prop);
     }
 }
+
+

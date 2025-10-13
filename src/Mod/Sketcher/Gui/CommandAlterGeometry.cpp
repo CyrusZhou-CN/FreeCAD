@@ -20,10 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
-#endif
-
 #include <Gui/Action.h>
 #include <Gui/Application.h>
 #include <Gui/BitmapFactory.h>
@@ -70,8 +66,8 @@ CmdSketcherToggleConstruction::CmdSketcherToggleConstruction()
 {
     sAppModule = "Sketcher";
     sGroup = "Sketcher";
-    sMenuText = QT_TR_NOOP("Toggle construction geometry");
-    sToolTipText = QT_TR_NOOP("Toggles the toolbar or selected geometry to/from construction mode");
+    sMenuText = QT_TR_NOOP("Toggle Construction Geometry");
+    sToolTipText = QT_TR_NOOP("Toggles between defining geometry and construction geometry modes");
     sWhatsThis = "Sketcher_ToggleConstruction";
     sStatusTip = sToolTipText;
     sPixmap = "Sketcher_ToggleConstruction";
@@ -167,7 +163,7 @@ void CmdSketcherToggleConstruction::activated(int iMsg)
         if (selection.size() != 1) {
             Gui::TranslatedUserWarning(Obj,
                                        QObject::tr("Wrong selection"),
-                                       QObject::tr("Select edge(s) from the sketch."));
+                                       QObject::tr("Select edges from the sketch"));
             return;
         }
 
@@ -176,12 +172,12 @@ void CmdSketcherToggleConstruction::activated(int iMsg)
         if (SubNames.empty()) {
             Gui::TranslatedUserWarning(Obj,
                                        QObject::tr("Wrong selection"),
-                                       QObject::tr("Select edge(s) from the sketch."));
+                                       QObject::tr("Select edges from the sketch"));
             return;
         }
 
         // undo command open
-        openCommand(QT_TRANSLATE_NOOP("Command", "Toggle draft from/to draft"));
+        openCommand(QT_TRANSLATE_NOOP("Command", "Toggle construction geometry"));
 
         // go through the selected subelements
         bool verticesonly = true;

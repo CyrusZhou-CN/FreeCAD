@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
 /***************************************************************************
  *   Copyright (c) 2004 Werner Mayer <wmayer[at]users.sourceforge.net>     *
  *                                                                         *
@@ -21,9 +22,6 @@
  ***************************************************************************/
 
 
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 #include <algorithm>
 #include <iomanip>
 #include <limits>
@@ -39,7 +37,6 @@
 #include <QTimer>
 #include <QtGlobal>
 #include <QMenu>
-#endif
 
 #include "PropertyItem.h"
 #include "PropertyView.h"
@@ -219,6 +216,14 @@ bool PropertyItem::removeProperty(const App::Property* prop)
     }
 
     return propertyItems.empty();
+}
+
+bool PropertyItem::renameProperty(const App::Property* prop)
+{
+    setPropertyData({const_cast<App::Property*>(prop)});
+    QString name = QString::fromLatin1(prop->getName());
+    setPropertyName(name, name);
+    return true;
 }
 
 App::Property* PropertyItem::getFirstProperty()
@@ -1179,7 +1184,7 @@ void PropertyUnitItem::setValue(const QVariant& value)
     if (!hasExpression() && value.canConvert<Base::Quantity>()) {
         const Base::Quantity& val = value.value<Base::Quantity>();
         Base::QuantityFormat format(Base::QuantityFormat::Default, highPrec);
-        setPropertyValue(Base::UnitsApi::toString(val, format));
+        setPropertyValue(val.toString(format));
     }
 }
 
@@ -1376,9 +1381,11 @@ void PropertyBoolItem::setValue(const QVariant& value)
 }
 
 QWidget* PropertyBoolItem::createEditor(QWidget* parent,
-                                        const std::function<void()>& method,
+                                        const std::function<void()>& /*method*/,
                                         FrameOption /*frameOption*/) const
 {
+    // The checkbox is basically artificial (it is not rendered). Other code handles the callback,
+    // etc.
     auto checkbox = new QCheckBox(parent);
     return checkbox;
 }
@@ -1578,7 +1585,7 @@ PropertyEditorWidget::PropertyEditorWidget(QWidget* parent)
     lineEdit->setReadOnly(true);
     layout->addWidget(lineEdit);
 
-    button = new QPushButton(QLatin1String("..."), this);
+    button = new QPushButton(QStringLiteral("…"), this);
 #if defined(Q_OS_MACOS)
     button->setAttribute(
         Qt::WA_LayoutUsesWidgetRect);  // layout size from QMacStyle was not correct
@@ -1643,6 +1650,7 @@ void VectorListWidget::buttonClicked()
         setValue(data);
     });
 
+    Gui::adjustDialogPosition(dlg);
     dlg->exec();
 }
 
@@ -1785,12 +1793,8 @@ void PropertyVectorDistanceItem::setValue(const QVariant& variant)
         return;
     }
     const Base::Vector3d& value = variant.value<Base::Vector3d>();
-
-    Base::QuantityFormat format(Base::QuantityFormat::Default, highPrec);
-    std::string val = fmt::format("({}, {}, {})",
-                                  Base::UnitsApi::toNumber(value.x, format),
-                                  Base::UnitsApi::toNumber(value.y, format),
-                                  Base::UnitsApi::toNumber(value.z, format));
+    std::string val = fmt::format("({:.{}g}, {:.{}g}, {:.{}g})",
+                                  value.x, highPrec, value.y, highPrec, value.z, highPrec);
     setPropertyValue(val);
 }
 
@@ -2525,12 +2529,9 @@ void PropertyRotationItem::setValue(const QVariant& value)
     Base::Vector3d axis;
     double angle {};
     h.getValue(axis, angle);
-    Base::QuantityFormat format(Base::QuantityFormat::Default, highPrec);
-    std::string val = fmt::format("App.Rotation(App.Vector({},{},{}),{})",
-                                  Base::UnitsApi::toNumber(axis.x, format),
-                                  Base::UnitsApi::toNumber(axis.y, format),
-                                  Base::UnitsApi::toNumber(axis.z, format),
-                                  Base::UnitsApi::toNumber(angle, format));
+    std::string val = fmt::format("App.Rotation(App.Vector({:.{}g},{:.{}g},{:.{}g}),{:.{}g})",
+                                  axis.x, highPrec, axis.y, highPrec, axis.z, highPrec,
+                                  angle, highPrec);
     setPropertyValue(val);
 }
 
@@ -2843,18 +2844,12 @@ void PropertyPlacementItem::setValue(const QVariant& value)
     Base::Vector3d axis;
     double angle {};
     h.getValue(axis, angle);
-
-    Base::QuantityFormat format(Base::QuantityFormat::Default, highPrec);
     std::string str = fmt::format("App.Placement("
-                                  "App.Vector({},{},{}),"
-                                  "App.Rotation(App.Vector({},{},{}),{}))",
-                                  Base::UnitsApi::toNumber(pos.x, format),
-                                  Base::UnitsApi::toNumber(pos.y, format),
-                                  Base::UnitsApi::toNumber(pos.z, format),
-                                  Base::UnitsApi::toNumber(axis.x, format),
-                                  Base::UnitsApi::toNumber(axis.y, format),
-                                  Base::UnitsApi::toNumber(axis.z, format),
-                                  Base::UnitsApi::toNumber(angle, format));
+                                  "App.Vector({:.{}g},{:.{}g},{:.{}g}),"
+                                  "App.Rotation(App.Vector({:.{}g},{:.{}g},{:.{}g}),{:.{}g}))",
+                                  pos.x, highPrec, pos.y, highPrec, pos.z, highPrec,
+                                  axis.x, highPrec, axis.y, highPrec, axis.z, highPrec,
+                                  angle, highPrec);
     setPropertyValue(str);
 }
 
@@ -4541,12 +4536,12 @@ LinkLabel::LinkLabel(QWidget* parent, const App::Property* prop)
     label->setTextInteractionFlags(Qt::TextBrowserInteraction);
     layout->addWidget(label);
 
-    editButton = new QPushButton(QLatin1String("..."), this);
+    editButton = new QPushButton(QStringLiteral("…"), this);
 #if defined(Q_OS_MACOS)
     editButton->setAttribute(
         Qt::WA_LayoutUsesWidgetRect);  // layout size from QMacStyle was not correct
 #endif
-    editButton->setToolTip(tr("Change the linked object"));
+    editButton->setToolTip(tr("Changes the linked object"));
     layout->addWidget(editButton);
 
     this->setFocusPolicy(Qt::StrongFocus);

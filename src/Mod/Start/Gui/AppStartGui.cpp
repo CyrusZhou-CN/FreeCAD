@@ -21,11 +21,9 @@
  *                                                                          *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QString>
 #include <QTimer>
-#endif
+
 
 #include <Base/Console.h>
 #include <Base/Interpreter.h>
@@ -119,7 +117,7 @@ PyMOD_INIT_FUNC(StartGui)
     static StartGui::StartLauncher* launcher = new StartGui::StartLauncher();
     Q_UNUSED(launcher)
 
-    Base::Console().log("Loading GUI of Start module... ");
+    Base::Console().log("Loading GUI of Start module… ");
     PyObject* mod = StartGui::initModule();
     auto manipulator = std::make_shared<StartGui::Manipulator>();
     Gui::WorkbenchManipulator::installManipulator(manipulator);

@@ -20,10 +20,8 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <Inventor/events/SoButtonEvent.h>
-#endif
+
 
 #include <App/Document.h>
 #include <Gui/Application.h>
@@ -46,9 +44,9 @@ CmdVisualInspection::CmdVisualInspection()
 {
     sAppModule = "Inspection";
     sGroup = QT_TR_NOOP("Inspection");
-    sMenuText = QT_TR_NOOP("Visual inspection...");
-    sToolTipText = QT_TR_NOOP("Visual inspection");
-    sStatusTip = QT_TR_NOOP("Visual inspection");
+    sMenuText = QT_TR_NOOP("Visual Inspection…");
+    sToolTipText = QT_TR_NOOP("Inspects the objects visually");
+    sStatusTip = sToolTipText;
     sWhatsThis = "Inspection_VisualInspection";
 }
 
@@ -72,8 +70,8 @@ CmdInspectElement::CmdInspectElement()
 {
     sAppModule = "Inspection";
     sGroup = QT_TR_NOOP("Inspection");
-    sMenuText = QT_TR_NOOP("Inspection...");
-    sToolTipText = QT_TR_NOOP("Get distance information");
+    sMenuText = QT_TR_NOOP("Inspection…");
+    sToolTipText = QT_TR_NOOP("Inspects distance information");
     sWhatsThis = "Inspection_InspectElement";
     sStatusTip = sToolTipText;
     sPixmap = "inspect_pipette";

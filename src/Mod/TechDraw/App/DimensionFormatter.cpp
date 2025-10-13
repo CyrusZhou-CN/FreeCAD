@@ -20,12 +20,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
-# include <QLocale>
-# include <QRegularExpression>
-# include <QString>
-#endif
+#include <QLocale>
+#include <QRegularExpression>
+#include <QString>
+
+#include <fmt/format.h>
 
 #include <Base/Console.h>
 #include <Base/UnitsApi.h>
@@ -250,7 +249,7 @@ std::string DimensionFormatter::getFormattedDimensionValue(const Format partial)
         tolerance.remove(plus);
 
         return (labelText +
-                 QStringLiteral(" \xC2\xB1 ") +          // +/- symbol
+                 QString::fromUtf8(" \xC2\xB1 ") +          // +/- symbol
                  tolerance).toStdString();
 
         // Unreachable code??
@@ -275,7 +274,7 @@ QString DimensionFormatter::formatValueToSpec(const double value, QString format
     QString formattedValue;
 
     constexpr auto format = [](QString f, double value){
-        return QString::asprintf(f.toStdString().c_str(), value);
+        return QString::fromStdString(fmt::sprintf(f.toStdString(), value));
     };
 
     QRegularExpression wrRegExp(QStringLiteral("%(?<dec>.*)(?<spec>[wWrR])"));

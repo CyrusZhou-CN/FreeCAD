@@ -20,8 +20,6 @@
  **************************************************************************/
 
 
-#include "PreCompiled.h"
-
 #include <App/PropertyContainer.h>
 #include <App/Application.h>
 #include <App/MeasureManager.h>
@@ -95,7 +93,9 @@ App::DocumentObjectExecReturn* MeasurePosition::execute()
 {
     const App::DocumentObject* object = Element.getValue();
     const std::vector<std::string>& subElements = Element.getSubValues();
-
+    if (subElements.empty()) {
+        return {};
+    }
     App::SubObjectT subject {object, subElements.front().c_str()};
     auto info = getMeasureInfo(subject);
 

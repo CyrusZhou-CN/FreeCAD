@@ -20,16 +20,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <Inventor/nodes/SoSeparator.h>
 #include <QAction>
 #include <QApplication>
 #include <QMenu>
 #include <QMessageBox>
 #include <QTextStream>
-#endif
+
 
 #include <App/Document.h>
 #include <App/MaterialObject.h>
@@ -161,7 +159,7 @@ void ViewProviderFemAnalysis::show()
 void ViewProviderFemAnalysis::setupContextMenu(QMenu* menu, QObject*, const char*)
 {
     Gui::ActionFunction* func = new Gui::ActionFunction(menu);
-    QAction* act = menu->addAction(tr("Activate analysis"));
+    QAction* act = menu->addAction(tr("Activate Analysis"));
     func->trigger(act, [this]() {
         this->doubleClicked();
     });

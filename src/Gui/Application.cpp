@@ -20,9 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-
-#ifndef _PreComp_
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <Inventor/errors/SoDebugError.h>
 #include <Inventor/errors/SoError.h>
@@ -38,13 +35,17 @@
 #include <QScreen>
 #include <QStatusBar>
 #include <QStyle>
+#include <QSurfaceFormat>
 #include <QTextStream>
 #include <QTimer>
 #include <QWindow>
-#endif
 
 #include <QLoggingCategory>
 #include <fmt/format.h>
+#include <list>
+#include <ranges>
+
+#include <FCConfig.h>
 
 #include <App/Document.h>
 #include <App/DocumentObjectPy.h>
@@ -137,7 +138,12 @@
 #include "WorkbenchManipulator.h"
 #include "WidgetFactory.h"
 #include "3Dconnexion/navlib/NavlibInterface.h"
+#include "Inventor/SoFCPlacementIndicatorKit.h"
 #include "QtWidgets.h"
+
+#include <OverlayManager.h>
+#include <ParamHandler.h>
+#include <Base/ServiceProvider.h>
 
 #ifdef BUILD_TRACY_FRAME_PROFILER
 #include <tracy/Tracy.hpp>
@@ -148,6 +154,7 @@ using namespace Gui::DockWnd;
 using namespace std;
 namespace sp = std::placeholders;
 
+FC_LOG_LEVEL_INIT("Gui")
 
 Application* Application::Instance = nullptr;
 
@@ -206,6 +213,8 @@ struct ApplicationP
 
         // Create the Theme Manager
         prefPackManager = new PreferencePackManager();
+        // Create the Style Parameter Manager
+        styleParameterManager = new StyleParameters::ParameterManager();
     }
 
     ~ApplicationP()
@@ -219,8 +228,11 @@ struct ApplicationP
     /// Active document
     Gui::Document* activeDocument {nullptr};
     Gui::Document* editDocument {nullptr};
+
     MacroManager* macroMngr;
     PreferencePackManager* prefPackManager;
+    StyleParameters::ParameterManager* styleParameterManager;
+
     /// List of all registered views
     std::list<Gui::BaseView*> passive;
     bool isClosing {false};
@@ -370,6 +382,61 @@ struct PyMethodDef FreeCADGui_methods[] = {
 
 }  // namespace Gui
 
+void Application::initStyleParameterManager()
+{
+    static ParamHandlers handlers;
+
+    const auto deduceParametersFilePath = []() -> std::string {
+        const auto hMainWindowGrp = App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/MainWindow");
+
+        if (const std::string& path = hMainWindowGrp->GetASCII("ThemeStyleParametersFile");
+            !path.empty()) {
+            return path;
+        }
+
+        return fmt::format("qss:parameters/{}.yaml", hMainWindowGrp->GetASCII("Theme", "Classic"));
+    };
+
+    auto themeParametersSource = new StyleParameters::YamlParameterSource(
+        deduceParametersFilePath(),
+        {.name = QT_TR_NOOP("Theme Parameters"),
+         .options = StyleParameters::ParameterSourceOption::UserEditable});
+
+    handlers.addDelayedHandler(
+        "BaseApp/Preferences/MainWindow",
+        {"ThemeStyleParametersFiles", "Theme"},
+        [themeParametersSource, deduceParametersFilePath, this](ParameterGrp::handle) {
+            themeParametersSource->changeFilePath(deduceParametersFilePath());
+            reloadStyleSheet();
+        });
+
+    Base::registerServiceImplementation<StyleParameters::ParameterSource>(
+        new StyleParameters::BuiltInParameterSource({.name = QT_TR_NOOP("Built-in Parameters")}));
+
+    // todo: left for compatibility with older theme versions, to be removed before release
+    Base::registerServiceImplementation<StyleParameters::ParameterSource>(
+        new StyleParameters::UserParameterSource(
+            App::GetApplication().GetParameterGroupByPath(
+                "User parameter:BaseApp/Preferences/Themes/UserTokens"),
+            {.name = QT_TR_NOOP("Theme Parameters - Fallback"),
+             .options = StyleParameters::ParameterSourceOption::ReadOnly}));
+
+    Base::registerServiceImplementation<StyleParameters::ParameterSource>(themeParametersSource);
+
+    Base::registerServiceImplementation<StyleParameters::ParameterSource>(
+        new StyleParameters::UserParameterSource(
+            App::GetApplication().GetParameterGroupByPath(
+                "User parameter:BaseApp/Preferences/Themes/UserParameters"),
+            {.name = QT_TR_NOOP("User Parameters"),
+             .options = StyleParameters::ParameterSource::UserEditable}));
+
+    const auto sources = Base::provideServiceImplementations<StyleParameters::ParameterSource>();
+    for (auto* source : std::views::all(sources) | std::views::reverse) {
+        d->styleParameterManager->addSource(source);
+    }
+
+    Base::registerServiceImplementation(d->styleParameterManager);
+}
 // clang-format off
 Application::Application(bool GUIenabled)
 {
@@ -413,10 +480,9 @@ Application::Application(bool GUIenabled)
                 0,
                 QLatin1String("Invalid system settings"),
                 QLatin1String(
-                    "Your system uses the same symbol for decimal point and group separator.\n\n"
-                    "This causes serious problems and makes the application fail to work "
-                    "properly.\n"
-                    "Go to the system configuration panel of the OS and fix this issue, please."));
+                    "The system locale uses the same symbol for the decimal point and the thousands separator.\n\n"
+                    "This may prevent the application from functioning correctly."
+                    "Go to the system configuration panel of the OS and fix this issue."));
             throw Base::RuntimeError("Invalid system settings");
         }
 #endif
@@ -505,6 +571,24 @@ Application::Application(bool GUIenabled)
         Gui::TaskView::TaskDialogPy::init_type();
 
         registerUserInputEnumInPython(module);
+        Base::PyRegisterEnum<SoFCPlacementIndicatorKit::Part>(module, "PlacementIndicatorParts", {
+            {"Axes", SoFCPlacementIndicatorKit::Axes},
+            {"ArrowHeads", SoFCPlacementIndicatorKit::ArrowHeads},
+            {"Labels", SoFCPlacementIndicatorKit::Labels},
+            {"PlaneIndicator", SoFCPlacementIndicatorKit::PlaneIndicator},
+            {"OriginIndicator", SoFCPlacementIndicatorKit::OriginIndicator},
+
+            // common configurations
+            {"AllParts", SoFCPlacementIndicatorKit::AllParts},
+            {"AxisCross", SoFCPlacementIndicatorKit::AxisCross},
+        });
+
+        Base::PyRegisterEnum<Gui::BitmapFactoryInst::Position>(module, "IconPosition", {
+            {"TopLeft",     Gui::BitmapFactoryInst::TopLeft},
+            {"TopRight",    Gui::BitmapFactoryInst::TopRight},
+            {"BottomLeft",  Gui::BitmapFactoryInst::BottomLeft},
+            {"BottomRight", Gui::BitmapFactoryInst::BottomRight}
+        });
 
         CommandActionPy::init_type();
         Base::Interpreter().addType(CommandActionPy::type_object(), module, "CommandAction");
@@ -562,6 +646,8 @@ Application::Application(bool GUIenabled)
     // clang-format on
 
     d = new ApplicationP(GUIenabled);
+
+    initStyleParameterManager();
 
     // global access
     Instance = this;
@@ -806,6 +892,10 @@ void Application::exportTo(const char* FileName, const char* DocName, const char
     string unicodepath = Base::Tools::escapedUnicodeFromUtf8(File.filePath().c_str());
     unicodepath = Base::Tools::escapeEncodeFilename(unicodepath);
 
+    if (strcmp(Module, "Part") == 0) {
+        FC_WARN("Exporting with 'Part' is deprecated, use 'ImportGui' instead");
+    }
+
     if (Module) {
         try {
             std::vector<App::DocumentObject*> sel =
@@ -999,10 +1089,10 @@ void Application::checkForRecomputes() {
     WaitCursor wc;
     wc.restoreCursor();
     auto res = QMessageBox::warning(getMainWindow(), QObject::tr("Recomputation required"),
-                                    QObject::tr("Some document(s) require recomputation for migration purposes. "
+                                    QObject::tr("Some documents require recomputation for migration purposes. "
                                                 "It is highly recommended to perform a recomputation before "
                                                 "any modification to avoid compatibility problems.\n\n"
-                                                "Do you want to recompute now?"),
+                                                "Recompute now?"),
                                     QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
     if (res != QMessageBox::Yes)
         return;
@@ -1017,8 +1107,8 @@ void Application::checkForRecomputes() {
     }
     if (hasError)
         QMessageBox::critical(getMainWindow(), QObject::tr("Recompute error"),
-                              QObject::tr("Failed to recompute some document(s).\n"
-                                          "Please check report view for more details."));
+                              QObject::tr("Failed to recompute some documents.\n"
+                                          "Check the report view for more details."));
 }
 
 void Application::checkPartialRestore(App::Document* doc)
@@ -1942,6 +2032,11 @@ Gui::PreferencePackManager* Application::prefPackManager()
     return d->prefPackManager;
 }
 
+Gui::StyleParameters::ParameterManager* Application::styleParameterManager()
+{
+    return d->styleParameterManager;
+}
+
 
 //**************************************************************************
 // Init, Destruct and singleton
@@ -2234,7 +2329,7 @@ void tryRunEventLoop(GUISingleApplication& mainApp)
     try {
         boost::interprocess::file_lock flock(filename.c_str());
         if (flock.try_lock()) {
-            Base::Console().log("Init: Executing event loop...\n");
+            Base::Console().log("Init: Executing event loop…\n");
             QApplication::exec();
 
             // Qt can't handle exceptions thrown from event handlers, so we need
@@ -2289,11 +2384,43 @@ void Application::runApplication()
 {
     StartupProcess::setupApplication();
 
+    {
+        QSurfaceFormat defaultFormat;
+        defaultFormat.setRenderableType(QSurfaceFormat::OpenGL);
+        defaultFormat.setProfile(QSurfaceFormat::CompatibilityProfile);
+        defaultFormat.setOption(QSurfaceFormat::DeprecatedFunctions, true);
+#if defined(FC_OS_LINUX) || defined(FC_OS_BSD)
+        // QGuiApplication::platformName() doesn't yet work at this point, so we use the env var
+        if (getenv("WAYLAND_DISPLAY")) {
+            // In some settings (at least EGL on Wayland) we get RGB565 by default.
+            // Request something better.
+            defaultFormat.setRedBufferSize(8);
+            defaultFormat.setGreenBufferSize(8);
+            defaultFormat.setBlueBufferSize(8);
+            // Qt's behavior with format requests seems opaque, underdocumented and,
+            // unfortunately, inconsistent between platforms. Requesting an alpha
+            // channel tends to steer it away from weird legacy choices like RGB565.
+            defaultFormat.setAlphaBufferSize(8);
+            // And a depth/stencil buffer is generally useful if we can have it.
+            defaultFormat.setDepthBufferSize(24);
+            defaultFormat.setStencilBufferSize(8);
+        }
+#endif
+        QSurfaceFormat::setDefaultFormat(defaultFormat);
+    }
+
     // A new QApplication
     Base::Console().log("Init: Creating Gui::Application and QApplication\n");
 
     int argc = App::Application::GetARGC();
     GUISingleApplication mainApp(argc, App::Application::GetARGV());
+
+#if (COIN_MAJOR_VERSION * 100 + COIN_MINOR_VERSION * 10 + COIN_MICRO_VERSION < 406) && (defined(FC_OS_LINUX) || defined(FC_OS_BSD))
+    // If QT is running with native Wayland then inform Coin to use EGL
+    if (QGuiApplication::platformName() == QString::fromStdString("wayland")) {
+        setenv("COIN_EGL", "1", 1);
+    }
+#endif
 
     // Make sure that we use '.' as decimal point. See also
     // http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=559846
@@ -2478,36 +2605,22 @@ void Application::setStyleSheet(const QString& qssFile, bool tiledBackground)
     }
 }
 
-QString Application::replaceVariablesInQss(QString qssText)
+void Application::reloadStyleSheet()
 {
-    // First we fetch the colors from preferences,
-    ParameterGrp::handle hGrp =
-        App::GetApplication().GetParameterGroupByPath("User parameter:BaseApp/Preferences/Themes");
-    unsigned long longAccentColor1 = hGrp->GetUnsigned("ThemeAccentColor1", 0);
-    unsigned long longAccentColor2 = hGrp->GetUnsigned("ThemeAccentColor2", 0);
-    unsigned long longAccentColor3 = hGrp->GetUnsigned("ThemeAccentColor3", 0);
+    const MainWindow* mw = getMainWindow();
 
-    // convert them to hex.
-    // Note: the ulong contains alpha channels so 8 hex characters when we need 6 here.
-    QString accentColor1 = QStringLiteral("#%1")
-                               .arg(longAccentColor1, 8, 16, QLatin1Char('0'))
-                               .toUpper()
-                               .mid(0, 7);
-    QString accentColor2 = QStringLiteral("#%1")
-                               .arg(longAccentColor2, 8, 16, QLatin1Char('0'))
-                               .toUpper()
-                               .mid(0, 7);
-    QString accentColor3 = QStringLiteral("#%1")
-                               .arg(longAccentColor3, 8, 16, QLatin1Char('0'))
-                               .toUpper()
-                               .mid(0, 7);
+    const QString qssFile = mw->property("fc_currentStyleSheet").toString();
+    const bool tiledBackground = mw->property("fc_tiledBackground").toBool();
 
-    qssText = qssText.replace(QStringLiteral("@ThemeAccentColor1"), accentColor1);
-    qssText = qssText.replace(QStringLiteral("@ThemeAccentColor2"), accentColor2);
-    qssText = qssText.replace(QStringLiteral("@ThemeAccentColor3"), accentColor3);
+    d->styleParameterManager->reload();
 
-    // Base::Console().warning("%s\n", qssText.toStdString());
-    return qssText;
+    setStyleSheet(qssFile, tiledBackground);
+    OverlayManager::instance()->refresh(nullptr, true);
+}
+
+QString Application::replaceVariablesInQss(const QString& qssText)
+{
+    return QString::fromStdString(d->styleParameterManager->replacePlaceholders(qssText.toStdString()));
 }
 
 void Application::checkForDeprecatedSettings()

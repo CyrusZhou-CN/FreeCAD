@@ -21,15 +21,13 @@
  *                                                                          *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <QAction>
 #include <QMenu>
 #include <vector>
 #include <sstream>
 #include <iostream>
-#endif
+
 
 #include <App/Link.h>
 #include <App/Document.h>
@@ -105,8 +103,6 @@ bool ViewProviderAssemblyLink::doubleClicked()
 bool ViewProviderAssemblyLink::onDelete(const std::vector<std::string>& subNames)
 {
     Q_UNUSED(subNames)
-
-    Base::Console().warning("onDelete\n");
 
     Gui::Command::doCommand(Gui::Command::Doc,
                             "App.getDocument(\"%s\").getObject(\"%s\").removeObjectsFromDocument()",

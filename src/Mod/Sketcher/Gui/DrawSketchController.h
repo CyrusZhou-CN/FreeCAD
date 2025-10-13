@@ -145,8 +145,9 @@ protected:
     };
     //@}
 
-private:
     Base::Vector2d prevCursorPosition;
+
+private:
     Base::Vector2d lastControlEnforcedPosition;
 
     int nOnViewParameter = OnViewParametersT::defaultMethodSize();
@@ -209,6 +210,10 @@ private:
 
         bool isVisible(Gui::EditableDatumLabel* ovp) const
         {
+            if (ovp->getFunction() == Gui::EditableDatumLabel::Function::Forced) {
+                return true;
+            }
+
             switch (onViewParameterVisibility) {
 
                 case OnViewParameterVisibility::Hidden:
@@ -365,13 +370,61 @@ public:
         }
     }
 
+    void finishEditingOnAllOVPs()
+    {
+        // we call this on a current OnViewParameter when pressed CTRL+ENTER to accept
+        // input on all visible ovps of current mode
+
+        // we check for initial state, since `onViewValueChanged` can process to next mode
+        // if we set hasFinishedEditing on current mode
+        auto initialState = handler->state();
+        for (size_t i = 0; i < onViewParameters.size(); i++) {
+            if (isOnViewParameterOfCurrentMode(i) && isOnViewParameterVisible(i)
+                && initialState == getState(static_cast<int>(i))) {
+                onViewParameters[i]->isSet = true;
+                onViewParameters[i]->hasFinishedEditing = true;
+
+                double currentValue = onViewParameters[i]->getValue();
+                onViewValueChanged(static_cast<int>(i), currentValue);
+            }
+        }
+    }
+
     void tryViewValueChanged(int onviewparameterindex, double value)
     {
+        // go to next label in circular manner if user has currently pressed enter on current one
+        if (onViewParameters[onviewparameterindex]->hasFinishedEditing) {
+            // find the first parameter of the current mode that is not locked to start the cycle
+            auto findNextUnlockedParameter = [this](size_t startIndex) -> int {
+                for (size_t i = startIndex; i < onViewParameters.size(); i++) {
+                    if (isOnViewParameterOfCurrentMode(i)
+                        && !onViewParameters[i]->hasFinishedEditing) {
+                        return static_cast<int>(i);
+                    }
+                }
+                return -1;
+            };
+
+            // find first unlocked parameter (for cycling back)
+            int firstOfCurrentMode = findNextUnlockedParameter(0);
+
+            // find next unlocked parameter after current one
+            int nextUnlockedIndex = findNextUnlockedParameter(onviewparameterindex + 1);
+
+            // if no next parameter found, cycle back to first of current mode
+            if (nextUnlockedIndex != -1) {
+                setFocusToOnViewParameter(nextUnlockedIndex);
+            }
+            else if (firstOfCurrentMode != -1) {
+                setFocusToOnViewParameter(firstOfCurrentMode);
+            }
+        }
+
         /* That is not supported with on-view parameters.
         // -> A machine does not forward to a next state when adapting the parameter (though it
         // may forward to
         //    a next state if all the parameters are fulfilled, see
-        //    doChangeDrawSketchHandlerMode). This ensures that the geometry has been defined
+        //    computeNextDrawSketchHandlerMode). This ensures that the geometry has been defined
         //    (either by mouse clicking or by widget). Autoconstraints on point should be picked
         //    when the state is reached upon machine state advancement.
         //
@@ -428,7 +481,7 @@ public:
     /** Change DSH to reflect the SelectMode it should be in based on values entered in the
      * controls
      */
-    virtual void doChangeDrawSketchHandlerMode()
+    virtual void computeNextDrawSketchHandlerMode()
     {}
 
     /** function that is called by the handler when the selection mode changed */
@@ -580,11 +633,17 @@ protected:
         // preselectAtPoint.
         handler->updateDataAndDrawToPosition(lastControlEnforcedPosition);
 
-        doChangeDrawSketchHandlerMode();
+        computeNextDrawSketchHandlerMode();
+
+        auto nextState = handler->getNextState();
+        bool shouldProcessLastPosWithNextState =
+            nextState && nextState != SelectMode::End && nextState != currentstate && firstMoveInit;
+        // the handler will be destroyed in applyNextState if the nextState is End
+        handler->applyNextState();
 
         // if the state changed and is not the last state (End). And is init (ie tool has not
         // reset)
-        if (!handler->isLastState() && handler->state() != currentstate && firstMoveInit) {
+        if (shouldProcessLastPosWithNextState) {
             // mode has changed, so reprocess the previous position to the new widget state
             handler->mouseMove(prevCursorPosition);
         }
@@ -628,6 +687,11 @@ protected:
                                  unsetOnViewParameter(parameter);
                                  finishControlsChanged();
                              });
+
+            // Connect Ctrl+Enter signal to apply values to all visible OVPs in current stage
+            QObject::connect(parameter, &Gui::EditableDatumLabel::finishEditingOnAllOVPs, [this]() {
+                finishEditingOnAllOVPs();
+            });
         }
     }
 
@@ -637,6 +701,7 @@ protected:
         onViewParameter->isSet = false;
         onViewParameter->hasFinishedEditing = false;
         onViewParameter->setColor(colorManager.dimConstrDeactivatedColor);
+        onViewParameter->setLockedAppearance(false);
     }
 
     void setOnViewParameterValue(OnViewParameter index,

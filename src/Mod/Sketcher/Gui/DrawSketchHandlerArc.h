@@ -90,7 +90,54 @@ public:
 private:
     std::list<Gui::InputHint> getToolHints() const override
     {
-        return lookupArcHints(constructionMethod(), state());
+        using State = std::pair<ConstructionMethod, SelectMode>;
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint {tr("%1 switch mode"), {KeyM}};
+
+        return Gui::lookupHints<State>(
+            {constructionMethod(), state()},
+            {
+                // Center method
+                {.state = {ConstructionMethod::Center, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick arc center"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::Center, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick arc start point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::Center, SelectMode::SeekThird},
+                 .hints =
+                     {
+                         {tr("%1 pick arc end point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+
+                // ThreeRim method
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick first arc point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick second arc point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekThird},
+                 .hints =
+                     {
+                         {tr("%1 pick third arc point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+            });
     }
 
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
@@ -342,13 +389,16 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Arc parameters"));
+        return QString(tr("Arc Parameters"));
     }
 
     bool canGoToNextMode() override
     {
         if (state() == SelectMode::SeekSecond && radius < Precision::Confusion()) {
             // Prevent validation of null arc.
+            return false;
+        }
+        if (state() == SelectMode::SeekThird && fabs(arcAngle) < Precision::Confusion()) {
             return false;
         }
         return true;
@@ -431,21 +481,6 @@ private:
             }
         }
     }
-
-    // Hint table structures
-    struct HintEntry
-    {
-        ConstructionMethod method;
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    // Static declaration
-    static Gui::InputHint switchModeHint();
-    static HintTable getArcHintTable();
-    static std::list<Gui::InputHint> lookupArcHints(ConstructionMethod method, SelectMode state);
 
 private:
     Base::Vector2d centerPoint, firstPoint, secondPoint;
@@ -556,7 +591,7 @@ void DSHArcControllerBase::doEnforceControlParameters(Base::Vector2d& onSketchPo
 
                 if (thirdParam->isSet) {
                     radius = thirdParam->getValue();
-                    if (radius < Precision::Confusion()) {
+                    if (radius < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                         unsetOnViewParameter(thirdParam.get());
                         return;
                     }
@@ -578,7 +613,7 @@ void DSHArcControllerBase::doEnforceControlParameters(Base::Vector2d& onSketchPo
                 if (fourthParam->isSet) {
                     onSketchPos.y = fourthParam->getValue();
                 }
-                if (thirdParam->isSet && fourthParam->isSet
+                if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing
                     && (onSketchPos - handler->firstPoint).Length() < Precision::Confusion()) {
                     unsetOnViewParameter(thirdParam.get());
                     unsetOnViewParameter(fourthParam.get());
@@ -587,21 +622,25 @@ void DSHArcControllerBase::doEnforceControlParameters(Base::Vector2d& onSketchPo
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-            auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (handler->constructionMethod() == DrawSketchHandlerArc::ConstructionMethod::Center) {
                 if (fifthParam->isSet) {
                     double arcAngle = Base::toRadians(fifthParam->getValue());
-                    if (fmod(fabs(arcAngle), 2 * std::numbers::pi) < Precision::Confusion()) {
+                    if (fmod(fabs(arcAngle), 2 * std::numbers::pi) < Precision::Confusion()
+                        && fifthParam->hasFinishedEditing) {
                         unsetOnViewParameter(fifthParam.get());
                         return;
                     }
+
+                    handler->arcAngle = arcAngle;
+
                     double angle = handler->startAngle + arcAngle;
                     onSketchPos.x = handler->centerPoint.x + cos(angle) * handler->radius;
                     onSketchPos.y = handler->centerPoint.y + sin(angle) * handler->radius;
                 }
             }
             else {
+                auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
                 if (fifthParam->isSet) {
                     onSketchPos.x = fifthParam->getValue();
                 }
@@ -677,7 +716,6 @@ void DSHArcController::adaptParameters(Base::Vector2d onSketchPos)
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-            auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (handler->constructionMethod() == DrawSketchHandlerArc::ConstructionMethod::Center) {
                 double range = Base::toDegrees(handler->arcAngle);
@@ -693,6 +731,7 @@ void DSHArcController::adaptParameters(Base::Vector2d onSketchPos)
                 fifthParam->setLabelRange(handler->arcAngle);
             }
             else {
+                auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
                 if (!fifthParam->isSet) {
                     setOnViewParameterValue(OnViewParameter::Fifth, onSketchPos.x);
                 }
@@ -714,39 +753,37 @@ void DSHArcController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHArcController::doChangeDrawSketchHandlerMode()
+void DSHArcController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::SeekThird);
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekThird);
             }
         } break;
         case SelectMode::SeekThird: {
+            auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
             if (handler->constructionMethod() == DrawSketchHandlerArc::ConstructionMethod::Center) {
-                auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-
                 if (fifthParam->hasFinishedEditing) {
-                    handler->setState(SelectMode::End);
+                    handler->setNextState(SelectMode::End);
                 }
             }
             else {
-                auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
                 auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
-                if (fifthParam->hasFinishedEditing || sixthParam->hasFinishedEditing) {
-                    handler->setState(SelectMode::End);
+                if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing) {
+                    handler->setNextState(SelectMode::End);
                 }
             }
         } break;
@@ -859,12 +896,6 @@ void DSHArcController::addConstraints()
         }
     }
     else {  // Valid diagnosis. Must check which constraints may be added.
-
-        // if no curve exists a crash occurs #12755
-        if (firstCurve < 0) {
-            return;
-        }
-
         auto startpointinfo = handler->getPointInfo(GeoElementId(firstCurve, pos1));
 
         if (x0set && startpointinfo.isXDoF()) {
@@ -928,60 +959,6 @@ template<>
 void DSHArcController::doConstructionMethodChanged()
 {
     handler->updateHint();
-}
-
-// Static member definitions
-Gui::InputHint DrawSketchHandlerArc::switchModeHint()
-{
-    return {QObject::tr("%1 switch mode"), {Gui::InputHint::UserInput::KeyM}};
-}
-
-DrawSketchHandlerArc::HintTable DrawSketchHandlerArc::getArcHintTable()
-{
-    const auto switchHint = switchModeHint();
-    return {
-        // Structure: {ConstructionMethod, SelectMode, {hints...}}
-
-        // Center method
-        {ConstructionMethod::Center,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick arc center"), {Gui::InputHint::UserInput::MouseLeft}}, switchHint}},
-        {ConstructionMethod::Center,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick arc start point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::Center,
-         SelectMode::SeekThird,
-         {{QObject::tr("%1 pick arc end point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-
-        // ThreeRim method
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick first arc point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick second arc point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekThird,
-         {{QObject::tr("%1 pick third arc point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerArc::lookupArcHints(ConstructionMethod method,
-                                                               SelectMode state)
-{
-    const auto arcHintTable = getArcHintTable();
-
-    auto it = std::find_if(arcHintTable.begin(),
-                           arcHintTable.end(),
-                           [method, state](const HintEntry& entry) {
-                               return entry.method == method && entry.state == state;
-                           });
-
-    return (it != arcHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
 }
 
 }  // namespace SketcherGui

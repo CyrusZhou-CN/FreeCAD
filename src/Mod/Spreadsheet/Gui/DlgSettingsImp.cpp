@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Gui/Application.h>
 
@@ -37,7 +36,6 @@ DlgSettingsImp::DlgSettingsImp(QWidget* parent)
     , ui(new Ui_DlgSettings)
 {
     ui->setupUi(this);
-    ui->dZLSpinBox->setDisabled(true);
 }
 
 /**

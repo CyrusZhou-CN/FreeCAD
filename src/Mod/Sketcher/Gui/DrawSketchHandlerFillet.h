@@ -277,16 +277,14 @@ private:
             catch (const Base::CADKernelError& e) {
                 if (e.getTranslatable()) {
                     Gui::TranslatedUserError(sketchgui,
-                                             QObject::tr("CAD Kernel Error"),
-                                             QObject::tr(e.getMessage().c_str()));
+                                             tr("CAD Kernel Error"),
+                                             tr(e.getMessage().c_str()));
                 }
                 Gui::Selection().clearSelection();
                 Gui::Command::abortCommand();
             }
             catch (const Base::ValueError& e) {
-                Gui::TranslatedUserError(sketchgui,
-                                         QObject::tr("Value Error"),
-                                         QObject::tr(e.getMessage().c_str()));
+                Gui::TranslatedUserError(sketchgui, tr("Value Error"), tr(e.getMessage().c_str()));
                 Gui::Selection().clearSelection();
                 Gui::Command::abortCommand();
             }
@@ -347,7 +345,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Fillet/Chamfer parameters"));
+        return QString(tr("Fillet/Chamfer Parameters"));
     }
 
     bool canGoToNextMode() override
@@ -402,6 +400,7 @@ private:
                 moveToNextMode();
             }
         }
+        updateHint();
     }
 
 
@@ -409,6 +408,33 @@ private:
     bool preserveCorner;
     int vtId, geoId1, geoId2;
     Base::Vector2d firstPos, secondPos;
+
+public:
+    std::list<Gui::InputHint> getToolHints() const override
+    {
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint {.message = tr("%1 switch mode"), .sequences = {KeyM}};
+        const Gui::InputHint preserveCornerHint {.message = tr("%1 toggle preserve corner"),
+                                                 .sequences = {KeyU}};
+
+        return Gui::lookupHints<SelectMode>(
+            state(),
+            {
+                {.state = SelectMode::SeekFirst,
+                 .hints = {{tr("%1 pick first edge or point"), {MouseLeft}},
+                           switchModeHint,
+                           preserveCornerHint}},
+                {.state = SelectMode::SeekSecond,
+                 .hints = {{tr("%1 pick second edge"), {MouseLeft}},
+                           switchModeHint,
+                           preserveCornerHint}},
+                {.state = SelectMode::End,
+                 .hints = {{tr("%1 create fillet"), {MouseLeft}},
+                           switchModeHint,
+                           preserveCornerHint}},
+            });
+    }
 };
 
 template<>
@@ -457,6 +483,5 @@ void DSHFilletController::adaptDrawingToCheckboxChange(int checkboxindex, bool v
 }
 
 }  // namespace SketcherGui
-
 
 #endif  // SKETCHERGUI_DrawSketchHandlerFillet_H

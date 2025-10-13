@@ -20,15 +20,16 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
+#include <FCConfig.h>
 
 #ifndef FC_OS_WIN32
 #ifndef GL_GLEXT_PROTOTYPES
 #define GL_GLEXT_PROTOTYPES 1
 #endif
+#else
+#include <windows.h>
 #endif
 
-#ifndef _PreComp_
 #include <algorithm>
 #include <limits>
 #ifdef FC_OS_MACOSX
@@ -54,7 +55,7 @@
 #include <Inventor/elements/SoViewingMatrixElement.h>
 #include <Inventor/errors/SoDebugError.h>
 #include <Inventor/nodes/SoCoordinate3.h>
-#endif
+
 #include <Inventor/C/glue/gl.h>
 
 #include <Gui/GLBuffer.h>
@@ -775,7 +776,7 @@ void SoFCIndexedFaceSet::generateGLArrays(SoGLRenderAction* action)
             if (numcolors != static_cast<int>(numTria)) {
                 SoDebugError::postWarning(
                     "SoFCIndexedFaceSet::generateGLArrays",
-                    "The number of faces (%d) doesn't match with the number of colors (%d).",
+                    "The number of faces (%d) does not match with the number of colors (%d).",
                     numTria,
                     numcolors);
             }
@@ -817,7 +818,7 @@ void SoFCIndexedFaceSet::generateGLArrays(SoGLRenderAction* action)
             if (numcolors != coords->getNum()) {
                 SoDebugError::postWarning(
                     "SoFCIndexedFaceSet::generateGLArrays",
-                    "The number of points (%d) doesn't match with the number of colors (%d).",
+                    "The number of points (%d) does not match with the number of colors (%d).",
                     coords->getNum(),
                     numcolors);
             }

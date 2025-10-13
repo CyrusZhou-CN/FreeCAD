@@ -20,12 +20,10 @@
  *                                                                          *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QDebug>
 #include <QTextStream>
 #include <memory>
-#endif
+
 
 #include <Base/Tools.h>
 #include <Mod/Sketcher/App/PropertyConstraintList.h>
@@ -109,6 +107,7 @@ void PropertyConstraintListItem::initialize()
 
             item->bind(list->createPath(id - 1));
             item->setAutoApply(false);
+            item->setReadOnly(!(*it)->isDriving);
         }
     }
 

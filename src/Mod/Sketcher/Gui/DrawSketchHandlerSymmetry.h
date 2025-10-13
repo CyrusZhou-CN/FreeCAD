@@ -191,7 +191,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Symmetry parameters"));
+        return QString(tr("Symmetry Parameters"));
     }
 
     void activated() override
@@ -214,6 +214,16 @@ private:
     int refGeoId;
     Sketcher::PointPos refPosId;
     bool deleteOriginal, createSymConstraints;
+
+public:
+    std::list<Gui::InputHint> getToolHints() const override
+    {
+        using enum Gui::InputHint::UserInput;
+
+        return {
+            {tr("%1 pick axis, edge, or point", "Sketcher Symmetry: hint"), {MouseLeft}},
+        };
+    }
 
     void deleteOriginalGeos()
     {
@@ -264,7 +274,7 @@ void DSHSymmetryController::configureToolWidget()
                                                              "Delete original geometries (U)"));
         toolWidget->setCheckboxLabel(WCheckbox::SecondBox,
                                      QApplication::translate("TaskSketcherTool_c2_symmetry",
-                                                             "Create Symmetry Constraints (J)"));
+                                                             "Create symmetry constraints (J)"));
     }
 }
 

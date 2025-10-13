@@ -68,23 +68,26 @@ jobs:
         # your codebase is analyzed, see https://docs.github.com/en/code-security/code-scanning/creating-an-advanced-setup-for-code-scanning/codeql-code-scanning-for-compiled-languages
     steps:
     - name: Harden the runner (Audit all outbound calls)
-      uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+      uses: step-security/harden-runner@f4a75cfd619ee5ce8d5b864b0d183aff3c69b55a # v2.13.1
       with:
         egress-policy: audit
-
-    - name: Checkout repository
-      uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      with:
-        fetch-depth: 2
-        submodules: recursive
 
     # prevent running out of disk space on Ubuntu runners.
     - name: Maximize build space
       uses: AdityaGarg8/remove-unwanted-software@90e01b21170618765a73370fcc3abbd1684a7793 # v5
       with:
         verbose: 'true'
-        remove-android: 'true'      # (frees ~9 GB)
-        remove-cached-tools: 'true' # (frees ~8.3 GB)
+        remove-android: 'true'       # (frees ~9 GB)
+        remove-cached-tools: 'true'  # (frees ~8.3 GB)
+        remove-haskell: 'true'       # (frees ~5.2 GB)
+        remove-swapfile: 'true'      # (frees ~4 GB)
+        remove-docker-images: 'true' # (frees ~3.2 GB)
+
+    - name: Checkout repository
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      with:
+        fetch-depth: 2
+        submodules: recursive
 
     # Install FreeCAD dependencies (cpp)
     - name: Setup build environment
@@ -98,7 +101,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@fca7ace96b7d713c7035871441bd52efbe39e27e # v3.28.19
+      uses: github/codeql-action/init@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
@@ -112,12 +115,6 @@ jobs:
 
         # Change the CodeQL Bundle version
         # tools: https://github.com/github/codeql-action/releases/download/codeql-bundle-v2.20.7/codeql-bundle-linux64.tar.gz
-
-        # Add exclusions
-        # config: |
-        #   query-filters:
-        #   - exclude:
-        #       id: py/file-not-closed
 
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
@@ -136,6 +133,31 @@ jobs:
         exit 1
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@fca7ace96b7d713c7035871441bd52efbe39e27e # v3.28.19
+      uses: github/codeql-action/analyze@181d5eefc20863364f96762470ba6f862bdef56b # v3.29.2
       with:
         category: "/language:${{matrix.language}}"
+        output: sarif-results
+        upload: failure-only
+
+    - name: filter-sarif
+      uses: advanced-security/filter-sarif@v1
+      with:
+        patterns: |
+          -tests/**/*
+          -src/3rdParty/**/*
+          -**/ui_*.h
+          -**/moc_*.cpp
+        input: sarif-results/cpp.sarif
+        output: sarif-results/cpp.sarif
+
+    - name: Upload SARIF
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: sarif-results/cpp.sarif
+
+    - name: Upload loc as a Build Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: sarif-results
+        path: sarif-results
+        retention-days: 1

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2025 Samuel Abels <knipknap@gmail.com>                  *
 # *                                                                         *
@@ -34,7 +33,7 @@ class CuttingToolMixin:
         obj.addProperty(
             "App::PropertyLength",
             "Chipload",
-            "Base",
+            "Attributes",
             QT_TRANSLATE_NOOP("App::Property", "Chipload per tooth"),
         )
         obj.Chipload = FreeCAD.Units.Quantity("0.0 mm")

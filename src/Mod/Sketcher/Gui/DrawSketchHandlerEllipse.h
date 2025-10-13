@@ -84,22 +84,56 @@ public:
     ~DrawSketchHandlerEllipse() override = default;
 
 private:
-    struct HintEntry
-    {
-        ConstructionMethod method;
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    static HintTable getEllipseHintTable();
-    static std::list<Gui::InputHint> lookupEllipseHints(ConstructionMethod method,
-                                                        SelectMode state);
-
     std::list<Gui::InputHint> getToolHints() const override
     {
-        return lookupEllipseHints(constructionMethod(), state());
+        using State = std::pair<ConstructionMethod, SelectMode>;
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint {tr("%1 switch mode"), {KeyM}};
+
+        return Gui::lookupHints<State>(
+            {constructionMethod(), state()},
+            {
+                // Center method
+                {.state = {ConstructionMethod::Center, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick ellipse center"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::Center, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick axis endpoint"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::Center, SelectMode::SeekThird},
+                 .hints =
+                     {
+                         {tr("%1 pick minor axis endpoint"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+
+                // ThreeRim method
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick first rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick second rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekThird},
+                 .hints =
+                     {
+                         {tr("%1 pick third rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+            });
     }
 
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
@@ -291,7 +325,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Ellipse parameters"));
+        return QString(tr("Ellipse Parameters"));
     }
 
     bool canGoToNextMode() override
@@ -524,7 +558,7 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
                 if (thirdParam->isSet) {
                     length = thirdParam->getValue();
-                    if (length < Precision::Confusion()) {
+                    if (length < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                         unsetOnViewParameter(thirdParam.get());
                         return;
                     }
@@ -547,7 +581,7 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
                     onSketchPos.y = fourthParam->getValue();
                 }
 
-                if (thirdParam->isSet && fourthParam->isSet
+                if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing
                     && (onSketchPos - handler->apoapsis).Length() < Precision::Confusion()) {
                     unsetOnViewParameter(thirdParam.get());
                     unsetOnViewParameter(fourthParam.get());
@@ -556,7 +590,6 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-            auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (handler->constructionMethod()
                 == DrawSketchHandlerEllipse::ConstructionMethod::Center) {
@@ -570,6 +603,7 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
                 }
             }
             else {
+                auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
                 if (fifthParam->isSet) {
                     onSketchPos.x = fifthParam->getValue();
                 }
@@ -578,7 +612,7 @@ void DSHEllipseControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
                     onSketchPos.y = sixthParam->getValue();
                 }
 
-                if (fifthParam->isSet && sixthParam->isSet
+                if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing
                     && areCollinear(handler->apoapsis, handler->periapsis, onSketchPos)) {
                     unsetOnViewParameter(fifthParam.get());
                     unsetOnViewParameter(sixthParam.get());
@@ -655,7 +689,6 @@ void DSHEllipseController::adaptParameters(Base::Vector2d onSketchPos)
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-            auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (handler->constructionMethod()
                 == DrawSketchHandlerEllipse::ConstructionMethod::Center) {
@@ -669,6 +702,7 @@ void DSHEllipseController::adaptParameters(Base::Vector2d onSketchPos)
                 fifthParam->setPoints(start, end);
             }
             else {
+                auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
                 if (!fifthParam->isSet) {
                     setOnViewParameterValue(OnViewParameter::Fifth, onSketchPos.x);
                 }
@@ -690,38 +724,38 @@ void DSHEllipseController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHEllipseController::doChangeDrawSketchHandlerMode()
+void DSHEllipseController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::SeekThird);
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekThird);
             }
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
-            auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
             if (handler->constructionMethod()
                 == DrawSketchHandlerEllipse::ConstructionMethod::Center) {
                 if (fifthParam->hasFinishedEditing) {
-                    handler->setState(SelectMode::End);
+                    handler->setNextState(SelectMode::End);
                 }
             }
             else {
-                if (fifthParam->hasFinishedEditing || sixthParam->hasFinishedEditing) {
-                    handler->setState(SelectMode::End);
+                auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
+                if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing) {
+                    handler->setNextState(SelectMode::End);
                 }
             }
         } break;
@@ -977,48 +1011,6 @@ void DSHEllipseController::addConstraints()
         }
     }
     // No constraint possible for 3 rim ellipse.
-}
-
-DrawSketchHandlerEllipse::HintTable DrawSketchHandlerEllipse::getEllipseHintTable()
-{
-    return {
-        // Structure: {ConstructionMethod, SelectMode, {hints...}}
-
-        // Center method
-        {ConstructionMethod::Center,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick ellipse center"), {Gui::InputHint::UserInput::MouseLeft}}}},
-        {ConstructionMethod::Center,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick axis endpoint"), {Gui::InputHint::UserInput::MouseLeft}}}},
-        {ConstructionMethod::Center,
-         SelectMode::SeekThird,
-         {{QObject::tr("%1 pick minor axis endpoint"), {Gui::InputHint::UserInput::MouseLeft}}}},
-
-        // ThreeRim method
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick first rim point"), {Gui::InputHint::UserInput::MouseLeft}}}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick second rim point"), {Gui::InputHint::UserInput::MouseLeft}}}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekThird,
-         {{QObject::tr("%1 pick third rim point"), {Gui::InputHint::UserInput::MouseLeft}}}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerEllipse::lookupEllipseHints(ConstructionMethod method,
-                                                                       SelectMode state)
-{
-    const auto ellipseHintTable = getEllipseHintTable();
-
-    auto it = std::find_if(ellipseHintTable.begin(),
-                           ellipseHintTable.end(),
-                           [method, state](const HintEntry& entry) {
-                               return entry.method == method && entry.state == state;
-                           });
-
-    return (it != ellipseHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
 }
 }  // namespace SketcherGui
 

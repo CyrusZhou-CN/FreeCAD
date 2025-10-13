@@ -25,6 +25,7 @@
 #define SKETCHERGUI_DrawSketchHandlerTranslate_H
 
 #include <QApplication>
+#include <map>
 
 #include <Base/Tools.h>
 
@@ -38,6 +39,7 @@
 
 #include "DrawSketchDefaultWidgetController.h"
 #include "DrawSketchControllableHandler.h"
+#include "SketcherTransformationExpressionHelper.h"
 
 #include "GeometryCreationMode.h"
 #include "Utils.h"
@@ -115,9 +117,17 @@ private:
         try {
             Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Translate geometries"));
 
+            expressionHelper.storeOriginalExpressions(sketchgui->getSketchObject(), listOfGeoIds);
+
             createShape(false);
 
             commandAddShapeGeometryAndConstraints();
+
+            expressionHelper.copyExpressionsToNewConstraints(sketchgui->getSketchObject(),
+                                                             listOfGeoIds,
+                                                             ShapeGeometry.size(),
+                                                             numberOfCopies,
+                                                             secondNumberOfCopies);
 
             if (deleteOriginal) {
                 deleteOriginalGeos();
@@ -172,7 +182,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Translate parameters"));
+        return QString(tr("Translate Parameters"));
     }
 
     void onButtonPressed(Base::Vector2d onSketchPos) override
@@ -226,6 +236,8 @@ private:
 
     bool deleteOriginal, cloneConstraints;
     int numberOfCopies, secondNumberOfCopies;
+
+    SketcherTransformationExpressionHelper expressionHelper;
 
     void deleteOriginalGeos()
     {
@@ -426,6 +438,24 @@ private:
             }
         }
     }
+
+
+public:
+    std::list<Gui::InputHint> getToolHints() const override
+    {
+        using enum Gui::InputHint::UserInput;
+
+        return Gui::lookupHints<SelectMode>(
+            state(),
+            {{.state = SelectMode::SeekFirst,
+              .hints = {{tr("%1 pick reference point", "Sketcher Translate: hint"), {MouseLeft}}}},
+             {.state = SelectMode::SeekSecond,
+              .hints = {{tr("%1 set translation vector", "Sketcher Translate: hint"),
+                         {MouseLeft}}}},
+             {.state = SelectMode::SeekThird,
+              .hints = {{tr("%1 set second translation vector", "Sketcher Translate: hint"),
+                         {MouseLeft}}}}});
+    }
 };
 
 template<>
@@ -583,7 +613,7 @@ void DSHTranslateControllerBase::doEnforceControlParameters(Base::Vector2d& onSk
 
             if (thirdParam->isSet) {
                 length = thirdParam->getValue();
-                if (length < Precision::Confusion()) {
+                if (length < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                     unsetOnViewParameter(thirdParam.get());
                     return;
                 }
@@ -609,7 +639,7 @@ void DSHTranslateControllerBase::doEnforceControlParameters(Base::Vector2d& onSk
 
             if (fifthParam->isSet) {
                 length = fifthParam->getValue();
-                if (length < Precision::Confusion()) {
+                if (length < Precision::Confusion() && fifthParam->hasFinishedEditing) {
                     unsetOnViewParameter(fifthParam.get());
                     return;
                 }
@@ -706,27 +736,27 @@ void DSHTranslateController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHTranslateController::doChangeDrawSketchHandlerMode()
+void DSHTranslateController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
                 if (handler->secondNumberOfCopies == 1) {
-                    handler->setState(SelectMode::End);
+                    handler->setNextState(SelectMode::End);
                 }
                 else {
-                    handler->setState(SelectMode::SeekThird);
+                    handler->setNextState(SelectMode::SeekThird);
                 }
             }
         } break;
@@ -734,8 +764,8 @@ void DSHTranslateController::doChangeDrawSketchHandlerMode()
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
             auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
-            if (fifthParam->hasFinishedEditing || sixthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::End);
+            if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::End);
             }
         } break;
         default:

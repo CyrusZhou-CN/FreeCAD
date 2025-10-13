@@ -22,9 +22,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoMultipleCopy.h>
 #include <Inventor/nodes/SoPickStyle.h>
@@ -33,7 +31,7 @@
 #include <Inventor/nodes/SoTransform.h>
 #include <QAction>
 #include <QMenu>
-#endif
+
 
 #include "App/Application.h"
 #include "Gui/Command.h"
@@ -156,7 +154,7 @@ std::vector<App::DocumentObject*> ViewProviderFemConstraint::claimChildren() con
 void ViewProviderFemConstraint::setupContextMenu(QMenu* menu, QObject* receiver, const char* member)
 {
     QAction* act;
-    act = menu->addAction(QObject::tr("Edit analysis feature"), receiver, member);
+    act = menu->addAction(QObject::tr("Edit Analysis Feature"), receiver, member);
     act->setData(QVariant((int)ViewProvider::Default));
     ViewProviderGeometryObject::setupContextMenu(menu,
                                                  receiver,

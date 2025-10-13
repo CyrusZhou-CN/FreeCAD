@@ -20,8 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QAction>
 #include <QMenu>
 #include <QMessageBox>
@@ -29,7 +27,6 @@
 
 #include <TopExp.hxx>
 #include <TopTools_IndexedMapOfShape.hxx>
-#endif
 
 #include <App/Document.h>
 #include <Base/Tools.h>
@@ -57,7 +54,7 @@ namespace SurfaceGui
 void ViewProviderSections::setupContextMenu(QMenu* menu, QObject* receiver, const char* member)
 {
     QAction* act;
-    act = menu->addAction(QObject::tr("Edit sections"), receiver, member);
+    act = menu->addAction(QObject::tr("Edit Sections"), receiver, member);
     act->setData(QVariant((int)ViewProvider::Default));
     PartGui::ViewProviderSpline::setupContextMenu(menu, receiver, member);
 }

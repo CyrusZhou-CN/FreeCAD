@@ -41,11 +41,11 @@ class BIM_Classification:
         return {
             "Pixmap": "BIM_Classification",
             "MenuText": QT_TRANSLATE_NOOP(
-                "BIM_Classification", "Manage classification..."
+                "BIM_Classification", "Manage Classification"
             ),
             "ToolTip": QT_TRANSLATE_NOOP(
                 "BIM_Classification",
-                "Manage classification systems and apply classification to objects",
+                "Manages classification systems and apply classification to objects",
             ),
         }
 
@@ -54,6 +54,12 @@ class BIM_Classification:
         return v
 
     def Activated(self):
+
+        # only raise the dialog if it is already open
+        if getattr(self, "form", None):
+            self.form.raise_()
+            return
+
         import Draft
         from PySide import QtCore, QtGui
         from bimcommands import BimMaterial
@@ -74,6 +80,7 @@ class BIM_Classification:
 
         # restore saved values
         self.form.onlyVisible.setChecked(PARAMS.GetInt("BimClassificationVisibleState", 0))
+        self.form.checkPrefix.setChecked(PARAMS.GetInt("BimClassificationSystemNamePrefix", 1))
         w = PARAMS.GetInt("BimClassificationDialogWidth", 629)
         h = PARAMS.GetInt("BimClassificationDialogHeight", 516)
         self.form.resize(w, h)
@@ -155,12 +162,17 @@ class BIM_Classification:
         self.form.buttonRename.clicked.connect(self.rename)
         self.form.search.textEdited.connect(self.updateClasses)
         self.form.buttonBox.accepted.connect(self.accept)
+        self.form.buttonBox.rejected.connect(self.reject)
         self.form.groupMode.currentIndexChanged.connect(self.updateObjects)
         self.form.treeClass.itemDoubleClicked.connect(self.apply)
         self.form.search.up.connect(self.onUpArrow)
         self.form.search.down.connect(self.onDownArrow)
-        self.form.onlyVisible.stateChanged.connect(self.onVisible)
-
+        if hasattr(self.form.onlyVisible, "checkStateChanged"): # Qt version >= 6.7.0
+            self.form.onlyVisible.checkStateChanged.connect(self.onVisible)
+            self.form.checkPrefix.checkStateChanged.connect(self.onPrefix)
+        else: # Qt version < 6.7.0
+            self.form.onlyVisible.stateChanged.connect(self.onVisible)
+            self.form.checkPrefix.stateChanged.connect(self.onPrefix)
         # center the dialog over FreeCAD window
         mw = FreeCADGui.getMainWindow()
         self.form.move(
@@ -652,6 +664,11 @@ class BIM_Classification:
         p.SetInt("BimClassificationDialogWidth", self.form.width())
         p.SetInt("BimClassificationDialogHeight", self.form.height())
         self.form.hide()
+        return self.reject()
+
+    def reject(self):
+        self.form.hide()
+        del self.form
         return True
 
     def onUpArrow(self):
@@ -667,8 +684,11 @@ class BIM_Classification:
                 self.form.treeClass.setCurrentItem(self.form.treeClass.itemBelow(i))
 
     def onVisible(self, index):
-        PARAMS.SetInt("BimClassificationVisibleState", index)
+        PARAMS.SetInt("BimClassificationVisibleState", getattr(index, "value", index))
         self.updateObjects()
+
+    def onPrefix(self, index):
+        PARAMS.SetInt("BimClassificationSystemNamePrefix", getattr(index, "value", index))
 
     def getIcon(self,obj):
         """returns a QIcon for an object"""

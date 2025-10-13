@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Base/Console.h>
 #include <Base/Interpreter.h>
@@ -81,7 +80,7 @@ PyMOD_INIT_FUNC(PointsGui)
         PyMOD_Return(nullptr);
     }
 
-    Base::Console().log("Loading GUI of Points module... done\n");
+    Base::Console().log("Loading GUI of Points module… done\n");
     PyObject* mod = PointsGui::initModule();
 
     // instantiating the commands

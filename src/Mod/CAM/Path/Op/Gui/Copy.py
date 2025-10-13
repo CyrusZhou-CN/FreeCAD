@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ***************************************************************************
 # *   Copyright (c) 2014 Yorik van Havre <yorik@uncreated.net>              *
 # *                                                                         *
@@ -147,4 +146,4 @@ if FreeCAD.GuiUp:
     # register the FreeCAD command
     FreeCADGui.addCommand("CAM_Copy", CommandPathCopy())
 
-FreeCAD.Console.PrintLog("Loading PathCopy... done\n")
+FreeCAD.Console.PrintLog("Loading PathCopy… done\n")

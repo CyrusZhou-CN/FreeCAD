@@ -20,9 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <limits>
 # include <QApplication>
 # include <QDebug>
@@ -34,7 +31,6 @@
 # include <QStyle>
 # include <QStyleOptionSpinBox>
 # include <QToolTip>
-#endif
 
 #include <sstream>
 
@@ -52,6 +48,7 @@
 #include "Command.h"
 #include "Dialogs/DlgExpressionInput.h"
 #include "Tools.h"
+#include "Widgets.h"
 
 
 using namespace Gui;
@@ -572,10 +569,17 @@ void QuantitySpinBox::userInput(const QString & text)
     else {
         d->validInput = false;
 
-        // we have to emit here signal explicitly as validator will not pass
-        // this value further but we want to check it to disable isSet flag if
-        // it has been set previously
-        Q_EMIT valueChanged(d->quantity.getValue());
+        // only emit signal to reset EditableDatumLabel if the input is truly empty or has
+        // no meaningful number don't emit for partially typed numbers like "71." which are
+        // temporarily invalid
+        const QString trimmedText = text.trimmed();
+        static const QRegularExpression partialNumberRegex(QStringLiteral(R"([+-]?(\d+)?(\.,\d*)?)"));
+        if (trimmedText.isEmpty() || !trimmedText.contains(partialNumberRegex)) {
+            // we have to emit here signal explicitly as validator will not pass
+            // this value further but we want to check it to disable isSet flag if
+            // it has been set previously
+            Q_EMIT valueChanged(d->quantity.getValue());
+        }
         return;
     }
 
@@ -610,7 +614,7 @@ void QuantitySpinBox::openFormulaDialog()
 
     QPoint pos = mapToGlobal(QPoint(0,0));
     box->move(pos-box->expressionPosition());
-    box->setExpressionInputSize(width(), height());
+    Gui::adjustDialogPosition(box);
 
     Q_EMIT showFormulaDialog(true);
 }
@@ -734,14 +738,14 @@ bool QuantitySpinBox::isCheckedRangeInExpresion() const
 int QuantitySpinBox::decimals() const
 {
     Q_D(const QuantitySpinBox);
-    return d->quantity.getFormat().precision;
+    return d->quantity.getFormat().getPrecision();
 }
 
 void QuantitySpinBox::setDecimals(int v)
 {
     Q_D(QuantitySpinBox);
     Base::QuantityFormat f = d->quantity.getFormat();
-    f.precision = v;
+    f.setPrecision(v);
     d->quantity.setFormat(f);
     updateText(d->quantity);
 }

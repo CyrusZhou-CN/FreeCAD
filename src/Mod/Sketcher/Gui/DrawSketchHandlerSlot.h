@@ -73,8 +73,6 @@ public:
         : radius(1.0)
         , length(0.0)
         , angle(0.0)
-        , isHorizontal(false)
-        , isVertical(false)
         , firstCurve(0)
     {}
 
@@ -83,7 +81,27 @@ public:
 private:
     std::list<Gui::InputHint> getToolHints() const override
     {
-        return lookupSlotHints(state());
+        using enum Gui::InputHint::UserInput;
+
+        return Gui::lookupHints<SelectMode>(
+            state(),
+            {
+                {.state = SelectMode::SeekFirst,
+                 .hints =
+                     {
+                         {tr("%1 pick slot start point"), {MouseLeft}},
+                     }},
+                {.state = SelectMode::SeekSecond,
+                 .hints =
+                     {
+                         {tr("%1 pick slot end point"), {MouseLeft}},
+                     }},
+                {.state = SelectMode::SeekThird,
+                 .hints =
+                     {
+                         {tr("%1 pick slot width"), {MouseLeft}},
+                     }},
+            });
     }
 
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
@@ -103,7 +121,6 @@ private:
 
                 secondPoint = onSketchPos;
                 angle = (secondPoint - startPoint).Angle();
-                checkHorizontalVertical();
                 length = (secondPoint - startPoint).Length();
                 const double scale = 0.2;
                 radius = length * scale;  // radius chosen at 1/5 of length
@@ -177,6 +194,22 @@ private:
 
     void generateAutoConstraints() override
     {
+        // alignment constraints needs to apply to the line not the arc.
+        bool alignmentCstr = false;
+        for (auto& ac : sugConstraints[1]) {
+            if (ac.Type == Sketcher::Horizontal || ac.Type == Sketcher::Vertical
+                || ac.Type == Sketcher::Perpendicular || ac.Type == Sketcher::Parallel) {
+                ac.GeoId = firstCurve + 2;
+                alignmentCstr = true;
+            }
+        }
+
+        if (avoidRedundants && alignmentCstr) {
+            removeRedundantHorizontalVertical(getSketchObject(),
+                                              sugConstraints[0],
+                                              sugConstraints[1]);
+        }
+
         // add auto constraints for the center of 1st arc
         generateAutoConstraintsOnElement(sugConstraints[0],
                                          getHighestCurveIndex() - 3,
@@ -199,8 +232,6 @@ private:
 
         sugConstraints[0].clear();
         sugConstraints[1].clear();
-        isHorizontal = false;
-        isVertical = false;
     }
 
     std::string getToolName() const override
@@ -301,65 +332,13 @@ private:
                                   firstCurve,
                                   Sketcher::PointPos::none,
                                   firstCurve + 1);
-
-            // Prevent duplicate with Autocontraint
-            AutoConstraint lastCons = {Sketcher::None,
-                                       Sketcher::GeoEnum::GeoUndef,
-                                       Sketcher::PointPos::none};
-            if (!sugConstraints[1].empty()) {
-                lastCons = sugConstraints[1].back();
-            }
-
-            if (isHorizontal || isVertical) {
-                addToShapeConstraints(isHorizontal ? Sketcher::Horizontal : Sketcher::Vertical,
-                                      firstCurve + 3);
-
-
-                if (lastCons.Type == Sketcher::Horizontal || lastCons.Type == Sketcher::Vertical) {
-                    sugConstraints[1].pop_back();
-                }
-            }
-            else {
-                // If horizontal/vertical Autoconstraint suggested, applied it on first line
-                // (rather than last arc)
-                if (lastCons.Type == Sketcher::Horizontal || lastCons.Type == Sketcher::Vertical) {
-                    sugConstraints[1].back().GeoId = firstCurve + 2;
-                }
-            }
-        }
-    }
-
-    void checkHorizontalVertical()
-    {
-        using std::numbers::pi;
-
-        isHorizontal = false;
-        isVertical = false;
-
-        if (fmod(fabs(angle), pi) < Precision::Confusion()) {
-            isHorizontal = true;
-        }
-        else if (fmod(fabs(angle + pi / 2), pi) < Precision::Confusion()) {
-            isVertical = true;
         }
     }
 
 private:
     Base::Vector2d startPoint, secondPoint;
     double radius, length, angle;
-    bool isHorizontal, isVertical;
     int firstCurve;
-
-    struct HintEntry
-    {
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    static HintTable getSlotHintTable();
-    static std::list<Gui::InputHint> lookupSlotHints(SelectMode state);
 };
 
 template<>
@@ -426,7 +405,7 @@ void DSHSlotControllerBase::doEnforceControlParameters(Base::Vector2d& onSketchP
 
             if (thirdParam->isSet) {
                 length = thirdParam->getValue();
-                if (length < Precision::Confusion()) {
+                if (length < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                     unsetOnViewParameter(thirdParam.get());
                     return;
                 }
@@ -447,7 +426,7 @@ void DSHSlotControllerBase::doEnforceControlParameters(Base::Vector2d& onSketchP
             if (fifthParam->isSet) {
                 double radius = fifthParam->getValue();
 
-                if (radius < Precision::Confusion()) {
+                if (radius < Precision::Confusion() && fifthParam->hasFinishedEditing) {
                     unsetOnViewParameter(fifthParam.get());
                     return;
                 }
@@ -535,30 +514,30 @@ void DSHSlotController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHSlotController::doChangeDrawSketchHandlerMode()
+void DSHSlotController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::SeekThird);
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekThird);
             }
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
 
             if (fifthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::End);
+                handler->setNextState(SelectMode::End);
             }
         } break;
         default:
@@ -616,23 +595,16 @@ void DSHSlotController::addConstraints()
     };
 
     auto constraintAngle = [&]() {
-        if (!handler->isHorizontal && !handler->isVertical) {
+        ConstraintType lastType = handler->sugConstraints[1].empty()
+            ? ConstraintType::None
+            : handler->sugConstraints[1].back().Type;
+        if (lastType != Sketcher::Horizontal && lastType != Sketcher::Vertical
+            && lastType != Sketcher::Perpendicular && lastType != Sketcher::Parallel) {
             Gui::cmdAppObjectArgs(obj,
                                   "addConstraint(Sketcher.Constraint('Angle',%d,%d,%f)) ",
                                   Sketcher::GeoEnum::HAxis,
                                   firstCurve + 2,
                                   handler->angle);
-
-            // Prevent duplicate with Autocontraint
-            AutoConstraint lastCons = {Sketcher::None,
-                                       Sketcher::GeoEnum::GeoUndef,
-                                       Sketcher::PointPos::none};
-            if (!handler->sugConstraints[1].empty()) {
-                lastCons = handler->sugConstraints[1].back();
-                if (lastCons.Type == Sketcher::Horizontal || lastCons.Type == Sketcher::Vertical) {
-                    handler->AutoConstraints.pop_back();
-                }
-            }
         }
     };
 
@@ -704,29 +676,6 @@ void DSHSlotController::addConstraints()
                               firstCurve,
                               handler->radius);
     }
-}
-
-DrawSketchHandlerSlot::HintTable DrawSketchHandlerSlot::getSlotHintTable()
-{
-    return {// Structure: {SelectMode, {hints...}}
-            {SelectMode::SeekFirst,
-             {{QObject::tr("%1 pick slot start point"), {Gui::InputHint::UserInput::MouseLeft}}}},
-            {SelectMode::SeekSecond,
-             {{QObject::tr("%1 pick slot end point"), {Gui::InputHint::UserInput::MouseLeft}}}},
-            {SelectMode::SeekThird,
-             {{QObject::tr("%1 set slot radius"), {Gui::InputHint::UserInput::MouseMove}}}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerSlot::lookupSlotHints(SelectMode state)
-{
-    const auto slotHintTable = getSlotHintTable();
-
-    auto it =
-        std::find_if(slotHintTable.begin(), slotHintTable.end(), [state](const HintEntry& entry) {
-            return entry.state == state;
-        });
-
-    return (it != slotHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
 }
 
 }  // namespace SketcherGui

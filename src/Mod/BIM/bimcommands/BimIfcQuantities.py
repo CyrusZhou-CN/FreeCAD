@@ -70,11 +70,11 @@ class BIM_IfcQuantities:
         return {
             "Pixmap": "BIM_IfcQuantities",
             "MenuText": QT_TRANSLATE_NOOP(
-                "BIM_IfcQuantities", "Manage IFC quantities..."
+                "BIM_IfcQuantities", "Manage IFC Quantities"
             ),
             "ToolTip": QT_TRANSLATE_NOOP(
                 "BIM_IfcQuantities",
-                "Manage how the quantities of different elements of of your BIM project will be exported to IFC",
+                "Manages how the quantities of different elements of the BIM project will be exported to IFC",
             ),
         }
 
@@ -83,6 +83,12 @@ class BIM_IfcQuantities:
         return v
 
     def Activated(self):
+
+        # only raise the dialog if it is already open
+        if getattr(self, "form", None):
+            self.form.raise_()
+            return
+
         from PySide import QtGui
 
         # build objects list
@@ -121,8 +127,12 @@ class BIM_IfcQuantities:
         self.form.quantities.setItemDelegate(QtGui.QStyledItemDelegate())
         self.qmodel.dataChanged.connect(self.setChecked)
         self.form.buttonBox.accepted.connect(self.accept)
+        self.form.buttonBox.rejected.connect(self.reject)
         self.form.quantities.clicked.connect(self.onClickTree)
-        self.form.onlyVisible.stateChanged.connect(self.update)
+        if hasattr(self.form.onlyVisible, "checkStateChanged"): # Qt version >= 6.7.0
+            self.form.onlyVisible.checkStateChanged.connect(self.update)
+        else: # Qt version < 6.7.0
+            self.form.onlyVisible.stateChanged.connect(self.update)
         self.form.buttonRefresh.clicked.connect(self.update)
         self.form.buttonApply.clicked.connect(self.add_qto)
 
@@ -446,6 +456,13 @@ class BIM_IfcQuantities:
         if changed:
             FreeCAD.ActiveDocument.commitTransaction()
             FreeCAD.ActiveDocument.recompute()
+
+        return self.reject()
+
+    def reject(self):
+        self.form.hide()
+        del self.form
+        return True
 
     def setChecked(self, id1, id2):
         sel = self.form.quantities.selectedIndexes()

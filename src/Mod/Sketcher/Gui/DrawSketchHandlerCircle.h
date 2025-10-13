@@ -80,7 +80,48 @@ public:
 private:
     std::list<Gui::InputHint> getToolHints() const override
     {
-        return lookupCircleHints(constructionMethod(), state());
+        using State = std::pair<ConstructionMethod, SelectMode>;
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint = {tr("%1 switch mode"), {KeyM}};
+
+        return Gui::lookupHints<State>(
+            {constructionMethod(), state()},
+            {
+                // Center method
+                {.state = {ConstructionMethod::Center, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick circle center"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::Center, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+
+                // ThreeRim method
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick first rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick second rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+                {.state = {ConstructionMethod::ThreeRim, SelectMode::SeekThird},
+                 .hints =
+                     {
+                         {tr("%1 pick third rim point"), {MouseLeft}},
+                         switchModeHint,
+                     }},
+            });
     }
 
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
@@ -105,8 +146,8 @@ private:
             case SelectMode::SeekSecond: {
                 if (constructionMethod() == ConstructionMethod::ThreeRim) {
                     centerPoint = (onSketchPos - firstPoint) / 2 + firstPoint;
-                    secondPoint = onSketchPos;
                 }
+                secondPoint = onSketchPos;
 
                 radius = (onSketchPos - centerPoint).Length();
 
@@ -266,7 +307,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("Circle parameters"));
+        return QString(tr("Circle Parameters"));
     }
 
     bool canGoToNextMode() override
@@ -308,19 +349,6 @@ private:
     }
 
 private:
-    struct HintEntry
-    {
-        ConstructionMethod method;
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    static Gui::InputHint switchModeHint();
-    static HintTable getCircleHintTable();
-    static std::list<Gui::InputHint> lookupCircleHints(ConstructionMethod method, SelectMode state);
-
     Base::Vector2d centerPoint, firstPoint, secondPoint;
     double radius;
     bool isDiameter;
@@ -451,13 +479,12 @@ void DSHCircleControllerBase::doEnforceControlParameters(Base::Vector2d& onSketc
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
-            auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
             if (handler->constructionMethod()
                 == DrawSketchHandlerCircle::ConstructionMethod::Center) {
                 if (thirdParam->isSet) {
                     double radius = (handler->isDiameter ? 0.5 : 1) * thirdParam->getValue();
-                    if (radius < Precision::Confusion()) {
+                    if (radius < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                         unsetOnViewParameter(thirdParam.get());
                         return;
                     }
@@ -472,6 +499,7 @@ void DSHCircleControllerBase::doEnforceControlParameters(Base::Vector2d& onSketc
                 }
             }
             else {
+                auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
                 if (thirdParam->isSet) {
                     onSketchPos.x = thirdParam->getValue();
                 }
@@ -480,7 +508,7 @@ void DSHCircleControllerBase::doEnforceControlParameters(Base::Vector2d& onSketc
                     onSketchPos.y = fourthParam->getValue();
                 }
 
-                if (thirdParam->isSet && fourthParam->isSet
+                if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing
                     && (onSketchPos - handler->firstPoint).Length() < Precision::Confusion()) {
                     unsetOnViewParameter(thirdParam.get());
                     unsetOnViewParameter(fourthParam.get());
@@ -498,7 +526,7 @@ void DSHCircleControllerBase::doEnforceControlParameters(Base::Vector2d& onSketc
             if (sixthParam->isSet) {
                 onSketchPos.y = sixthParam->getValue();
             }
-            if (fifthParam->isSet && sixthParam->isSet
+            if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing
                 && areCollinear(handler->firstPoint, handler->secondPoint, onSketchPos)) {
                 unsetOnViewParameter(fifthParam.get());
                 unsetOnViewParameter(sixthParam.get());
@@ -533,7 +561,6 @@ void DSHCircleController::adaptParameters(Base::Vector2d onSketchPos)
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
-            auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
             if (handler->constructionMethod()
                 == DrawSketchHandlerCircle::ConstructionMethod::Center) {
@@ -557,6 +584,7 @@ void DSHCircleController::adaptParameters(Base::Vector2d onSketchPos)
                 thirdParam->setPoints(start, end);
             }
             else {
+                auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
                 if (!thirdParam->isSet) {
                     setOnViewParameterValue(OnViewParameter::Third, onSketchPos.x);
                 }
@@ -596,40 +624,42 @@ void DSHCircleController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHCircleController::doChangeDrawSketchHandlerMode()
+void DSHCircleController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
-                handler->setState(SelectMode::SeekSecond);
+            if (firstParam->hasFinishedEditing && secondParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::SeekSecond);
             }
         } break;
         case SelectMode::SeekSecond: {
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
-            auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
             if (thirdParam->hasFinishedEditing
                 && handler->constructionMethod()
                     == DrawSketchHandlerCircle::ConstructionMethod::Center) {
 
-                handler->setState(SelectMode::End);
+                handler->setNextState(SelectMode::End);
             }
-            else if (onViewParameters.size() > 3 && thirdParam->isSet && fourthParam->isSet
-                     && handler->constructionMethod()
-                         == DrawSketchHandlerCircle::ConstructionMethod::ThreeRim) {
+            else if (onViewParameters.size() > 3) {
+                auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
+                if ((thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing)
+                    && handler->constructionMethod()
+                        == DrawSketchHandlerCircle::ConstructionMethod::ThreeRim) {
 
-                handler->setState(SelectMode::SeekThird);
+                    handler->setNextState(SelectMode::SeekThird);
+                }
             }
         } break;
         case SelectMode::SeekThird: {
             auto& fifthParam = onViewParameters[OnViewParameter::Fifth];
             auto& sixthParam = onViewParameters[OnViewParameter::Sixth];
 
-            if (fifthParam->hasFinishedEditing || sixthParam->hasFinishedEditing) {
-                handler->setState(SelectMode::End);
+            if (fifthParam->hasFinishedEditing && sixthParam->hasFinishedEditing) {
+                handler->setNextState(SelectMode::End);
             }
         } break;
         default:
@@ -686,6 +716,11 @@ void DSHCircleController::addConstraints()
                                       firstCurve,
                                       handler->radius);
             }
+
+            const std::vector<Sketcher::Constraint*>& ConStr =
+                handler->sketchgui->getSketchObject()->Constraints.getValues();
+            int index = static_cast<int>(ConStr.size()) - 1;
+            handler->moveConstraint(index, prevCursorPosition);
         };
 
         // NOTE: if AutoConstraints is empty, we can add constraints directly without any diagnose.
@@ -740,54 +775,6 @@ void DSHCircleController::addConstraints()
     // No constraint possible for 3 rim circle.
 }
 
-Gui::InputHint DrawSketchHandlerCircle::switchModeHint()
-{
-    return {QObject::tr("%1 switch mode"), {Gui::InputHint::UserInput::KeyM}};
-}
-
-DrawSketchHandlerCircle::HintTable DrawSketchHandlerCircle::getCircleHintTable()
-{
-    const auto switchHint = switchModeHint();
-    return {
-        // Structure: {ConstructionMethod, SelectMode, {hints...}}
-
-        // Center method
-        {ConstructionMethod::Center,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick circle center"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::Center,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick rim point"), {Gui::InputHint::UserInput::MouseLeft}}, switchHint}},
-
-        // ThreeRim method
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick first rim point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick second rim point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::ThreeRim,
-         SelectMode::SeekThird,
-         {{QObject::tr("%1 pick third rim point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerCircle::lookupCircleHints(ConstructionMethod method,
-                                                                     SelectMode state)
-{
-    const auto circleHintTable = getCircleHintTable();
-
-    auto it = std::find_if(circleHintTable.begin(),
-                           circleHintTable.end(),
-                           [method, state](const HintEntry& entry) {
-                               return entry.method == method && entry.state == state;
-                           });
-
-    return (it != circleHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
-}
 }  // namespace SketcherGui
 
 

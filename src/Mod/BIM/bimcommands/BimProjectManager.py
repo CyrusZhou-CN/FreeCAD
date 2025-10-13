@@ -40,13 +40,18 @@ class BIM_ProjectManager:
 
         return {
             "Pixmap": "BIM_ProjectManager",
-            "MenuText": QT_TRANSLATE_NOOP("BIM_ProjectManager", "Setup project..."),
+            "MenuText": QT_TRANSLATE_NOOP("BIM_ProjectManager", "Setup Project"),
             "ToolTip": QT_TRANSLATE_NOOP(
-                "BIM_ProjectManager", "Create or manage a BIM project"
+                "BIM_ProjectManager", "Creates or manages a BIM project"
             ),
         }
 
     def Activated(self):
+
+        # only raise the dialog if it is already open
+        if getattr(self, "form", None):
+            self.form.raise_()
+            return
 
         import FreeCADGui
         import ArchBuildingPart
@@ -139,6 +144,7 @@ class BIM_ProjectManager:
     def reject(self):
 
         self.form.hide()
+        del self.form
         return True
 
     def accept(self):
@@ -400,7 +406,7 @@ class BIM_ProjectManager:
         if self.form.radioNative3.isChecked():
             from nativeifc import ifc_status
             ifc_status.set_button(True,True)
-        return True
+        return self.reject()
 
     def addGroup(self):
         from PySide import QtCore, QtGui
@@ -420,8 +426,8 @@ class BIM_ProjectManager:
 
         res = QtGui.QInputDialog.getText(
             None,
-            translate("BIM", "Save preset"),
-            translate("BIM", "Preset name:"),
+            translate("BIM", "Save Preset"),
+            translate("BIM", "Preset name"),
             QtGui.QLineEdit.Normal,
             "DefaultProject",
         )
@@ -469,10 +475,6 @@ class BIM_ProjectManager:
                 + "\n"
             )
             s += "groups=" + ";;".join(groups) + "\n"
-
-            s += "levelsWP=" + str(int(self.form.levelsWP.isChecked())) + "\n"
-            s += "levelsAxis=" + str(int(self.form.levelsAxis.isChecked())) + "\n"
-
             s += (
                 "addHumanFigure="
                 + str(int(self.form.addHumanFigure.isChecked()))
@@ -486,7 +488,7 @@ class BIM_ProjectManager:
 
     def fillPresets(self):
         self.form.presets.clear()
-        self.form.presets.addItem(translate("BIM", "User preset..."))
+        self.form.presets.addItem(translate("BIM", "User preset"))
         presetdir = os.path.join(FreeCAD.getUserAppDataDir(), "BIM")
         if os.path.isdir(presetdir):
             for f in os.listdir(presetdir):
@@ -563,10 +565,6 @@ class BIM_ProjectManager:
                             groups = s[1].split(";;")
                             self.form.groupsList.clear()
                             self.form.groupsList.addItems(groups)
-                        elif s[0] == "levelsWP":
-                            self.form.levelsWP.setChecked(bool(int(s[1])))
-                        elif s[0] == "levelsAxis":
-                            self.form.levelsAxis.setChecked(bool(int(s[1])))
                         elif s[0] == "addHumanFigure":
                             self.form.addHumanFigure.setChecked(bool(int(s[1])))
 
@@ -801,7 +799,7 @@ class BIM_ProjectManager:
                         )
 
             FreeCAD.Console.PrintMessage(
-                translate("BIM", "Template successfully loaded into current document")
+                translate("BIM", "Template successfully loaded into the current document")
                 + "\n"
             )
             self.reject()

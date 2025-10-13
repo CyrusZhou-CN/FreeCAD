@@ -24,16 +24,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <BRepAdaptor_Surface.hxx>
 #include <QAction>
 #include <QMessageBox>
 #include <TopoDS.hxx>
 #include <limits>
 #include <sstream>
-#endif
+
 
 #include <Gui/Command.h>
 #include <Gui/Selection/SelectionObject.h>
@@ -155,6 +153,9 @@ TaskFemConstraintTransform::TaskFemConstraintTransform(
 
     ui->lw_Rect->clear();
 
+    ui->lbl_info_2->setText(tr("Select single geometry of type: ")
+                            + QString::fromUtf8("<b>%1</b>").arg(tr("Face")));
+
     // Transformable surfaces
     Gui::Command::doCommand(Gui::Command::Doc,
                             TaskFemConstraintTransform::getSurfaceReferences(
@@ -200,7 +201,7 @@ TaskFemConstraintTransform::TaskFemConstraintTransform(
     if ((p == 0) && (!Objects.empty())) {
         QMessageBox::warning(this,
                              tr("Analysis feature update error"),
-                             tr("The transformable faces have changed. Please add only the "
+                             tr("The transformable faces have changed. Add only the "
                                 "transformable faces and remove non-transformable faces!"));
         return;
     }
@@ -323,8 +324,16 @@ void TaskFemConstraintTransform::addToSelection()
             QMessageBox::warning(this, tr("Selection error"), tr("Selected object is not a part!"));
             return;
         }
-        const std::vector<std::string>& subNames = it.getSubNames();
+
         App::DocumentObject* obj = it.getObject();
+        if (obj->getDocument() != pcConstraint->getDocument()) {
+            QMessageBox::warning(this,
+                                 tr("Selection error"),
+                                 tr("External object selection is not supported"));
+            return;
+        }
+
+        const std::vector<std::string>& subNames = it.getSubNames();
         if (subNames.size() != 1) {
             QMessageBox::warning(this,
                                  tr("Selection error"),

@@ -20,8 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QFuture>
 #include <QFutureWatcher>
 #include <QtConcurrentMap>
@@ -30,7 +28,6 @@
 #include <Precision.hxx>
 #include <math_Gauss.hxx>
 #include <math_Householder.hxx>
-#endif
 
 #include <Base/Sequencer.h>
 #include <Base/Tools.h>
@@ -964,7 +961,9 @@ void BSplineParameterCorrection::DoParameterCorrection(int iIter)
     double fMaxDiff = 0.0, fMaxScalar = 1.0;
     double fWeight = _fSmoothInfluence;
 
-    Base::SequencerLauncher seq("Calc surface...", iIter * _pvcPoints->Length());
+    Base::SequencerLauncher seq("Calc surface...",
+                                static_cast<size_t>(iIter)
+                                    * static_cast<size_t>(_pvcPoints->Length()));
 
     do {
         fMaxScalar = 1.0;
@@ -1273,8 +1272,10 @@ void BSplineParameterCorrection::CalcSmoothingTerms(bool bRecalc,
 {
     if (bRecalc) {
         Base::SequencerLauncher seq("Initializing...",
-                                    3 * _usUCtrlpoints * _usUCtrlpoints * _usVCtrlpoints
-                                        * _usVCtrlpoints);
+                                    static_cast<size_t>(3) * static_cast<size_t>(_usUCtrlpoints)
+                                        * static_cast<size_t>(_usUCtrlpoints)
+                                        * static_cast<size_t>(_usVCtrlpoints)
+                                        * static_cast<size_t>(_usVCtrlpoints));
         CalcFirstSmoothMatrix(seq);
         CalcSecondSmoothMatrix(seq);
         CalcThirdSmoothMatrix(seq);

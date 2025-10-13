@@ -20,7 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Base/Console.h>
 #include <Base/Interpreter.h>
@@ -99,7 +98,7 @@ PyMOD_INIT_FUNC(Sketcher)
     Sketcher::Measure ::initialize();
 
 
-    Base::Console().log("Loading Sketcher module... done\n");
+    Base::Console().log("Loading Sketcher module… done\n");
 
     PyMOD_Return(sketcherModule);
 }

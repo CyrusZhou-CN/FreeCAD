@@ -91,14 +91,10 @@ public:
     void activated() override
     {
         DrawSketchHandlerBSplineBase::activated();
-        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add sketch bSpline"));
+        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add Sketch B-Spline"));
     }
 
 private:
-    std::list<Gui::InputHint> getToolHints() const override
-    {
-        return lookupBSplineHints(constructionMethod(), state());
-    }
     void updateDataAndDrawToPosition(Base::Vector2d onSketchPos) override
     {
         prevCursorPosition = onSketchPos;
@@ -408,6 +404,54 @@ private:
         sugConstraints[1].clear();
     }
 
+    std::list<Gui::InputHint> getToolHints() const override
+    {
+        using State = std::pair<ConstructionMethod, SelectMode>;
+        using enum Gui::InputHint::UserInput;
+
+        const Gui::InputHint switchModeHint {tr("%1 switch mode"), {KeyM}};
+
+        return Gui::lookupHints<State>(
+            {constructionMethod(), state()},
+            {
+                // ControlPoints method
+                {.state = {ConstructionMethod::ControlPoints, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick first control point"), {MouseLeft}},
+                         switchModeHint,
+                         {tr("%1 + degree"), {KeyU}},
+                         {tr("%1 - degree"), {KeyJ}},
+                     }},
+                {.state = {ConstructionMethod::ControlPoints, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick next control point"), {MouseLeft}},
+                         {tr("%1 finish B-spline"), {MouseRight}},
+                         switchModeHint,
+                         {tr("%1 + degree"), {KeyU}},
+                         {tr("%1 - degree"), {KeyJ}},
+                     }},
+
+                // Knots method
+                {.state = {ConstructionMethod::Knots, SelectMode::SeekFirst},
+                 .hints =
+                     {
+                         {tr("%1 pick first knot"), {MouseLeft}},
+                         switchModeHint,
+                         {tr("%1 toggle periodic"), {KeyR}},
+                     }},
+                {.state = {ConstructionMethod::Knots, SelectMode::SeekSecond},
+                 .hints =
+                     {
+                         {tr("%1 pick next knot"), {MouseLeft}},
+                         {tr("%1 finish B-spline"), {MouseRight}},
+                         switchModeHint,
+                         {tr("%1 toggle periodic"), {KeyR}},
+                     }},
+            });
+    }
+
     std::string getToolName() const override
     {
         return "DSH_BSpline";
@@ -450,7 +494,7 @@ private:
 
     QString getToolWidgetText() const override
     {
-        return QString(QObject::tr("B-spline parameters"));
+        return QString(tr("B-Spline Parameters"));
     }
 
     bool canGoToNextMode() override
@@ -471,6 +515,12 @@ private:
             sketchgui->getSketchObject()->solve();
         }
         else if (state() == SelectMode::SeekSecond) {
+            // Prevent adding a new point if it's coincident with the last one.
+            if (!points.empty()
+                && (prevCursorPosition - getLastPoint()).Length() < Precision::Confusion()) {
+                return false;
+            }
+
             // We stay in SeekSecond unless the user closed the bspline.
             bool isClosed = false;
 
@@ -557,7 +607,7 @@ private:
     {
         Gui::Command::abortCommand();
         tryAutoRecomputeIfNotSolve(sketchgui->getSketchObject());
-        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add sketch B-spline"));
+        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add Sketch B-Spline"));
 
         SplineDegree = 3;
         geoIds.clear();
@@ -695,7 +745,14 @@ private:
         // Restart the command
         Gui::Command::abortCommand();
         tryAutoRecomputeIfNotSolve(sketchgui->getSketchObject());
-        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add sketch B-spline"));
+        Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add Sketch B-Spline"));
+
+        // Restore keyboard focus after command restart
+        if (Gui::Document* doc = Gui::Application::Instance->activeDocument()) {
+            if (Gui::MDIView* mdi = doc->getActiveView()) {
+                mdi->setFocus();
+            }
+        }
 
         // Add the necessary alignment geometries and constraints
         for (size_t i = 0; i < geoIds.size(); ++i) {
@@ -732,7 +789,9 @@ private:
         for (auto& point : points) {
             bsplinePoints3D.emplace_back(point.x, point.y, 0.0);
         }
-        if (onlyeditoutline) {
+
+        double len = (prevCursorPosition - getLastPoint()).Length();
+        if (onlyeditoutline && (points.empty() || len >= Precision::Confusion())) {
             bsplinePoints3D.emplace_back(prevCursorPosition.x, prevCursorPosition.y, 0.0);
         }
 
@@ -792,21 +851,6 @@ private:
             }
         }
     }
-
-private:
-    struct HintEntry
-    {
-        ConstructionMethod method;
-        SelectMode state;
-        std::list<Gui::InputHint> hints;
-    };
-
-    using HintTable = std::vector<HintEntry>;
-
-    static Gui::InputHint switchModeHint();
-    static HintTable getBSplineHintTable();
-    static std::list<Gui::InputHint> lookupBSplineHints(ConstructionMethod method,
-                                                        SelectMode state);
 };
 
 template<>
@@ -863,8 +907,9 @@ void DSHBSplineController::configureToolWidget()
         toolWidget->setNoticeText(
             QApplication::translate("TaskSketcherTool_c1_bspline", "Press F to undo last point."));
 
-        QStringList names = {QApplication::translate("Sketcher_CreateBSpline", "By control points"),
-                             QApplication::translate("Sketcher_CreateBSpline", "By knots")};
+        QStringList names = {
+            QApplication::translate("Sketcher_CreateBSpline", "From control points"),
+            QApplication::translate("Sketcher_CreateBSpline", "From knots")};
         toolWidget->setComboboxElements(WCombobox::FirstCombo, names);
 
         toolWidget->setCheckboxLabel(
@@ -991,7 +1036,7 @@ void DSHBSplineControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
 
             if (thirdParam->isSet) {
                 length = thirdParam->getValue();
-                if (length < Precision::Confusion()) {
+                if (length < Precision::Confusion() && thirdParam->hasFinishedEditing) {
                     unsetOnViewParameter(thirdParam.get());
                     return;
                 }
@@ -1012,7 +1057,7 @@ void DSHBSplineControllerBase::doEnforceControlParameters(Base::Vector2d& onSket
                 onSketchPos.y = prevPoint.y + sin(angle) * length;
             }
 
-            if (thirdParam->isSet && fourthParam->isSet
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing
                 && (onSketchPos - prevPoint).Length() < Precision::Confusion()) {
                 unsetOnViewParameter(thirdParam.get());
                 unsetOnViewParameter(fourthParam.get());
@@ -1079,14 +1124,14 @@ void DSHBSplineController::adaptParameters(Base::Vector2d onSketchPos)
 }
 
 template<>
-void DSHBSplineController::doChangeDrawSketchHandlerMode()
+void DSHBSplineController::computeNextDrawSketchHandlerMode()
 {
     switch (handler->state()) {
         case SelectMode::SeekFirst: {
             auto& firstParam = onViewParameters[OnViewParameter::First];
             auto& secondParam = onViewParameters[OnViewParameter::Second];
 
-            if (firstParam->isSet && secondParam->isSet) {
+            if (firstParam->hasFinishedEditing || secondParam->hasFinishedEditing) {
                 double x = firstParam->getValue();
                 double y = secondParam->getValue();
                 handler->onButtonPressed(Base::Vector2d(x, y));
@@ -1096,7 +1141,7 @@ void DSHBSplineController::doChangeDrawSketchHandlerMode()
             auto& thirdParam = onViewParameters[OnViewParameter::Third];
             auto& fourthParam = onViewParameters[OnViewParameter::Fourth];
 
-            if (thirdParam->hasFinishedEditing || fourthParam->hasFinishedEditing) {
+            if (thirdParam->hasFinishedEditing && fourthParam->hasFinishedEditing) {
                 handler->canGoToNextMode();  // its not going to next mode
 
                 unsetOnViewParameter(thirdParam.get());
@@ -1225,55 +1270,6 @@ void DSHBSplineController::addConstraints()
         constraintlengths(true);
     }
 }
-
-Gui::InputHint DrawSketchHandlerBSpline::switchModeHint()
-{
-    return {QObject::tr("%1 switch mode"), {Gui::InputHint::UserInput::KeyM}};
-}
-
-DrawSketchHandlerBSpline::HintTable DrawSketchHandlerBSpline::getBSplineHintTable()
-{
-    const auto switchHint = switchModeHint();
-    return {
-        // Structure: {ConstructionMethod, SelectMode, {hints...}}
-
-        // ControlPoints method
-        {ConstructionMethod::ControlPoints,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick first control point"), {Gui::InputHint::UserInput::MouseLeft}},
-          switchHint}},
-        {ConstructionMethod::ControlPoints,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick next control point"), {Gui::InputHint::UserInput::MouseLeft}},
-          {QObject::tr("%1 finish B-spline"), {Gui::InputHint::UserInput::MouseRight}},
-          switchHint}},
-
-        // Knots method
-        {ConstructionMethod::Knots,
-         SelectMode::SeekFirst,
-         {{QObject::tr("%1 pick first knot"), {Gui::InputHint::UserInput::MouseLeft}}, switchHint}},
-        {ConstructionMethod::Knots,
-         SelectMode::SeekSecond,
-         {{QObject::tr("%1 pick next knot"), {Gui::InputHint::UserInput::MouseLeft}},
-          {QObject::tr("%1 finish B-spline"), {Gui::InputHint::UserInput::MouseRight}},
-          switchHint}}};
-}
-
-std::list<Gui::InputHint> DrawSketchHandlerBSpline::lookupBSplineHints(ConstructionMethod method,
-                                                                       SelectMode state)
-{
-    const auto bSplineHintTable = getBSplineHintTable();
-
-    auto it = std::find_if(bSplineHintTable.begin(),
-                           bSplineHintTable.end(),
-                           [method, state](const HintEntry& entry) {
-                               return entry.method == method && entry.state == state;
-                           });
-
-    return (it != bSplineHintTable.end()) ? it->hints : std::list<Gui::InputHint> {};
-}
-// TODO: On pressing, say, W, modify last pole's weight
-// TODO: On pressing, say, M, modify next knot's multiplicity
 
 }  // namespace SketcherGui
 

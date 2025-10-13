@@ -20,8 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <Precision.hxx>
 #include <QDoubleValidator>
 #include <QLocale>
@@ -34,7 +32,6 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/nodes/SoMarkerSet.h>
 #include <Inventor/nodes/SoSeparator.h>
-#endif
 
 #include <App/Document.h>
 #include <Gui/Application.h>
@@ -286,10 +283,10 @@ void SketcherValidation::onFindReversedClicked()
             Gui::TranslatedUserWarning(
                 *sketch,
                 tr("Reversed external geometry"),
-                tr("%1 reversed external-geometry arcs were found. Their endpoints are"
-                   " encircled in 3D view.\n\n"
+                tr("%1 reversed external geometry arcs were found. Their endpoints are"
+                   " encircled in the 3D view.\n\n"
                    "%2 constraints are linking to the endpoints. The constraints have"
-                   " been listed in Report view (menu View -> Panels -> Report view).\n\n"
+                   " been listed in the report view (menu View -> Panels -> Report view).\n\n"
                    "Click \"Swap endpoints in constraints\" button to reassign endpoints."
                    " Do this only once to sketches created in FreeCAD older than v0.15")
                     .arg(points.size() / 2)
@@ -301,8 +298,8 @@ void SketcherValidation::onFindReversedClicked()
             Gui::TranslatedUserWarning(
                 *sketch,
                 tr("Reversed external geometry"),
-                tr("%1 reversed external-geometry arcs were found. Their endpoints are "
-                   "encircled in 3D view.\n\n"
+                tr("%1 reversed external geometry arcs were found. Their endpoints are "
+                   "encircled in the 3D view.\n\n"
                    "However, no constraints linking to the endpoints were found.")
                     .arg(points.size() / 2));
 
@@ -312,7 +309,7 @@ void SketcherValidation::onFindReversedClicked()
     else {
         Gui::TranslatedNotification(*sketch,
                                     tr("Reversed external geometry"),
-                                    tr("No reversed external-geometry arcs were found."));
+                                    tr("No reversed external geometry arcs were found."));
     }
 }
 
@@ -351,7 +348,7 @@ void SketcherValidation::onOrientLockEnableClicked()
         *sketch,
         tr("Constraint orientation locking"),
         tr("Orientation locking was enabled and recomputed for %1 constraints. The"
-           " constraints have been listed in Report view (menu View -> Panels ->"
+           " constraints have been listed in the report view (menu View → Panels →"
            " Report view).")
             .arg(n));
 
@@ -372,7 +369,7 @@ void SketcherValidation::onOrientLockDisableClicked()
         *sketch,
         tr("Constraint orientation locking"),
         tr("Orientation locking was disabled for %1 constraints. The"
-           " constraints have been listed in Report view (menu View -> Panels ->"
+           " constraints have been listed in the report view (menu View → Panels →"
            " Report view). Note that for all future constraints, the locking still"
            " defaults to ON.")
             .arg(n));
@@ -388,10 +385,10 @@ void SketcherValidation::onDelConstrExtrClicked()
 
     int reply = QMessageBox::question(
         this,
-        tr("Delete constraints to external geom."),
-        tr("You are about to delete ALL constraints that deal with external geometry. This is "
-           "useful to rescue a sketch with broken/changed links to external geometry. Are you sure "
-           "you want to delete the constraints?"),
+        tr("Delete Constraints to External Geometry"),
+        tr("This will delete all constraints that deal with external geometry. This is "
+           "useful to rescue a sketch with broken or changed links to external geometry. Delete "
+           "the constraints?"),
         QMessageBox::No | QMessageBox::Yes,
         QMessageBox::No);
     if (reply != QMessageBox::Yes) {

@@ -266,6 +266,7 @@ public Q_SLOTS:
 
     void showMessage (const QString & message, int timeout = 0);
     void setRightSideMessage(const QString & message);
+    bool isRightSideMessageVisible() const;
 
     // Set main window title
     void setWindowTitle(const QString& string);
@@ -318,7 +319,7 @@ private Q_SLOTS:
     /**
      * \internal
      */
-    void onSetActiveSubWindow(QWidget *window);
+    void setActiveSubWindow(QWidget*);
     /**
      * Activates the associated tab to this widget.
      */

@@ -21,15 +21,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <QAction>
 #include <QMenu>
 #include <QMessageBox>
 #include <QTimer>
 #include <TopExp.hxx>
 #include <TopTools_IndexedMapOfShape.hxx>
-#endif
+
 
 #include <App/Document.h>
 #include <Base/Console.h>
@@ -60,7 +58,7 @@ void ViewProviderGeomFillSurface::setupContextMenu(QMenu* menu,
                                                    const char* member)
 {
     QAction* act;
-    act = menu->addAction(QObject::tr("Edit filling"), receiver, member);
+    act = menu->addAction(QObject::tr("Edit Filling"), receiver, member);
     act->setData(QVariant((int)ViewProvider::Default));
     PartGui::ViewProviderSpline::setupContextMenu(menu, receiver, member);
 }

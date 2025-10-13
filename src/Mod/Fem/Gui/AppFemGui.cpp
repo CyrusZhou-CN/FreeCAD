@@ -21,7 +21,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
 #include <Base/Console.h>
 #include <Base/PyObjectBase.h>
@@ -104,7 +103,7 @@ PyMOD_INIT_FUNC(FemGui)
     }
 
     PyObject* mod = FemGui::initModule();
-    Base::Console().log("Loading GUI of Fem module... done\n");
+    Base::Console().log("Loading GUI of FEM module… done\n");
 
     // instantiating the commands
     CreateFemCommands();

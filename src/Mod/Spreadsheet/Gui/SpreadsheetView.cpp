@@ -20,15 +20,13 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <QPalette>
 #include <QPrintDialog>
 #include <QPrintPreviewDialog>
 #include <QPrinter>
 #include <QTextDocument>
-#endif
+
 
 #include <App/Application.h>
 #include <App/DocumentObject.h>
@@ -74,15 +72,9 @@ SheetView::SheetView(Gui::Document* pcDocument, App::DocumentObject* docObj, QWi
     ui = new Ui::Sheet();
     QWidget* w = new QWidget(this);
     ui->setupUi(w);
-    ui->zoomMinus->hide();
-    ui->zoomPlus->hide();
-    ui->zoomSlider->hide();
-    ui->zoomTB->hide();
-    ui->realSB_h->hide();
-    ui->realSB_v->hide();
     setCentralWidget(w);
 
-    // new ZoomableView(ui);
+    new ZoomableView(ui);
 
     delegate = new SpreadsheetDelegate(sheet);
     ui->cells->setModel(model);
@@ -154,6 +146,8 @@ SheetView::SheetView(Gui::Document* pcDocument, App::DocumentObject* docObj, QWi
     // Set document object to create auto completer
     ui->cellContent->setDocumentObject(sheet);
     ui->cellAlias->setDocumentObject(sheet);
+
+    ui->cellContent->setPrefix('=');
 }
 
 SheetView::~SheetView()
@@ -193,7 +187,7 @@ bool SheetView::onMsg(const char* pMsg, const char**)
     else if (strcmp("Std_Delete", pMsg) == 0) {
         std::vector<Range> ranges = selectedRanges();
         if (sheet->hasCell(ranges)) {
-            Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Clear cell(s)"));
+            Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Clear Cells"));
             std::vector<Range>::const_iterator i = ranges.begin();
             for (; i != ranges.end(); ++i) {
                 FCMD_OBJ_CMD(sheet, "clear('" << i->rangeString() << "')");
@@ -647,12 +641,11 @@ SheetViewPy::~SheetViewPy() = default;
 
 Py::Object SheetViewPy::repr()
 {
-    std::ostringstream s_out;
     if (!getSheetViewPtr()) {
         throw Py::RuntimeError("Cannot print representation of deleted object");
     }
-    s_out << "SheetView";
-    return Py::String(s_out.str());
+
+    return Py::String("SheetView");
 }
 
 // Since with PyCXX it's not possible to make a sub-class of MDIViewPy

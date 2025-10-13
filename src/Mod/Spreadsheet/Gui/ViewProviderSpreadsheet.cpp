@@ -21,13 +21,11 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <QMenu>
 #include <QString>
 #include <sstream>
-#endif
+
 
 #include <Gui/Application.h>
 #include <Gui/BitmapFactory.h>
@@ -106,7 +104,7 @@ void ViewProviderSheet::exportAsFile()
     QString selectedFilter;
     QString formatList = QObject::tr("CSV (*.csv *.CSV);;All (*)");
     QString fileName = Gui::FileDialog::getSaveFileName(Gui::getMainWindow(),
-                                                        QObject::tr("Export file"),
+                                                        QObject::tr("Export File"),
                                                         QString(),
                                                         formatList,
                                                         &selectedFilter);
@@ -131,7 +129,7 @@ void ViewProviderSheet::exportAsFile()
 void ViewProviderSheet::setupContextMenu(QMenu* menu, QObject* receiver, const char* member)
 {
     QAction* act;
-    act = menu->addAction(QObject::tr("Show spreadsheet"), receiver, member);
+    act = menu->addAction(QObject::tr("Show Spreadsheet"), receiver, member);
     act->setData(QVariant((int)ViewProvider::Default));
 }
 

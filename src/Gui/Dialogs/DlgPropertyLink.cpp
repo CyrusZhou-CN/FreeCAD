@@ -20,13 +20,10 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <algorithm>
 #include <sstream>
 #include <QStyledItemDelegate>
 #include <QTreeWidgetItem>
-#endif
 
 #include <App/Document.h>
 #include <App/DocumentObject.h>
@@ -173,8 +170,8 @@ DlgPropertyLink::formatObject(App::Document* ownerDoc, App::DocumentObject* obj,
         if (obj->Label.getStrValue() == obj->getNameInDocument()) {
             return QLatin1String(objName);
         }
-        return QStringLiteral("%1 (%2)").arg(QLatin1String(objName),
-                                                  QString::fromUtf8(obj->Label.getValue()));
+        return QStringLiteral("%1 (%2)").arg(QString::fromUtf8(obj->Label.getValue()),
+                                                  QLatin1String(objName));
     }
 
     auto sobj = obj->getSubObject(sub);
@@ -182,10 +179,10 @@ DlgPropertyLink::formatObject(App::Document* ownerDoc, App::DocumentObject* obj,
         return QStringLiteral("%1.%2").arg(QLatin1String(objName), QString::fromUtf8(sub));
     }
 
-    return QStringLiteral("%1.%2 (%3)")
-        .arg(QLatin1String(objName),
-             QString::fromUtf8(sub),
-             QString::fromUtf8(sobj->Label.getValue()));
+    return QStringLiteral("%1 (%2.%3)")
+        .arg(QString::fromUtf8(sobj->Label.getValue()),
+             QLatin1String(objName),
+             QString::fromUtf8(sub));
 }
 
 static inline bool isLinkSub(const QList<App::SubObjectT>& links)
@@ -386,14 +383,16 @@ void DlgPropertyLink::init(const App::DocumentObjectT& prop, bool tryFilter)
 
     // Try to select items corresponding to the current links inside the
     // property
-    ui->treeWidget->blockSignals(true);
-    for (auto& link : oldLinks) {
-        onSelectionChanged(Gui::SelectionChanges(SelectionChanges::AddSelection,
-                                                 link.getDocumentName(),
-                                                 link.getObjectName(),
-                                                 link.getSubName()));
+    {
+        QSignalBlocker blockTree(ui->treeWidget);
+        QSignalBlocker blockSelectionModel(ui->treeWidget->selectionModel());
+        for (auto& link : oldLinks) {
+            onSelectionChanged(Gui::SelectionChanges(SelectionChanges::AddSelection,
+                                                     link.getDocumentName(),
+                                                     link.getObjectName(),
+                                                     link.getSubName()));
+        }
     }
-    ui->treeWidget->blockSignals(false);
 
     // For link list type property, try to auto filter type
     if (tryFilter && isLinkList) {

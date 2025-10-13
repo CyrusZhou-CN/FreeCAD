@@ -174,6 +174,12 @@ class GuiExport ViewProviderWeakPtrT
 {
 public:
     explicit ViewProviderWeakPtrT(ViewProviderDocumentObject*);
+
+    ViewProviderWeakPtrT(ViewProviderWeakPtrT &&);
+    ViewProviderWeakPtrT &operator=(ViewProviderWeakPtrT &&);
+
+    FC_DISABLE_COPY(ViewProviderWeakPtrT);
+
     ~ViewProviderWeakPtrT();
 
     /*!
@@ -221,12 +227,6 @@ public:
 private:
     ViewProviderDocumentObject* _get() const noexcept;
 
-public:
-    // disable
-    ViewProviderWeakPtrT(const ViewProviderWeakPtrT&) = delete;
-    ViewProviderWeakPtrT& operator=(const ViewProviderWeakPtrT&) = delete;
-
-private:
     class Private;
     std::unique_ptr<Private> d;
 };
@@ -306,6 +306,11 @@ private:
     ViewProviderWeakPtrT ptr;
 };
 
+#ifdef _MSC_VER
+#  pragma warning(push)
+#  pragma warning(disable: 4251)  // MSVC emits warning C4251 too conservatively for our use-case
+#endif
+
 /**
  * The DocumentObserver class simplifies the step to write classes that listen
  * to what happens inside a document.
@@ -367,6 +372,10 @@ private:
     Connection connectDocumentRedo;
     Connection connectDocumentDelete;
 };
+
+#ifdef _MSC_VER
+#  pragma warning(pop)
+#endif
 
 } //namespace Gui
 

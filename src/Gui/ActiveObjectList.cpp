@@ -21,8 +21,6 @@
 *                                                                         *
 ***************************************************************************/
 
-#include "PreCompiled.h"
-
 #include <App/Document.h>
 #include <Gui/Application.h>
 #include <Gui/Document.h>
@@ -196,4 +194,16 @@ void ActiveObjectList::objectDeleted(const ViewProviderDocumentObject &vp)
             ++it;
         }
     }
+}
+
+App::DocumentObject* ActiveObjectList::getObjectWithExtension(const Base::Type extensionTypeId) const
+{
+    for (const auto& pair : _ObjectMap) {
+        App::DocumentObject* obj = getObject(pair.second, true);
+        if (obj && obj->hasExtension(extensionTypeId)) {
+            return obj;
+        }
+    }
+
+    return nullptr;
 }

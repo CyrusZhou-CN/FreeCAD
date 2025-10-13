@@ -21,11 +21,10 @@
  ***************************************************************************/
 
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <limits>
 # include <gp_Circ.hxx>
 # include <gp_Dir.hxx>
+# include <gp_Cylinder.hxx>
 # include <BRep_Builder.hxx>
 # include <Mod/Part/App/FCBRepAlgoAPI_Cut.h>
 # include <Mod/Part/App/FCBRepAlgoAPI_Fuse.h>
@@ -39,6 +38,7 @@
 # include <BRepOffsetAPI_MakePipeShell.hxx>
 # include <BRepPrimAPI_MakeRevol.hxx>
 # include <BRepAdaptor_Curve.hxx>
+# include <BRepAdaptor_Surface.hxx>
 # include <Geom_Circle.hxx>
 # include <GC_MakeArcOfCircle.hxx>
 # include <Geom_TrimmedCurve.hxx>
@@ -47,7 +47,6 @@
 # include <TopoDS_Face.hxx>
 # include <TopoDS_Wire.hxx>
 # include <TopExp.hxx>
-#endif
 
 #include <App/Application.h>
 #include <App/DocumentObject.h>
@@ -58,6 +57,7 @@
 #include <Mod/Part/App/FaceMakerCheese.h>
 #include <Mod/Part/App/TopoShapeMapper.h>
 #include <Mod/Part/App/TopoShapeOpCode.h>
+#include <Mod/Part/App/Tools.h>
 
 #include "FeatureHole.h"
 #include "json.hpp"
@@ -376,6 +376,7 @@ const std::vector<Hole::ThreadDescription> Hole::threadDescription[] =
         { "7/8",        22.225, 1.814,    20.40 },
         { "1",          25.400, 2.117,    23.25 },
         { "1 1/8",      28.575, 2.117,    26.50 },
+        { "1 3/16",     30.163, 1.588,    28.58 },
         { "1 1/4",      31.750, 2.117,    29.50 },
         { "1 3/8",      34.925, 2.117,    32.75 },
         { "1 1/2",      38.100, 2.117,    36.00 },
@@ -613,7 +614,7 @@ const double Hole::metricHoleDiameters[51][4] =
         { 150.0,  155.0,  158.0,  165.0}
 };
 
-const Hole::UTSClearanceDefinition Hole::UTSHoleDiameters[22] =
+const Hole::UTSClearanceDefinition Hole::UTSHoleDiameters[23] =
 {
     /* UTS clearance hole diameters according to ASME B18.2.8 */
     // for information: the norm defines a drill bit number (that is in turn standardized in another ASME norm).
@@ -641,6 +642,7 @@ const Hole::UTSClearanceDefinition Hole::UTSHoleDiameters[22] =
         { "7/8",   23.0, 23.8, 26.2 },
         { "1",     26.2, 27.8, 29.4 },
         { "1 1/8", 29.4, 31.0, 33.3 },
+        { "1 3/16", 31.0, 32.5, 34.9 },
         { "1 1/4", 32.5, 34.1, 36.5 },
         { "1 3/8", 36.5, 38.1, 40.9 },
         { "1 1/2", 39.7, 41.3, 44.0 }
@@ -925,6 +927,7 @@ void Hole::updateHoleCutParams()
             HoleCutCountersinkAngle.setReadOnly(false);
         }
 
+        // Tag: MIGRATION
         // handle since FreeCAD 0.18 deprecated types that were
         // removed after FreeCAD 0.20
         if (holeCutTypeStr == "Cheesehead (deprecated)") {
@@ -1407,7 +1410,7 @@ double Hole::getThreadProfileAngle()
 void Hole::findClosestDesignation()
 {
     int threadType = ThreadType.getValue();
-    const int numTypes = static_cast<int>(std::size(threadDescription)); 
+    const int numTypes = static_cast<int>(std::size(threadDescription));
 
     if (threadType < 0 || threadType >= numTypes) {
         throw Base::IndexError(QT_TRANSLATE_NOOP("Exception", "Thread type is invalid"));
@@ -1424,18 +1427,28 @@ void Hole::findClosestDesignation()
     if (oldSizeIndex >= 0 && oldSizeIndex < static_cast<int>(options.size())) {
         targetPitch = options[oldSizeIndex].pitch;
     }
-
-    // Scan all entries to find the minimal (Δdiameter, Δpitch) Euclidean distance
     size_t bestIndex = 0;
-    double bestMetric = std::numeric_limits<double>::infinity();
-
-    for (size_t i = 0; i < options.size(); ++i) {
-        double dDiff = options[i].diameter - diameter;
-        double pDiff = options[i].pitch - targetPitch;
-        double metric = std::hypot(dDiff, pDiff);
-        if (metric < bestMetric) {
-            bestMetric = metric;
-            bestIndex = i;
+    if (targetPitch == 0.0) {
+        // If pitch is unknown, prioritize the closest diameter
+        double bestDiameterDiff = std::numeric_limits<double>::infinity();
+        for (size_t i = 0; i < options.size(); ++i) {
+            double dDiff = std::abs(options[i].diameter - diameter);
+            if (dDiff < bestDiameterDiff) {
+                bestDiameterDiff = dDiff;
+                bestIndex = i;
+            }
+        }
+    } else {
+        // Scan all entries to find the minimal (Δdiameter, Δpitch) Euclidean distance
+        double bestMetric = std::numeric_limits<double>::infinity();
+        for (size_t i = 0; i < options.size(); ++i) {
+            double dDiff = options[i].diameter - diameter;
+            double pDiff = options[i].pitch - targetPitch;
+            double metric = std::hypot(dDiff, pDiff);
+            if (metric < bestMetric) {
+                bestMetric = metric;
+                bestIndex = i;
+            }
         }
     }
 
@@ -1708,7 +1721,6 @@ void Hole::onChanged(const App::Property* prop)
             if (isNotDimension) {
                 // if through all, set the depth accordingly
                 Depth.setValue(getThroughAllLength());
-                ThreadDepth.setValue(getThroughAllLength());
             }
             updateThreadDepthParam();
         }
@@ -1755,9 +1767,9 @@ void Hole::setupObject()
 
     Base::Reference<ParameterGrp> hGrp = App::GetApplication().GetUserParameter()
         .GetGroup("BaseApp")->GetGroup("Preferences")->GetGroup("Mod/PartDesign");
-    
+
     BaseProfileType.setValue(baseProfileOption_idxToBitmask(hGrp->GetInt("defaultBaseTypeHole", 1)));
-    
+
     ProfileBased::setupObject();
 }
 
@@ -1884,9 +1896,9 @@ static gp_Pnt toPnt(gp_Vec dir)
 App::DocumentObjectExecReturn* Hole::execute()
 {
     TopoShape profileshape =
-        getProfileShape(  Part::ShapeOption::NeedSubElement 
+        getProfileShape(  Part::ShapeOption::NeedSubElement
                         | Part::ShapeOption::ResolveLink
-                        | Part::ShapeOption::Transform 
+                        | Part::ShapeOption::Transform
                         | Part::ShapeOption::DontSimplifyCompound);
 
     // Find the base shape
@@ -1915,7 +1927,8 @@ App::DocumentObjectExecReturn* Hole::execute()
         /* Build the prototype hole */
 
         // Get vector normal to profile
-        Base::Vector3d  SketchVector = getProfileNormal();
+        Base::Vector3d SketchVector = guessNormalDirection(profileshape);
+
         if (Reversed.getValue())
             SketchVector *= -1.0;
 
@@ -2109,6 +2122,9 @@ App::DocumentObjectExecReturn* Hole::execute()
         }
         std::vector<TopoShape> holes;
         auto compound = findHoles(holes, profileshape, protoHole);
+        if (holes.empty()) {
+            return new App::DocumentObjectExecReturn(QT_TRANSLATE_NOOP("Exception", "Hole error: Finding axis failed"));
+        }
 
         TopoShape result(0);
 
@@ -2140,10 +2156,10 @@ App::DocumentObjectExecReturn* Hole::execute()
             retry = false;
         } catch (Standard_Failure & e) {
             FC_WARN(getFullName() << ": boolean operation with compound failed ("
-                                  << e.GetMessageString() << "), retry...");
+                                  << e.GetMessageString() << "), retry…");
         } catch (Base::Exception & e)  {
-            FC_WARN(getFullName() << ": boolean operation with compound failed ("
-                                  << e.what() << "), retry...");
+            FC_WARN(getFullName() << ": boolean operation with compound failed (" << e.what()
+                                  << "), retry…");
         }
 
         if (retry) {
@@ -2175,7 +2191,7 @@ App::DocumentObjectExecReturn* Hole::execute()
 
         if (!isSingleSolidRuleSatisfied(result.getShape())) {
             return new App::DocumentObjectExecReturn(
-                    QT_TRANSLATE_NOOP("Exception", "Result has multiple solids: that is not currently supported."));
+                    QT_TRANSLATE_NOOP("Exception", "Result has multiple solids: enable 'Allow Compound' in the active body."));
         }
         this->Shape.setValue(result);
 
@@ -2251,6 +2267,22 @@ gp_Vec Hole::computePerpendicular(const gp_Vec& zDir) const
     xDir.Normalize();
     return xDir;
 }
+Base::Vector3d Hole::guessNormalDirection(const TopoShape& profileshape) const
+{
+    // If trying to build a hole from a cylinder face
+    // we must try to find the direction ourselves as
+    // getProfileNormal() will try to find the normal to
+    // the middle of the face
+    if (profileshape.hasSubShape(TopAbs_FACE)) {
+        BRepAdaptor_Surface sf(TopoDS::Face(profileshape.getSubShape(TopAbs_FACE, 1)));
+
+        if (sf.GetType() == GeomAbs_Cylinder) {
+            return Base::convertTo<Base::Vector3d>(sf.Cylinder().Axis().Direction());
+        }
+    }
+
+    return getProfileNormal();
+}
 TopoShape Hole::findHoles(std::vector<TopoShape> &holes,
                           const TopoShape& profileshape,
                           const TopoDS_Shape& protoHole) const
@@ -2276,7 +2308,7 @@ TopoShape Hole::findHoles(std::vector<TopoShape> &holes,
     int baseProfileType = BaseProfileType.getValue();
 
     // Iterate over edges and filter out non-circle/non-arc types
-    if (baseProfileType & BaseProfileTypeOptions::OnCircles || 
+    if (baseProfileType & BaseProfileTypeOptions::OnCircles ||
        baseProfileType & BaseProfileTypeOptions::OnArcs) {
         for (const auto &profileEdge : profileshape.getSubTopoShapes(TopAbs_EDGE)) {
             TopoDS_Edge edge = TopoDS::Edge(profileEdge.getShape());
@@ -2290,7 +2322,7 @@ TopoShape Hole::findHoles(std::vector<TopoShape> &holes,
             if (!(baseProfileType & BaseProfileTypeOptions::OnCircles) && adaptor.IsClosed()) {
                 continue;
             }
-            
+
             // Filter for arcs
             if (!(baseProfileType & BaseProfileTypeOptions::OnArcs) && !adaptor.IsClosed()) {
                 continue;
@@ -2723,7 +2755,7 @@ int Hole::baseProfileOption_idxToBitmask(int index)
     }
      if (index == 2) {
         return PartDesign::Hole::BaseProfileTypeOptions::OnPoints;
-    } 
+    }
     Base::Console().error("Unexpected hole base profile combobox index: %i", index);
     return 0;
 }
@@ -2731,10 +2763,10 @@ int Hole::baseProfileOption_bitmaskToIdx(int bitmask)
 {
     if (bitmask == PartDesign::Hole::BaseProfileTypeOptions::OnCirclesArcs) {
         return 0;
-    } 
+    }
     if (bitmask == PartDesign::Hole::BaseProfileTypeOptions::OnPointsCirclesArcs) {
         return 1;
-    } 
+    }
     if (bitmask == PartDesign::Hole::BaseProfileTypeOptions::OnPoints) {
         return 2;
     }
@@ -2745,3 +2777,5 @@ int Hole::baseProfileOption_bitmaskToIdx(int bitmask)
 
 
 } // namespace PartDesign
+
+

@@ -20,15 +20,12 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 #include <cmath>
 
 #include <QGuiApplication>
 #include <QPainter>
 
 #include <Inventor/events/SoKeyboardEvent.h>
-#endif  // #ifndef _PreComp_
 
 #include <Base/Console.h>
 #include <Base/Exception.h>
@@ -150,9 +147,10 @@ ViewProviderSketchDrawSketchHandlerAttorney::setAngleSnapping(ViewProviderSketch
 
 inline void ViewProviderSketchDrawSketchHandlerAttorney::moveConstraint(ViewProviderSketch& vp,
                                                                         int constNum,
-                                                                        const Base::Vector2d& toPos)
+                                                                        const Base::Vector2d& toPos,
+                                                                        OffsetMode offset)
 {
-    vp.moveConstraint(constNum, toPos);
+    vp.moveConstraint(constNum, toPos, offset);
 }
 
 inline void
@@ -759,7 +757,7 @@ void DrawSketchHandler::createAutoConstraints(const std::vector<AutoConstraint>&
 
         if (createowncommand) {
             // Open the Command
-            Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add auto constraints"));
+            Gui::Command::openCommand(QT_TRANSLATE_NOOP("Command", "Add Auto-Constraints"));
         }
 
         // Iterate through constraints
@@ -1092,9 +1090,12 @@ void DrawSketchHandler::setAngleSnapping(bool enable, Base::Vector2d referencePo
                                                                   referencePoint);
 }
 
-void DrawSketchHandler::moveConstraint(int constNum, const Base::Vector2d& toPos)
+void DrawSketchHandler::moveConstraint(int constNum, const Base::Vector2d& toPos, OffsetMode offset)
 {
-    ViewProviderSketchDrawSketchHandlerAttorney::moveConstraint(*sketchgui, constNum, toPos);
+    ViewProviderSketchDrawSketchHandlerAttorney::moveConstraint(*sketchgui,
+                                                                constNum,
+                                                                toPos,
+                                                                offset);
 }
 
 void DrawSketchHandler::signalToolChanged() const

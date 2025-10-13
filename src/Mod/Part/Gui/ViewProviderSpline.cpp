@@ -20,8 +20,6 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
-#ifndef _PreComp_
 # include <QAction>
 # include <QMenu>
 
@@ -43,7 +41,6 @@
 # include <Inventor/nodes/SoCoordinate3.h>
 # include <Inventor/nodes/SoSeparator.h>
 # include <Inventor/nodes/SoSwitch.h>
-#endif
 
 #include <Gui/ActionFunction.h>
 #include <Gui/BitmapFactory.h>
@@ -91,7 +88,7 @@ void ViewProviderSplineExtension::extensionSetupContextMenu(QMenu* menu, QObject
 {
     // toggle command to display components
     Gui::ActionFunction* func = new Gui::ActionFunction(menu);
-    QAction* act = menu->addAction(QObject::tr("Show control points"));
+    QAction* act = menu->addAction(QObject::tr("Show Control Points"));
     act->setCheckable(true);
     act->setChecked(ControlPoints.getValue());
     func->toggle(act, [this](bool on) {
@@ -289,7 +286,8 @@ void ViewProviderSplineExtension::showControlPointsOfFace(const TopoDS_Face& fac
         return; // nothing to do
 
     SoCoordinate3 * coords = new SoCoordinate3;
-    coords->point.setNum(nCtU * nCtV + knots.size());
+    coords->point.setNum((static_cast<float>(nCtU) * static_cast<float>(nCtV)) +
+                         static_cast<float>(knots.size()));
 
     int index=0;
     SbVec3f* verts = coords->point.startEditing();

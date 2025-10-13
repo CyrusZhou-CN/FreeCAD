@@ -21,16 +21,14 @@
  *                                                                         *
  ***************************************************************************/
 
-#include "PreCompiled.h"
 
-#ifndef _PreComp_
 #include <BRepAdaptor_Surface.hxx>
 #include <QAction>
 #include <QMessageBox>
 #include <TopoDS.hxx>
 #include <limits>
 #include <sstream>
-#endif
+
 
 #include <App/Document.h>
 #include <Gui/Command.h>
@@ -166,10 +164,9 @@ void TaskFemConstraintBearing::onSelectionChanged(const Gui::SelectionChanges& m
             std::vector<std::string> SubElements = pcConstraint->References.getSubValues();
 
             if (!Objects.empty()) {
-                QMessageBox::warning(
-                    this,
-                    tr("Selection error"),
-                    tr("Please use only a single reference for bearing constraint"));
+                QMessageBox::warning(this,
+                                     tr("Selection error"),
+                                     tr("Use only a single reference for bearing constraint"));
                 return;
             }
             if (subName.substr(0, 4) != "Face") {
