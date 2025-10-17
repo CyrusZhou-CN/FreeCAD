@@ -379,6 +379,7 @@ def makeFace(wires, method=2, cleanup=False):
     """makeFace(wires): makes a face from a list of wires, finding which ones are holes"""
     # print("makeFace: start:", wires)
     import Part
+    import DraftGeomUtils
 
     if not isinstance(wires, list):
         if len(wires.Vertexes) < 3:
@@ -758,10 +759,7 @@ def download(url, force=False):
     """download(url,force=False): downloads a file from the given URL and saves it in the
     macro path. Returns the path to the saved file. If force is True, the file will be
     downloaded again evn if it already exists."""
-    try:
-        from urllib.request import urlopen
-    except ImportError:
-        from urllib2 import urlopen
+    from urllib.request import urlopen
     import os
 
     name = url.split("/")[-1]
