@@ -187,14 +187,16 @@ bool PropertyItemDelegate::eventFilter(QObject *o, QEvent *ev)
             auto parentEditor = qobject_cast<PropertyEditor*>(this->parent());
             if (parentEditor && parentEditor->activeEditor == checkBox) {
                 checkBox->toggle();
-                // Delay valueChanged to ensure proper recomputation
-                QTimer::singleShot(0, this, [this]() {
-                    valueChanged();
-                });
             }
         }
     }
     else if (ev->type() == QEvent::FocusOut) {
+        if (auto button = qobject_cast<Gui::ColorButton*>(o)) {
+            // Ignore the event if the ColorButton's modal dialog is active.
+            if (button->property("modal_dialog_active").toBool()) {
+                return true;
+            }
+        }
         auto parentEditor = qobject_cast<PropertyEditor*>(this->parent());
         if (auto* comboBox = qobject_cast<QComboBox*>(o)) {
             if (parentEditor && parentEditor->activeEditor == comboBox) {
