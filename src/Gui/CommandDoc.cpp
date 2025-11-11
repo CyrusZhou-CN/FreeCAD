@@ -980,7 +980,7 @@ bool StdCmdPrintPdf::isActive()
 // Std_Quit
 //===========================================================================
 
-DEF_STD_CMD(StdCmdQuit)
+DEF_STD_CMD_C(StdCmdQuit)
 
 StdCmdQuit::StdCmdQuit()
   :Command("Std_Quit")
@@ -993,6 +993,14 @@ StdCmdQuit::StdCmdQuit()
   sPixmap       = "application-exit";
   sAccel        = keySequenceToAccel(QKeySequence::Quit);
   eType         = NoTransaction;
+}
+
+Action * StdCmdQuit::createAction()
+{
+    Action *pcAction = Command::createAction();
+    pcAction->setMenuRole(QAction::QuitRole);
+
+    return pcAction;
 }
 
 void StdCmdQuit::activated(int iMsg)
