@@ -268,10 +268,9 @@ For stock from the base object&apos;s bounding box it means the extra material i
 
 Pour les bruts de boîtes et de cylindres, cela correspond à la taille réelle du brut créé.
 
-Pour les bruts provenant de la boîte englobante de l'objet de base, cela correspond au matériau
-supplémentaire dans toutes les directions. Un brut créé à partir d'un tel modèle obtiendra sa taille de
-base à partir de l'objet de base de la nouvelle tâche et appliquera les paramètres supplémentaires
-enregistrés.</translation>
+Pour les bruts provenant de la boîte englobante de l'objet de base, cela correspond au matériau supplémentaire dans toutes les
+directions. Un brut créé à partir d'un tel modèle obtiendra sa taille de base à partir de l'objet de base de la nouvelle tâche et appliquera
+les paramètres supplémentaires enregistrés.</translation>
     </message>
     <message>
       <location filename="../panels/DlgJobTemplateExport.ui" line="166"/>
@@ -2201,7 +2200,7 @@ Par défaut : 3 mm</translation>
     <message>
       <location filename="../panels/PageOpVcarveEdit.ui" line="72"/>
       <source>Discretization Deflection</source>
-      <translation>Écart de discrétisation</translation>
+      <translation>Déflexion de discrétisation</translation>
     </message>
     <message>
       <location filename="../panels/PageOpVcarveEdit.ui" line="79"/>
@@ -2462,9 +2461,8 @@ This can be helpful when almost all jobs will be processed by the same machine w
 
 If left empty no template will be preselected.</source>
       <translation>Modèle par défaut à sélectionner lors de la création d'une nouvelle tâche
-Cela peut être utile lorsque presque toutes les tâches seront traitées par la même machine avec une
-configuration similaire.
-Si ce champ est laissé vide, aucun modèle ne sera présélectionné.</translation>
+Cela peut être utile lorsque presque toutes les tâches seront traitées par la même machine avec une configuration similaire. Si ce
+champ est laissé vide, aucun modèle ne sera présélectionné.</translation>
     </message>
     <message>
       <location filename="../preferences/PathJob.ui" line="72"/>
@@ -2574,8 +2572,8 @@ Voir la politique d'enregistrement des fichiers ci-dessous pour savoir comment t
     <message>
       <location filename="../preferences/PathJob.ui" line="87"/>
       <source>Default value for new jobs, used for computing Paths. Smaller increases accuracy, but slows down computation</source>
-      <translation>Valeur par défaut pour les nouvelles tâches utilisée pour le calcul des parcours. Une valeur plus
-petite améliore la précision, mais ralentit le calcul.</translation>
+      <translation>Valeur par défaut pour les nouvelles tâches utilisée pour le calcul des parcours. Une valeur plus petite améliore la précision, mais
+ralentit le calcul.</translation>
     </message>
     <message>
       <location filename="../preferences/PathJob.ui" line="94"/>
@@ -4316,7 +4314,7 @@ Peut-être utile pour les opérations multi-profils, par exemple une poche avec 
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="95"/>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="410"/>
       <source>Set distance which will attempts to avoid unnecessary retractions</source>
-      <translation>Définir la distance qui tentera d'éviter les rétractions inutiles</translation>
+      <translation>Définit la distance qui tentera d'éviter les rétractions inutiles.</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="101"/>
@@ -4421,7 +4419,7 @@ Peut-être utile pour les opérations multi-profils, par exemple une poche avec 
     <message>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="79"/>
       <source>Deflection distance for arc interpolation</source>
-      <translation>Distance de déviation pour l'interpolation des arcs</translation>
+      <translation>Distance de déflexion pour l'interpolation des arcs</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/ZCorrect.py" line="88"/>
@@ -5500,7 +5498,7 @@ Rotationnel : balayage rotationnel sur le 4ᵉ axe.</translation>
     <message>
       <location filename="../../../Path/Op/Vcarve.py" line="333"/>
       <source>The deflection value for discretizing arcs</source>
-      <translation>La valeur de déflexion pour discrétiser les arcs</translation>
+      <translation>Valeur de la déflexion pour discrétiser les arcs</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Vcarve.py" line="343"/>
@@ -5917,7 +5915,7 @@ Rotationnel : balayage rotationnel sur le 4ᵉ axe.</translation>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="546"/>
       <source>Initializing LinearDeflection to 0.001 mm.</source>
-      <translation>Initialisation de la déviation linéaire à 0.001 mm</translation>
+      <translation>Initialisation de la déflexion linéaire à 0.001 mm</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="772"/>
@@ -6180,7 +6178,7 @@ Rotationnel : balayage rotationnel sur le 4ᵉ axe.</translation>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="501"/>
       <source>Initializing LinearDeflection to 0.0001 mm.</source>
-      <translation>Initialisation de la déviation linéaire à 0.0001 mm</translation>
+      <translation>Initialisation de la déflexion linéaire à 0.0001 mm</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="642"/>
@@ -6524,12 +6522,12 @@ les parois.</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="58"/>
       <source>Arc3d</source>
-      <translation>Arc3d</translation>
+      <translation>Arc 3D</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="59"/>
       <source>ArcZ</source>
-      <translation>ArcZ</translation>
+      <translation>Arc Z</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="60"/>
@@ -6539,12 +6537,12 @@ les parois.</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="61"/>
       <source>Line3d</source>
-      <translation>Ligne3d</translation>
+      <translation>Ligne 3D</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="62"/>
       <source>LineZ</source>
-      <translation>LigneZ</translation>
+      <translation>Ligne Z</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="63"/>
@@ -7076,7 +7074,7 @@ page wiki de l'atelier CAM.</translation>
     <message>
       <location filename="../../../Path/Main/Gui/JobCmd.py" line="58"/>
       <source>New Job</source>
-      <translation>Tâche</translation>
+      <translation>Créer une tâche</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/JobCmd.py" line="60"/>
@@ -7455,12 +7453,12 @@ Les valeurs seront converties dans l'unité souhaitée lors du post-traitement.<
     <message>
       <location filename="../../../Path/Main/Gui/SanityCmd.py" line="54"/>
       <source>Sanity Check</source>
-      <translation>Recherche des erreurs</translation>
+      <translation>Rechercher des erreurs</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/SanityCmd.py" line="56"/>
       <source>Checks the CAM job for common errors</source>
-      <translation>Vérifie la tâche CAM pour les erreurs courantes.</translation>
+      <translation>Recherche les erreurs courantes dans la tâche de CAM.</translation>
     </message>
   </context>
   <context>
@@ -7863,8 +7861,8 @@ Les valeurs seront converties dans l'unité souhaitée lors du post-traitement.<
       <location filename="../../../Path/Tool/library/ui/editor.py" line="411"/>
       <source>Are you sure you want to remove the library &apos;{0}&apos;?
 This will not delete the toolbits contained within it.</source>
-      <translation>Êtes-vous sûr de vouloir supprimer la bibliothèque &apos;{0}&apos;?
-Cela ne supprimera pas les outils contenus dans celle-ci.</translation>
+      <translation>Êtes-vous sûr de vouloir supprimer la bibliothèque « {0} » ?
+Cela ne supprimera pas les outils qu'elle contient.</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/library/ui/editor.py" line="430"/>
@@ -7876,7 +7874,7 @@ Cela ne supprimera pas les outils contenus dans celle-ci.</translation>
     <message>
       <location filename="../../../Path/Tool/library/ui/editor.py" line="431"/>
       <source>Failed to delete library &apos;{0}&apos;: {1}</source>
-      <translation>Impossible de supprimer la bibliothèque &apos;{0}&apos;: {1}</translation>
+      <translation>Impossible de supprimer la bibliothèque « {0} » : {1}</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/library/ui/editor.py" line="471"/>
@@ -7961,7 +7959,7 @@ du disque et de toutes les bibliothèques qui les contiennent.</translation>
     <message>
       <location filename="../../../PathScripts/PathUtils.py" line="219"/>
       <source>Selected faces should be vertical</source>
-      <translation>Les faces sélectionnées doivent être verticales</translation>
+      <translation>Les faces sélectionnées doivent être verticales.</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/toolbit/models/tap.py" line="75"/>
@@ -9431,7 +9429,7 @@ Grand diamètre</translation>
     <message>
       <location filename="../../../Path/Tool/toolbit/ui/cmd.py" line="53"/>
       <source>New Toolbit</source>
-      <translation>Nouvel outil</translation>
+      <translation>Nouvel outil coupant</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/toolbit/ui/cmd.py" line="54"/>

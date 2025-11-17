@@ -483,7 +483,7 @@ de manera que s'evita l'autointersecció.</translation>
     <message>
       <location filename="../../CommandBody.cpp" line="541"/>
       <source>Set Tip</source>
-      <translation>Establir punta</translation>
+      <translation>Establir punt de treball</translation>
     </message>
     <message>
       <location filename="../../CommandBody.cpp" line="542"/>

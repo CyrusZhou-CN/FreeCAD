@@ -9501,7 +9501,7 @@ Questo non eliminerà gli utensili contenuti al suo interno.</translation>
     <message>
       <location filename="../../../InitGui.py" line="176"/>
       <source>Simulators</source>
-      <translation type="unfinished">Simulators</translation>
+      <translation>Simulatori</translation>
     </message>
   </context>
 </TS>

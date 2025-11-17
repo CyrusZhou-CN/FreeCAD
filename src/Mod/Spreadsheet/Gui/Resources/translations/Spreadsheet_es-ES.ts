@@ -963,7 +963,7 @@ Por defecto: %V = %A
     <message>
       <location filename="../../DlgSettings.ui" line="119"/>
       <source>Import/Export Settings</source>
-      <translation>Opciones para Importar/Exportar</translation>
+      <translation>Configuración de importación/exportación</translation>
     </message>
     <message>
       <location filename="../../DlgSettings.ui" line="32"/>

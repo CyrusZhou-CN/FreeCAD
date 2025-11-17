@@ -24,7 +24,7 @@
     <message>
       <location filename="../../../CommandInsertLink.py" line="81"/>
       <source>Component</source>
-      <translation type="unfinished">Component</translation>
+      <translation>Komponent</translation>
     </message>
   </context>
   <context>
@@ -177,7 +177,7 @@
     <message>
       <location filename="../../../JointObject.py" line="1531"/>
       <source>Select 2 elements from 2 separate parts</source>
-      <translation type="unfinished">Select 2 elements from 2 separate parts</translation>
+      <translation>Vælg 2 elementer fra 2 forskellige komponenter</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="1696"/>
@@ -342,7 +342,7 @@
     <message>
       <location filename="../../../CommandCreateSimulation.py" line="488"/>
       <source>Enter your formula...</source>
-      <translation type="unfinished">Enter your formula...</translation>
+      <translation>Indtast din formel...</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateSimulation.py" line="541"/>
@@ -515,7 +515,7 @@ SLOPE defines the steepness of the transition between 0 and H1 and H2 to 0 about
     <message>
       <location filename="../../../JointObject.py" line="225"/>
       <source>This is the local coordinate system within Reference1's object that will be used for the joint</source>
-      <translation type="unfinished">This is the local coordinate system within Reference1's object that will be used for the joint</translation>
+      <translation>Dette er det lokale koordinatsystem for objektet Reference1, der vil blive brugt til forbindelse</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="237"/>
@@ -531,7 +531,7 @@ SLOPE defines the steepness of the transition between 0 and H1 and H2 to 0 about
     <message>
       <location filename="../../../JointObject.py" line="271"/>
       <source>This is the local coordinate system within Reference2's object that will be used for the joint</source>
-      <translation type="unfinished">This is the local coordinate system within Reference2's object that will be used for the joint</translation>
+      <translation>Dette er det lokale koordinatsystem for objektet Reference2, der vil blive brugt til forbindelse</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="283"/>
@@ -547,47 +547,47 @@ SLOPE defines the steepness of the transition between 0 and H1 and H2 to 0 about
     <message>
       <location filename="../../../JointObject.py" line="317"/>
       <source>Enable the minimum length limit of the joint</source>
-      <translation type="unfinished">Enable the minimum length limit of the joint</translation>
+      <translation>Aktiver minimumslængden for forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="330"/>
       <source>Enable the maximum length limit of the joint</source>
-      <translation type="unfinished">Enable the maximum length limit of the joint</translation>
+      <translation>Aktiver maksimumslængden for forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="343"/>
       <source>Enable the minimum angle limit of the joint</source>
-      <translation type="unfinished">Enable the minimum angle limit of the joint</translation>
+      <translation>Aktiver minimumsvinklen for forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="356"/>
       <source>Enable the maximum angle limit of the joint</source>
-      <translation type="unfinished">Enable the maximum angle limit of the joint</translation>
+      <translation>Aktiver maksimumsvinklen for forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="386"/>
       <source>This is the angle of the joint. It is used only by the Angle joint.</source>
-      <translation type="unfinished">This is the angle of the joint. It is used only by the Angle joint.</translation>
+      <translation>Dette er vinklen for forbindelsen. Den bruges kun for vinkelforbindelser.</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="422"/>
       <source>This is the minimum limit for the length between both coordinate systems (along their z-axis)</source>
-      <translation type="unfinished">This is the minimum limit for the length between both coordinate systems (along their z-axis)</translation>
+      <translation>Dette er den minimale afstand mellem de to koordinatsystemer (langs deres z-akser)</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="434"/>
       <source>This is the maximum limit for the length between both coordinate systems (along their z-axis)</source>
-      <translation type="unfinished">This is the maximum limit for the length between both coordinate systems (along their z-axis)</translation>
+      <translation>Dette er den maksimale afstand mellem de to koordinatsystemer (langs deres z-akser)</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="446"/>
       <source>This is the minimum limit for the angle between both coordinate systems (between their x-axis)</source>
-      <translation type="unfinished">This is the minimum limit for the angle between both coordinate systems (between their x-axis)</translation>
+      <translation>Dette er den minimale vinkel mellem de to koordinatsystemer (mellem deres x-akser)</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="458"/>
       <source>This is the maximum limit for the angle between both coordinate systems (between their x-axis)</source>
-      <translation type="unfinished">This is the maximum limit for the angle between both coordinate systems (between their x-axis)</translation>
+      <translation>Dette er den maksimale vinkel mellem de to koordinatsystemer (mellem deres x-akser)</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="259"/>
@@ -597,12 +597,12 @@ SLOPE defines the steepness of the transition between 0 and H1 and H2 to 0 about
     <message>
       <location filename="../../../JointObject.py" line="477"/>
       <source>The first object of the joint</source>
-      <translation type="unfinished">The first object of the joint</translation>
+      <translation>Første objekt i forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="497"/>
       <source>The second object of the joint</source>
-      <translation type="unfinished">The second object of the joint</translation>
+      <translation>Det andet objekt i forbindelsen</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="398"/>
@@ -931,7 +931,7 @@ The files are named "runPreDrag.asmt" and "dragging.log" and are located in the 
     <message>
       <location filename="../../ViewProviderAssembly.cpp" line="1595"/>
       <source>Solver failed to converge</source>
-      <translation type="unfinished">Solver failed to converge</translation>
+      <translation>Løsningen konvergerer ikke</translation>
     </message>
     <message>
       <location filename="../../ViewProviderAssembly.cpp" line="1601"/>
@@ -1235,7 +1235,7 @@ The files are named "runPreDrag.asmt" and "dragging.log" and are located in the 
     <message>
       <location filename="../../../CommandCreateAssembly.py" line="49"/>
       <source>New Assembly</source>
-      <translation type="unfinished">New Assembly</translation>
+      <translation>Ny samling</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateAssembly.py" line="54"/>
@@ -1376,7 +1376,7 @@ The files are named "runPreDrag.asmt" and "dragging.log" and are located in the 
     <message>
       <location filename="../../../CommandCreateJoint.py" line="274"/>
       <source>Creates an angle joint that fixes the angle between the Z-axis of the selected coordinate systems</source>
-      <translation type="unfinished">Creates an angle joint that fixes the angle between the Z-axis of the selected coordinate systems</translation>
+      <translation>Opretter en vinkelforbindelse, der fastholder vinklen mellem Z-akserne for de valgte koordinatsystemer</translation>
     </message>
   </context>
   <context>
@@ -1415,7 +1415,7 @@ The files are named "runPreDrag.asmt" and "dragging.log" and are located in the 
     <message>
       <location filename="../../../CommandCreateJoint.py" line="372"/>
       <source>&lt;p&gt;Creates a belt joint that links 2 rotating objects together. They will have the same rotation direction.&lt;/p&gt;&lt;p&gt;Select the same coordinate systems as the revolute joints.&lt;/p&gt;</source>
-      <translation type="unfinished">&lt;p&gt;Creates a belt joint that links 2 rotating objects together. They will have the same rotation direction.&lt;/p&gt;&lt;p&gt;Select the same coordinate systems as the revolute joints.&lt;/p&gt;</translation>
+      <translation>&lt;p&gt;Opretter en bælteforbindelse, der forbinder 2 roterende objekter. De to objekter vil få samme rotationsretning.&lt;/p&gt;&lt;p&gt;Vælg de samme koordinatsystemer som revolute samlinger.&lt;/p&gt;</translation>
     </message>
   </context>
   <context>

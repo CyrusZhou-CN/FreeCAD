@@ -1109,7 +1109,7 @@ Ez csak akkor hatásos, ha a 'Csak folyamat' bekapcsolt</translation>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="149"/>
       <source>Number of tasks</source>
-      <translation type="unfinished">Number of tasks</translation>
+      <translation>Feladatok száma</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="159"/>
@@ -1119,12 +1119,12 @@ Ez csak akkor hatásos, ha a 'Csak folyamat' bekapcsolt</translation>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="175"/>
       <source>Threads per task</source>
-      <translation type="unfinished">Threads per task</translation>
+      <translation>Szálak a feladathoz</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="185"/>
       <source>Number of threads per task. Take effect if Elmer uses OpenMP.</source>
-      <translation type="unfinished">Number of threads per task. Take effect if Elmer uses OpenMP.</translation>
+      <translation>Szálak száma feladatonként. Hatásos, ha Elmer OpenMP-t használ.</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="206"/>
@@ -7983,7 +7983,7 @@ Hagyja üresen az alapértelmezett Python futtatható fájl használatához</tra
     <message>
       <location filename="../ui/SolverElmer.ui" line="14"/>
       <source>Solver Elmer Control</source>
-      <translation type="unfinished">Solver Elmer Control</translation>
+      <translation>Elmer megoldó ellenőrző</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="20"/>
@@ -8013,7 +8013,7 @@ Hagyja üresen az alapértelmezett Python futtatható fájl használatához</tra
     <message>
       <location filename="../ui/SolverElmer.ui" line="82"/>
       <source>Simulation type</source>
-      <translation type="unfinished">Simulation type</translation>
+      <translation>Szimuláció típusa</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="122"/>

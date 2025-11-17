@@ -2637,7 +2637,9 @@ w geometrii kształtu, zamiast wewnątrz właściwości Umiejscowienie.</transla
     <message>
       <location filename="../../DlgExportStep.ui" line="123"/>
       <source>Uncheck this to skip invisible objects when exporting, which is useful for CADs that do not support invisibility STEP styling.</source>
-      <translation>Usuń zaznaczenie tej opcji, aby podczas eksportowania pominąć niewidoczne obiekty, co jest przydatne w przypadku programów CAD, które nie obsługują stylizacji niewidocznych obiektów STEP.</translation>
+      <translation>Usuń zaznaczenie tej opcji, aby podczas eksportowania pominąć niewidoczne obiekty, 
+co jest przydatne w przypadku programów CAD, 
+które nie obsługują stylizacji niewidocznych obiektów STEP.</translation>
     </message>
     <message>
       <location filename="../../DlgExportStep.ui" line="14"/>

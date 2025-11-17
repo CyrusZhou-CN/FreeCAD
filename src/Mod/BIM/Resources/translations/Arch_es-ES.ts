@@ -1818,7 +1818,7 @@ Utilice el nombre del proyecto IFC para obtener todas las entidades IFC de ese p
     <message>
       <location filename="../ui/dialogLibrary.ui" line="49"/>
       <source>Links the selected object in the current document. Only works in offline mode.</source>
-      <translation type="unfinished">Links the selected object in the current document. Only works in offline mode.</translation>
+      <translation>Enlaza el objeto seleccionado en el documento actual. Solo funciona en el modo sin conexión.</translation>
     </message>
     <message>
       <location filename="../ui/dialogLibrary.ui" line="63"/>
@@ -2537,7 +2537,7 @@ p, li { white-space: pre-wrap; }
     <message>
       <location filename="../ui/preferences-arch.ui" line="14"/>
       <source>General Settings</source>
-      <translation type="unfinished">General Settings</translation>
+      <translation>Configuración general</translation>
     </message>
     <message>
       <location filename="../ui/preferences-arch.ui" line="20"/>
@@ -4032,7 +4032,7 @@ The default template is located at:
     <message>
       <location filename="../../bimcommands/BimProfile.py" line="79"/>
       <source>Profile settings</source>
-      <translation>Ajustes del perfil</translation>
+      <translation>Configuración del perfil</translation>
     </message>
     <message>
       <location filename="../../bimcommands/BimProfile.py" line="136"/>
@@ -4785,7 +4785,7 @@ If Run = 0 then the run is calculated so that the height is the same as the rela
     <message>
       <location filename="../../ArchGrid.py" line="493"/>
       <source>Add Column</source>
-      <translation type="unfinished">Add Column</translation>
+      <translation>Añadir columna</translation>
     </message>
     <message>
       <location filename="../../ArchGrid.py" line="494"/>
@@ -8205,17 +8205,17 @@ Creación de Edificio cancelada.</translation>
     <message>
       <location filename="../../ArchWall.py" line="205"/>
       <source>This overrides Width attribute to set width of each segment of wall.  Disabled and ignored if Base object (ArchSketch) provides Widths information, with getWidths() method  (If a value is zero, the value of 'Width' will be followed).  [ENHANCEMENT by ArchSketch] GUI 'Edit Wall Segment Width' Tool is provided in external SketchArch Add-on to let users to set the values interactively.  'Toponaming-Tolerant' if ArchSketch is used in Base (and SketchArch Add-on is installed).  Warning : Not 'Toponaming-Tolerant' if just Sketch is used.</source>
-      <translation>Esto anula el atributo Ancho para establecer el ancho de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de Anchos mediante el método getWidths() (Si un valor es cero, se seguirá el valor de 'Ancho'). [MEJORA por ArchSketch] La herramienta GUI 'Editar Ancho del Segmento de Muro' está disponible en el complemento externo SketchArch para permitir a los usuarios establecer los valores de manera interactiva. 'Tolerante a Toponaming' si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es 'Tolerante a Toponaming' si solo se usa Sketch.</translation>
+      <translation>Esto sustituye el atributo Ancho para establecer el ancho de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de anchuras mediante el método getWidths() (si un valor es cero, se seguirá el valor de "Ancho"). [MEJORA por ArchSketch] La herramienta de la interfaz "Editar ancho del segmento de muro" está disponible en el complemento externo SketchArch para permitir a los usuarios establecer los valores de manera interactiva. "Tolerante a Toponaming" si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es "Tolerante a Toponaming" si solo se usa Sketch.</translation>
     </message>
     <message>
       <location filename="../../ArchWall.py" line="216"/>
       <source>This overrides Align attribute to set align of each segment of wall.  Disabled and ignored if Base object (ArchSketch) provides Aligns information, with getAligns() method  (If a value is not 'Left, Right, Center', the value of 'Align' will be followed).  [ENHANCEMENT by ArchSketch] GUI 'Edit Wall Segment Align' Tool is provided in external SketchArch Add-on to let users to set the values interactively.  'Toponaming-Tolerant' if ArchSketch is used in Base (and SketchArch Add-on is installed).  Warning : Not 'Toponaming-Tolerant' if just Sketch is used.</source>
-      <translation>Esto anula el atributo Alineación para establecer la alineación de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de Alineaciones mediante el método getAligns() (Si un valor no es 'Izquierda, Derecha, Centro', se seguirá el valor de 'Alineación'). [MEJORA por ArchSketch] La herramienta GUI 'Editar Alineación del Segmento de Muro' está disponible en el complemento externo SketchArch para permitir a los usuarios establecer los valores de manera interactiva. 'Tolerante a Toponaming' si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es 'Tolerante a Toponaming' si solo se usa Sketch.</translation>
+      <translation>Esto sustituye el atributo Alineación para establecer la alineación de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de Alineaciones mediante el método getAligns() (si un valor no es "Izquierda, Derecha, Centro", se seguirá el valor de "Alineación"). [MEJORA por ArchSketch] La herramienta de interfaz "Editar alineación del segmento de muro" está disponible en el complemento externo SketchArch para permitir a los usuarios establecer los valores de manera interactiva. "Tolerante a Toponaming" si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es "Tolerante a Toponaming" si solo se usa Sketch.</translation>
     </message>
     <message>
       <location filename="../../ArchWall.py" line="227"/>
       <source>This overrides Offset attribute to set offset of each segment of wall.  Disabled and ignored if Base object (ArchSketch) provides Offsets information, with getOffsets() method  (If a value is zero, the value of 'Offset' will be followed).  [ENHANCED by ArchSketch] GUI 'Edit Wall Segment Offset' Tool is provided in external Add-on ('SketchArch') to let users to select the edges interactively.  'Toponaming-Tolerant' if ArchSketch is used in Base (and SketchArch Add-on is installed).  Warning : Not 'Toponaming-Tolerant' if just Sketch is used. Property is ignored if Base ArchSketch provided the selected edges. </source>
-      <translation>Esto anula el atributo Desfase para establecer el desfase de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de Desfases mediante el método getOffsets() (Si un valor es cero, se seguirá el valor de 'Desfase'). [MEJORADO por ArchSketch] La herramienta GUI 'Editar Desfase del Segmento de Muro' está disponible en el complemento externo ('SketchArch') para permitir a los usuarios seleccionar los bordes de manera interactiva. 'Tolerante a Toponaming' si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es 'Tolerante a Toponaming' si solo se usa Sketch. La propiedad se ignora si el ArchSketch Base proporcionó los bordes seleccionados. </translation>
+      <translation>Esto sobrescribe el atributo Desfase para establecer el desfase de cada segmento del muro. Desactivado e ignorado si el objeto Base (ArchSketch) proporciona información de Desfases mediante el método getOffsets() (si un valor es cero, se seguirá el valor de "Desfase"). [MEJORADO por ArchSketch] La herramienta de interfaz "Editar Desfase del Segmento de Muro" está disponible en el complemento externo ("SketchArch") para permitir a los usuarios seleccionar los bordes de manera interactiva. "Tolerante a Toponaming" si se usa ArchSketch en la Base (y el complemento SketchArch está instalado). Advertencia: No es "Tolerante a Toponaming" si solo se usa Sketch. La propiedad se ignora si el ArchSketch Base proporcionó los bordes seleccionados. </translation>
     </message>
     <message>
       <location filename="../../ArchWall.py" line="260"/>
@@ -8388,7 +8388,7 @@ Creación de Edificio cancelada.</translation>
     <message>
       <location filename="../../InitGui.py" line="444"/>
       <source>&amp;Snapping</source>
-      <translation>&amp;Ajustar</translation>
+      <translation>&amp;Ajuste</translation>
     </message>
     <message>
       <location filename="../../InitGui.py" line="445"/>
@@ -9145,7 +9145,7 @@ CTRL+/ para alternar entre modo automático y manual</translation>
     <message>
       <location filename="../../InitGui.py" line="675"/>
       <source>Snapping</source>
-      <translation>Ajustar</translation>
+      <translation>Ajuste</translation>
     </message>
     <message>
       <location filename="../../bimcommands/BimBox.py" line="153"/>
@@ -9656,12 +9656,12 @@ CTRL+/ para alternar entre modo automático y manual</translation>
     <message>
       <location filename="../../bimcommands/BimMaterial.py" line="107"/>
       <source>Search Objects</source>
-      <translation type="unfinished">Search Objects</translation>
+      <translation>Buscar objetos</translation>
     </message>
     <message>
       <location filename="../../bimcommands/BimMaterial.py" line="108"/>
       <source>Searches for objects in the tree</source>
-      <translation type="unfinished">Searches for objects in the tree</translation>
+      <translation>Busca objetos en el árbol</translation>
     </message>
     <message>
       <location filename="../../bimcommands/BimMaterial.py" line="129"/>
@@ -9893,78 +9893,78 @@ CTRL+/ para alternar entre modo automático y manual</translation>
       <translation>Consejo: Los resultados se ven mejor en el modo de modo de alambres (menú Vistas -&gt; Estilo de dibujo -&gt; Modo de alambres)</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="294"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="295"/>
       <source>Building Layout</source>
       <translation>Layout de Edificio</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="320"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="321"/>
       <source>Building Outline</source>
       <translation>Contorno de Edificio</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="339"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="340"/>
       <source>Building Label</source>
       <translation>Etiqueta de Edificio</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="349"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="350"/>
       <source>Vertical Axes</source>
       <translation>Ejes verticales</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="360"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="361"/>
       <source>Horizontal Axes</source>
       <translation>Ejes horizontales</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="370"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="371"/>
       <source>Axes</source>
       <translation>Ejes</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="384"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="385"/>
       <source>Level</source>
       <translation>Nivel</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="445"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="446"/>
       <source>Save Preset</source>
       <translation>Guardar ajuste preestablecido</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="446"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="447"/>
       <source>Preset name</source>
       <translation>Nombre de ajuste preestablecido</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="495"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="496"/>
       <source>User preset</source>
       <translation>Preconfiguración de usuario</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="785"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="786"/>
       <source>Template successfully loaded into the current document</source>
       <translation type="unfinished">Template successfully loaded into the current document</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="430"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="431"/>
       <location filename="../../nativeifc/ifc_viewproviders.py" line="156"/>
       <source>New Group</source>
       <translation>Nuevo grupo</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="649"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="650"/>
       <source>Save template file</source>
       <translation>Guardar archivo de plantilla</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="658"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="659"/>
       <source>Template saved successfully</source>
       <translation>Plantilla guardada exitosamente</translation>
     </message>
     <message>
-      <location filename="../../bimcommands/BimProjectManager.py" line="671"/>
+      <location filename="../../bimcommands/BimProjectManager.py" line="672"/>
       <source>Open template file</source>
       <translation>Abrir archivo de plantilla</translation>
     </message>
@@ -11421,7 +11421,7 @@ Please check your FreeCAD installation or provide a custom template under menu P
     <message>
       <location filename="../ui/dialogSetup.ui" line="176"/>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;How many small squares between each main line of the grid. Location in preferences: &lt;span style=" font-weight:600;"&gt;Draft &amp;gt; Grid and snapping &amp;gt; Main line every&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-      <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Número de cuadrados pequeños entre cada línea principal de la cuadrícula. Ubicación en preferencias: &lt;span style=" font-weight:600;"&gt;Draft &amp;gt; Cuadricula y ajuste &amp;gt; Líneas principales cada&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+      <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Cuántos cuadrados pequeños hay entre cada línea principal de la cuadrícula. Ubicación en preferencias: &lt;span style=" font-weight:600;"&gt;Draft &amp;gt; Cuadrícula y ajuste &amp;gt; Líneas principales cada&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
       <location filename="../ui/dialogSetup.ui" line="179"/>

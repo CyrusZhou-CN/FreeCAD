@@ -9500,7 +9500,7 @@ Això no suprimirà les broques que conté.</translation>
     <message>
       <location filename="../../../InitGui.py" line="176"/>
       <source>Simulators</source>
-      <translation type="unfinished">Simulators</translation>
+      <translation>Simuladors</translation>
     </message>
   </context>
 </TS>

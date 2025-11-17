@@ -45,9 +45,9 @@ Las propiedades dependientes se calculan a continuación.</translation>
       <source>The angle of the cone that forms a hull around the helix.
 Non-zero values turn the helix into a conical spiral.
 Positive values make the radius grow, negative shrinks.</source>
-      <translation type="unfinished">The angle of the cone that forms a hull around the helix.
-Non-zero values turn the helix into a conical spiral.
-Positive values make the radius grow, negative shrinks.</translation>
+      <translation>El ángulo del cono que forma un casco alrededor de la hélice.
+Los valores distintos de cero convierten la hélice en una espiral cónica.
+Los valores positivos aumentan el radio, los negativos lo disminuyen.</translation>
     </message>
     <message>
       <location filename="../../../App/FeatureHelix.cpp" line="95"/>
@@ -375,12 +375,12 @@ para que se evite la auto intersección.</translation>
     <message>
       <location filename="../../Command.cpp" line="190"/>
       <source>Datum Line</source>
-      <translation type="unfinished">Datum Line</translation>
+      <translation>Línea de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="191"/>
       <source>Creates a new datum line</source>
-      <translation type="unfinished">Creates a new datum line</translation>
+      <translation>Crear una nueva línea de referencia</translation>
     </message>
   </context>
   <context>
@@ -434,7 +434,7 @@ para que se evite la auto intersección.</translation>
     <message>
       <location filename="../../Command.cpp" line="2000"/>
       <source>Mirrors the selected features or active body</source>
-      <translation type="unfinished">Mirrors the selected features or active body</translation>
+      <translation>Refleja las características seleccionadas o el cuerpo activo</translation>
     </message>
   </context>
   <context>
@@ -555,12 +555,12 @@ para que se evite la auto intersección.</translation>
     <message>
       <location filename="../../Command.cpp" line="162"/>
       <source>Datum Plane</source>
-      <translation type="unfinished">Datum Plane</translation>
+      <translation>Plano de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="163"/>
       <source>Creates a new datum plane</source>
-      <translation type="unfinished">Creates a new datum plane</translation>
+      <translation>Crear un nuevo plano de referencia</translation>
     </message>
   </context>
   <context>
@@ -591,12 +591,12 @@ para que se evite la auto intersección.</translation>
     <message>
       <location filename="../../Command.cpp" line="218"/>
       <source>Datum Point</source>
-      <translation type="unfinished">Datum Point</translation>
+      <translation>Punto de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="219"/>
       <source>Creates a new datum point</source>
-      <translation type="unfinished">Creates a new datum point</translation>
+      <translation>Crear un nuevo punto de referencia</translation>
     </message>
   </context>
   <context>
@@ -3215,7 +3215,7 @@ measured along the specified direction</source>
     <message>
       <location filename="../../Command.cpp" line="144"/>
       <source>There is no active body. Please activate a body before inserting a datum entity.</source>
-      <translation type="unfinished">There is no active body. Please activate a body before inserting a datum entity.</translation>
+      <translation>No hay ningún cuerpo activo. Por favor, active un cuerpo antes de insertar una entidad de referencia.</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="408"/>
@@ -3565,7 +3565,7 @@ For legacy documents with Part Design objects lacking a body, use the migrate fu
     <message>
       <location filename="../../ViewProviderDatum.cpp" line="227"/>
       <source>Edit Datum</source>
-      <translation type="unfinished">Edit Datum</translation>
+      <translation>Editar referencia</translation>
     </message>
     <message>
       <location filename="../../ViewProviderDressUp.cpp" line="87"/>
@@ -4150,7 +4150,7 @@ Sólo disponible para agujeros sin rosca</translation>
     <message>
       <location filename="../../TaskHoleParameters.ui" line="191"/>
       <source>Check to override the values predefined by the 'Type'</source>
-      <translation>Marcar para reemplazar los valores predefinidos por el 'Tipo'</translation>
+      <translation>Marcar para sustituir los valores predefinidos por el "Tipo"</translation>
     </message>
     <message>
       <location filename="../../TaskHoleParameters.ui" line="306"/>
@@ -4403,7 +4403,7 @@ más de 90: radio de agujero más grande en la parte inferior</translation>
     <message>
       <location filename="../../../WizardShaft/WizardShaft.py" line="104"/>
       <source>The Plot add-on is not installed. Install it to enable this feature.</source>
-      <translation type="unfinished">The Plot add-on is not installed. Install it to enable this feature.</translation>
+      <translation>El complemento de gráficas no está instalado. Instálelo para activar esta característica.</translation>
     </message>
   </context>
   <context>
@@ -5195,12 +5195,12 @@ No se permiten interceptar entidades de croquis o múltiples caras en un croquis
     <message>
       <location filename="../../Command.cpp" line="2380"/>
       <source>Create Datum</source>
-      <translation type="unfinished">Create Datum</translation>
+      <translation>Crear referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2381"/>
       <source>Creates a datum object or local coordinate system</source>
-      <translation type="unfinished">Creates a datum object or local coordinate system</translation>
+      <translation>Crea un objeto de referencia o sistema de coordenadas local</translation>
     </message>
   </context>
   <context>
@@ -5208,12 +5208,12 @@ No se permiten interceptar entidades de croquis o múltiples caras en un croquis
     <message>
       <location filename="../../Command.cpp" line="2415"/>
       <source>Create Datum</source>
-      <translation type="unfinished">Create Datum</translation>
+      <translation>Crear referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2416"/>
       <source>Creates a datum object or local coordinate system</source>
-      <translation type="unfinished">Creates a datum object or local coordinate system</translation>
+      <translation>Crea un objeto de referencia o sistema de coordenadas local</translation>
     </message>
   </context>
   <context>
@@ -5355,17 +5355,17 @@ No se permiten interceptar entidades de croquis o múltiples caras en un croquis
     <message>
       <location filename="../../ViewProviderDatum.cpp" line="113"/>
       <source>Datum Plane Parameters</source>
-      <translation type="unfinished">Datum Plane Parameters</translation>
+      <translation>Parámetros del plano de referencia</translation>
     </message>
     <message>
       <location filename="../../ViewProviderDatum.cpp" line="118"/>
       <source>Datum Line Parameters</source>
-      <translation type="unfinished">Datum Line Parameters</translation>
+      <translation>Parámetros de la línea de referencia</translation>
     </message>
     <message>
       <location filename="../../ViewProviderDatum.cpp" line="123"/>
       <source>Datum Point Parameters</source>
-      <translation type="unfinished">Datum Point Parameters</translation>
+      <translation>Parámetros del punto de referencia</translation>
     </message>
     <message>
       <location filename="../../ViewProviderDatum.cpp" line="128"/>
@@ -5447,12 +5447,12 @@ No se permiten interceptar entidades de croquis o múltiples caras en un croquis
     <message>
       <location filename="../../TaskPatternParameters.cpp" line="216"/>
       <source>Select a direction reference (edge, face, datum line)</source>
-      <translation type="unfinished">Select a direction reference (edge, face, datum line)</translation>
+      <translation>Seleccione una referencia de dirección (borde, cara, línea de dato)</translation>
     </message>
     <message>
       <location filename="../../TaskPatternParameters.cpp" line="296"/>
       <source>Invalid selection. Select an edge, planar face, or datum line.</source>
-      <translation type="unfinished">Invalid selection. Select an edge, planar face, or datum line.</translation>
+      <translation>Selección inválida. Seleccione un borde, cara plana, o línea de datos.</translation>
     </message>
   </context>
 </TS>

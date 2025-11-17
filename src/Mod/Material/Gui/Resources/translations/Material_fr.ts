@@ -824,7 +824,7 @@ S'ils ne sont pas cochés, ils seront triés par leur nom.</translation>
     <message>
       <location filename="../../MaterialsEditor.ui" line="205"/>
       <source>Toggle Favorite</source>
-      <translation>Activer/désactiver les favoris</translation>
+      <translation>Ajouter/supprimer des favoris</translation>
     </message>
     <message>
       <location filename="../../MaterialsEditor.ui" line="164"/>
@@ -988,7 +988,7 @@ S'ils ne sont pas cochés, ils seront triés par leur nom.</translation>
     <message>
       <location filename="../../ModelSelect.ui" line="162"/>
       <source>Toggle Favorites</source>
-      <translation>Activer/désactiver les favoris</translation>
+      <translation>Ajouter/supprimer des favoris</translation>
     </message>
     <message>
       <location filename="../../ModelSelect.ui" line="172"/>

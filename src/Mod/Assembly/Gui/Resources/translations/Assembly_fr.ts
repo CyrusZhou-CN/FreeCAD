@@ -262,7 +262,7 @@ s'assurer que le fichier est &lt;b&gt;ouvert dans la session en cours&lt;/b&gt;
     <message>
       <location filename="../../../CommandCreateBom.py" line="373"/>
       <source>Sub-assembly children: the children of sub-assemblies will be included in the bill of materials</source>
-      <translation>Enfants des sous-ensembles : les enfants des sous-ensembles seront inclus dans la nomenclature.</translation>
+      <translation>Enfants des sous-ensembles : les enfants des sous-ensembles seront inclus à la nomenclature.</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateBom.py" line="379"/>
@@ -272,7 +272,8 @@ s'assurer que le fichier est &lt;b&gt;ouvert dans la session en cours&lt;/b&gt;
     <message>
       <location filename="../../../CommandCreateBom.py" line="385"/>
       <source>Only parts: adds only part containers and sub-assemblies to the bill of materials. Solids like Part Design bodies, fasteners, or Part workbench primitives are ignored.</source>
-      <translation>Pièces uniquement : ajoute uniquement les conteneurs de pièces et les sous-ensembles à la nomenclature. Les solides tels que les corps de PartDesign, les fixations ou les primitives de l'atelier Part sont ignorés.</translation>
+      <translation>Pièces uniquement : ajoute uniquement les conteneurs de pièces et les sous-ensembles à la nomenclature. Les solides tels que les
+corps de PartDesign, les fixations ou les primitives de l'atelier Part sont ignorés.</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateBom.py" line="387"/>
@@ -282,7 +283,10 @@ s'assurer que le fichier est &lt;b&gt;ouvert dans la session en cours&lt;/b&gt;
     <message>
       <location filename="../../../CommandCreateBom.py" line="400"/>
       <source>Custom columns : 'Description' and other custom columns you add by clicking on 'Add column' will not have their data overwritten. If a column name starts with '.' followed by a property name (e.g. '.Length'), it will be auto-populated with that property value. These columns can be renamed by double-clicking or pressing F2 (renaming a column will currently lose its data).</source>
-      <translation>Colonnes personnalisées : les données des colonnes « Description » et autres colonnes personnalisées que vous ajoutez en cliquant sur « Ajouter une colonne » ne seront pas écrasées. Si le nom d'une colonne commence par « . » suivi d'un nom de propriété (par exemple « .Length »), elle sera automatiquement remplie avec la valeur de cette propriété. Ces colonnes peuvent être renommées en double-cliquant dessus ou en appuyant sur F2 (le renommage d'une colonne entraînera la perte de ses données).</translation>
+      <translation>Colonnes personnalisées : les données des colonnes « Description » et autres colonnes personnalisées que vous ajoutez en cliquant
+sur « Ajouter une colonne » ne seront pas écrasées. Si le nom d'une colonne commence par « . » suivi d'un nom de propriété (par
+exemple « .Length »), elle sera automatiquement remplie avec la valeur de cette propriété. Ces colonnes peuvent être renommées en
+double-cliquant dessus ou en appuyant sur F2 (le renommage d'une colonne entraînera la perte de ses données).</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateBom.py" line="406"/>
@@ -487,7 +491,7 @@ SLOPE définit la pente de la transition entre 0 et H1 et H2 à 0 à T1 et T2 re
     <message>
       <location filename="../../../InitGui.py" line="203"/>
       <source>Grounding</source>
-      <translation>Verrouillage</translation>
+      <translation>Blocage</translation>
     </message>
     <message>
       <location filename="../../../InitGui.py" line="230"/>
@@ -520,7 +524,7 @@ SLOPE définit la pente de la transition entre 0 et H1 et H2 à 0 à T1 et T2 re
     <message>
       <location filename="../../../JointObject.py" line="225"/>
       <source>This is the local coordinate system within Reference1's object that will be used for the joint</source>
-      <translation>Système de coordonnées local dans l'objet Reference1 qui sera utilisé pour la liaison</translation>
+      <translation>Système de coordonnées local dans l'objet Reference1 qui sera utilisé pour la liaison.</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="237"/>
@@ -536,7 +540,7 @@ SLOPE définit la pente de la transition entre 0 et H1 et H2 à 0 à T1 et T2 re
     <message>
       <location filename="../../../JointObject.py" line="271"/>
       <source>This is the local coordinate system within Reference2's object that will be used for the joint</source>
-      <translation>Système de coordonnées locales de l'objet Reference2 qui sera utilisé pour la liaison</translation>
+      <translation>Système de coordonnées locales de l'objet Reference2 qui sera utilisé pour la liaison.</translation>
     </message>
     <message>
       <location filename="../../../JointObject.py" line="283"/>
@@ -870,12 +874,12 @@ Les fichiers sont nommés « runPreDrag.asmt » et « dragging.log » et se trou
     <message>
       <location filename="../preferences/Assembly.ui" line="59"/>
       <source>Ground first part</source>
-      <translation>Verrouiller la première pièce</translation>
+      <translation>Bloquer la première pièce</translation>
     </message>
     <message>
       <location filename="../preferences/Assembly.ui" line="66"/>
       <source>When inserting the first part in the assembly, it can be grounded automatically</source>
-      <translation>Lors de l'insertion de la première pièce dans l'assemblage, celle-ci peut être verrouillée automatiquement.</translation>
+      <translation>Lors de l'insertion de la première pièce dans l'assemblage, celle-ci peut être bloquée automatiquement.</translation>
     </message>
     <message>
       <location filename="../preferences/Assembly.ui" line="23"/>
@@ -1019,7 +1023,7 @@ Sélectionner les mêmes systèmes de coordonnées que pour les liaisons pivots.
     <message>
       <location filename="../panels/TaskAssemblyCreateView.ui" line="56"/>
       <source>Explode Radially</source>
-      <translation>Explosez radialement</translation>
+      <translation>Exploser radialement</translation>
     </message>
     <message>
       <location filename="../panels/TaskAssemblyCreateBom.ui" line="23"/>
@@ -1049,7 +1053,8 @@ Sélectionner les mêmes systèmes de coordonnées que pour les liaisons pivots.
     <message>
       <location filename="../panels/TaskAssemblyCreateBom.ui" line="58"/>
       <source>Adds only part containers and sub-assemblies to the bill of materials. Solids (e.g. bodies, fasteners, primitives) are excluded.</source>
-      <translation>Ajoute uniquement les conteneurs de pièces et les sous-ensembles à la nomenclature. Les solides (par exemple, les corps, les fixations, les primitives) sont exclus.</translation>
+      <translation>Ajoute uniquement les conteneurs de pièces et les sous-ensembles à la nomenclature. Les solides (par exemple, les corps, les
+fixations, les primitives) sont exclus.</translation>
     </message>
     <message>
       <location filename="../panels/TaskAssemblyCreateBom.ui" line="61"/>
@@ -1151,7 +1156,7 @@ lors du recalcul. Les colonnes « Description » et personnalisées ne sont pas 
     <message>
       <location filename="../panels/TaskAssemblyCreateSimulation.ui" line="89"/>
       <source>Simulation Settings</source>
-      <translation>Paramètres de simulation</translation>
+      <translation>Paramètres de la simulation</translation>
     </message>
     <message>
       <location filename="../panels/TaskAssemblyCreateSimulation.ui" line="95"/>
@@ -1184,7 +1189,7 @@ lors du recalcul. Les colonnes « Description » et personnalisées ne sont pas 
       <location filename="../panels/TaskAssemblyCreateSimulation.ui" line="132"/>
       <location filename="../panels/TaskAssemblyCreateSimulation.ui" line="139"/>
       <source>Time step</source>
-      <translation>Pas de temps</translation>
+      <translation>Intervalle de temps</translation>
     </message>
     <message>
       <location filename="../panels/TaskAssemblyCreateSimulation.ui" line="149"/>
@@ -1258,7 +1263,7 @@ lors du recalcul. Les colonnes « Description » et personnalisées ne sont pas 
     <message>
       <location filename="../../../CommandCreateAssembly.py" line="54"/>
       <source>Creates an assembly object in the current document, or in the current active assembly (if any). Limit of one root assembly per file.</source>
-      <translation>Crée un assemblage dans l'actuel document ou dans l'assemblage actif en cours (le cas échéant). Un seul assemblage racine par fichier est autorisé.</translation>
+      <translation>Crée un assemblage dans l'actuel document ou dans l'assemblage actif (le cas échéant). Un seul assemblage racine par fichier est autorisé.</translation>
     </message>
   </context>
   <context>
@@ -1267,12 +1272,12 @@ lors du recalcul. Les colonnes « Description » et personnalisées ne sont pas 
       <location filename="../../../CommandCreateAssembly.py" line="101"/>
       <location filename="../../../CommandCreateAssembly.py" line="135"/>
       <source>Activate Assembly</source>
-      <translation>Activer l'assemblage</translation>
+      <translation>Activer un assemblage</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateAssembly.py" line="106"/>
       <source>Select an assembly to activate:</source>
-      <translation>Sélectionnez un assemblage à activer :</translation>
+      <translation>Sélectionner un assemblage à activer :</translation>
     </message>
     <message>
       <location filename="../../../CommandCreateAssembly.py" line="138"/>
@@ -1457,8 +1462,8 @@ Sélectionner les mêmes systèmes de coordonnées que pour les liaisons pivots.
       <location filename="../../../CommandCreateJoint.py" line="435"/>
       <source>&lt;p&gt;Toggles the grounding of a part.&lt;/p&gt;&lt;p&gt;Grounding a part permanently locks its position in the assembly, preventing any movement or rotation. You need at least one grounded part before starting to assemble.</source>
       <translation>Active ou désactive le blocage d'une pièce.
-Le blocage d'une pièce immobilise définitivement sa position dans l'assemblage, empêchant tout
-mouvement ou rotation. Il faut au moins une pièce à bloquer avant de commencer l'assemblage.</translation>
+Le blocage d'une pièce immobilise définitivement sa position dans l'assemblage, empêchant tout mouvement ou rotation. Il faut au
+moins une pièce à bloquer avant de commencer l'assemblage.</translation>
     </message>
   </context>
   <context>

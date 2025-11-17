@@ -70,7 +70,7 @@
     <message>
       <location filename="../../Command.cpp" line="954"/>
       <source>Creates cross-sections of the mesh</source>
-      <translation>Crée des coupes du maillage</translation>
+      <translation>Crée des coupes du maillage.</translation>
     </message>
   </context>
   <context>
@@ -520,7 +520,7 @@
     <message>
       <location filename="../../Command.cpp" line="1615"/>
       <source>Segmentation</source>
-      <translation>Segmentation</translation>
+      <translation>Segmenter le maillage</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1616"/>

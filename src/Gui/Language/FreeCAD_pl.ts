@@ -9,24 +9,24 @@
       <translation>&lt;pusty&gt;</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2380"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2649"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
       <source>Angle</source>
       <translation>Kąt</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2388"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2657"/>
       <source>Axis</source>
       <translation>Oś</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2658"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2662"/>
       <source>Position</source>
       <translation>Pozycja</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2908"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2912"/>
       <location filename="../Dialogs/DlgAddProperty.cpp" line="340"/>
       <source>Enum</source>
       <translation>Wyliczenia</translation>
@@ -3475,7 +3475,7 @@ na widoku drzewa, aby go w pełni przeładować.</translation>
       <source>All documents that will be created will get the specified author name.
 Keep blank for anonymous.
 You can also use the form: John Doe &lt;john@doe.com&gt;</source>
-      <translation>Wszystkie dokumenty, które będą tworzone, otrzymają wprowadzone nazwisko autora.
+      <translation>Wszystkie dokumenty, które będą tworzone, otrzymają wprowadzoną nazwę autora.
 Pozostaw puste miejsce dla zachowania anonimowości.
 Możesz również skorzystać z formatki: John Doe &lt;john@doe.com&gt;</translation>
     </message>
@@ -4031,9 +4031,9 @@ Turntable: the part will be rotated around the Z-axis (with constrained axes).
 Free Turntable: the part will be rotated around the Z-axis.
          </source>
       <translation>Styl obrotu widoku.
-Rounded Arcball: przesuwanie myszy w rogach ekranu powoduje jedynie obrót obiektu.
+Zaokrąglony Arcball: przesuwanie myszy w rogach ekranu powoduje jedynie obrót obiektu.
 Trackball: przesuwanie myszy w poziomie obraca obiekt wokół osi Y.
-Trackball Classic: przesuwanie myszy obraca obiekt z możliwością precesji.
+Klasyczny-Trackball: przesuwanie myszy obraca obiekt z możliwością precesji.
 Turntable: obiekt obraca się wokół osi Z (z ograniczonymi osiami).
 Free Turntable: obiekt obraca się wokół osi Z 
          </translation>
@@ -4061,7 +4061,7 @@ Free Turntable: obiekt obraca się wokół osi Z
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="508"/>
       <source>Rounded Arcball</source>
-      <translation>Arcball</translation>
+      <translation>Zaokrąglony Arcball</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="516"/>
@@ -4123,7 +4123,7 @@ Wartością jest średnica kuli, która ma zmieścić się na ekranie.</translat
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="790"/>
       <source>Enable spinning animations</source>
-      <translation>Włącz animacje wirowania</translation>
+      <translation>Włącz animacje obrotowe</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="856"/>
@@ -4388,7 +4388,8 @@ długość wiersza w konsoli Python</translation>
     <message>
       <location filename="../PreferencePages/DlgSettingsPythonConsole.ui" line="91"/>
       <source>The interval in milliseconds at which the profiler runs when there is Python code running (to keep the GUI responding). Set to 0 to disable.</source>
-      <translation>Interwał w milisekundach, w którym działa profiler, gdy uruchomiony jest kod Python (aby GUI nadal reagowało).
+      <translation>Interwał w milisekundach, w którym działa profiler, 
+gdy uruchomiony jest kod Python (aby GUI nadal reagowało).
 Ustaw wartość 0, aby wyłączyć.</translation>
     </message>
     <message>
@@ -6067,7 +6068,7 @@ bądź przyciskami PgUp / PgDown na klawiaturze.</translation>
   <context>
     <name>Gui::LabelEditor</name>
     <message>
-      <location filename="../Widgets.cpp" line="1422"/>
+      <location filename="../Widgets.cpp" line="1428"/>
       <source>List</source>
       <translation>Lista</translation>
     </message>
@@ -6184,7 +6185,7 @@ bądź przyciskami PgUp / PgDown na klawiaturze.</translation>
     <name>Gui::MainWindow</name>
     <message>
       <location filename="../MainWindow.cpp" line="181"/>
-      <location filename="../MainWindow.cpp" line="2260"/>
+      <location filename="../MainWindow.cpp" line="2269"/>
       <source>Dimension</source>
       <translation>Wymiar</translation>
     </message>
@@ -6217,55 +6218,55 @@ bądź przyciskami PgUp / PgDown na klawiaturze.</translation>
       <translation>Zamknij wszystkie</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1441"/>
-      <location filename="../MainWindow.cpp" line="1442"/>
-      <location filename="../MainWindow.cpp" line="1443"/>
+      <location filename="../MainWindow.cpp" line="1450"/>
+      <location filename="../MainWindow.cpp" line="1451"/>
+      <location filename="../MainWindow.cpp" line="1452"/>
       <source>Toggles this toolbar</source>
       <translation>Włącza / wyłącza ten pasek narzędzi</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1462"/>
-      <location filename="../MainWindow.cpp" line="1463"/>
-      <location filename="../MainWindow.cpp" line="1464"/>
+      <location filename="../MainWindow.cpp" line="1471"/>
+      <location filename="../MainWindow.cpp" line="1472"/>
+      <location filename="../MainWindow.cpp" line="1473"/>
       <source>Toggles this dockable window</source>
       <translation>Włącza / wyłącza to okno dokujące</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1657"/>
+      <location filename="../MainWindow.cpp" line="1666"/>
       <source>Safe mode enabled</source>
       <translation>Tryb awaryjny włączony</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1658"/>
+      <location filename="../MainWindow.cpp" line="1667"/>
       <source>FreeCAD is now running in safe mode.</source>
       <translation>FreeCAD działa teraz w trybie awaryjnym.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1662"/>
+      <location filename="../MainWindow.cpp" line="1671"/>
       <source>Safe mode temporarily disables your configurations and addons. Restart the application to exit safe mode.</source>
       <translation>Tryb awaryjny tymczasowo wyłącza konfiguracje i dodatki. Aby wyjść z trybu awaryjnego, należy ponownie uruchomić aplikację.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2004"/>
-      <location filename="../MainWindow.cpp" line="2148"/>
+      <location filename="../MainWindow.cpp" line="2013"/>
+      <location filename="../MainWindow.cpp" line="2157"/>
       <source>Unsaved document</source>
       <translation>Dokument niezapisany</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2005"/>
+      <location filename="../MainWindow.cpp" line="2014"/>
       <source>The exported object contains external link. Save the documentat least once before exporting.</source>
       <translation>Wyeksportowany obiekt zawiera zewnętrzny odnośnik. 
 Proszę zapisać dokument przynajmniej raz przed wyeksportowaniem.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2149"/>
+      <location filename="../MainWindow.cpp" line="2158"/>
       <source>To link to external objects, the document must be saved at least once.
 Save the document now?</source>
       <translation>Aby powiązać z obiektami zewnętrznymi, dokument musi być zapisany co najmniej raz.
 Zapisać dokument teraz?</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2456"/>
+      <location filename="../MainWindow.cpp" line="2465"/>
       <source>Safe Mode</source>
       <translation>Tryb awaryjny</translation>
     </message>
@@ -6533,12 +6534,12 @@ lub klawisze PgUp/PgDown na klawiaturze.</translation>
   <context>
     <name>Gui::PropertyEditor::LinkSelection</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Error</source>
       <translation>Błąd</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Object not found</source>
       <translation>Obiekt nie znaleziony</translation>
     </message>
@@ -7841,14 +7842,14 @@ Opis elementu może być ustawiony poprzez edycję właściwości "label2".</tra
   <context>
     <name>PropertyListDialog</name>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Invalid input</source>
       <translation>Niepoprawne dane wejściowe</translation>
     </message>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Input in line %1 is not a number</source>
       <translation>Wprowadzony ciąg znaków w linii %1 nie jest liczbą</translation>
     </message>
@@ -8966,37 +8967,37 @@ Wszelkie zmiany dokonane w bieżącej kopii zostaną utracone.
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="409"/>
       <source>Left panel hint offset</source>
-      <translation>Odsunięcie z lewej panelu podpowiedzi</translation>
+      <translation>Odsunięcie podpowiedzi w panelu lewym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="412"/>
       <source>Left panel hint length</source>
-      <translation>Długość lewego panelu podpowiedzi</translation>
+      <translation>Długość podpowiedzi w panelu lewym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="415"/>
       <source>Right panel hint offset</source>
-      <translation>Odsunięcie z prawej panelu podpowiedzi</translation>
+      <translation>Odsunięcie podpowiedzi w panelu prawym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="418"/>
       <source>Right panel hint length</source>
-      <translation>Długość prawego panelu podpowiedzi</translation>
+      <translation>Długość podpowiedzi w panelu prawym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="421"/>
       <source>Top panel hint offset</source>
-      <translation>Odsunięcie góry panelu podpowiedzi</translation>
+      <translation>Odsunięcie podpowiedzi w panelu górnym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="424"/>
       <source>Top panel hint length</source>
-      <translation>Długość podpowiedzi panelu górnego</translation>
+      <translation>Długość podpowiedzi w panelu górnym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="427"/>
       <source>Bottom panel hint offset</source>
-      <translation>Odsunięcie dołu panelu podpowiedzi</translation>
+      <translation>Odsunięcie podpowiedzi w panelu dolnym</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="430"/>
@@ -9031,7 +9032,7 @@ Wszelkie zmiany dokonane w bieżącej kopii zostaną utracone.
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="401"/>
       <source>Check navigation cube</source>
-      <translation>Sprawdź kostkę nawigacji</translation>
+      <translation>Uwzględnij kostkę nawigacyjną</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsAdvanced.cpp" line="447"/>
@@ -9460,7 +9461,7 @@ Czy chcesz usunąć je wszystkie rekurencyjnie?</translation>
   <context>
     <name>StdCmdNew</name>
     <message>
-      <location filename="../MainWindow.cpp" line="2253"/>
+      <location filename="../MainWindow.cpp" line="2262"/>
       <location filename="../DocumentRecovery.cpp" line="404"/>
       <source>Unnamed</source>
       <translation>Bez nazwy</translation>
@@ -10419,9 +10420,13 @@ Po kliknięciu widoczność jest przełączana</translation>
       <source>Enables non-intrusive pop-up notifications above the status bar notification area. Pop-up notifications can be manually dismissed by clicking on them, and also automatically dismissed by specifying a maximum and minimum duration for them to be displayed.
 
 Additionally, pop-up notifications can be disabled. In this case the user can still use the notification area as a quick-access location to view notifications, without the distracton of an additional pop-up.</source>
-      <translation>Włącza nieinwazyjne powiadomienia wyskakujące wyświetlane nad obszarem powiadomień na pasku stanu. Powiadomienia te można zamknąć samodzielnie, klikając na nie, a także automatycznie – określając minimalny i maksymalny czas ich wyświetlania.
+      <translation>Umożliwia wyświetlanie nienachalnych powiadomień typu pop-up nad obszarem powiadomień paska stanu. 
+Powiadomienia pop-up można zamknąć ręcznie, klikając je, a także automatycznie, 
+określając ich maksymalny i minimalny czas wyświetlania.
 
-Dodatkowo powiadomienia te mogą zostać całkowicie wyłączone. W takim przypadku użytkownik nadal może korzystać z obszaru powiadomień jako szybkiego miejsca dostępu do komunikatów, bez rozpraszających wyskakujących powiadomień.</translation>
+Dodatkowo powiadomienia pop-up można wyłączyć. 
+W takiej sytuacji użytkownik nadal może korzystać z obszaru powiadomień jako miejsca szybkiego dostępu 
+do komunikatów, bez rozpraszającego dodatkowego okna pop-up.</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNotificationArea.ui" line="37"/>
@@ -10959,8 +10964,8 @@ ustawiając długość pomiędzy dwoma punktami obrazu</translation>
   <context>
     <name>Gui::ExpLineEdit</name>
     <message>
-      <location filename="../Widgets.cpp" line="1526"/>
-      <location filename="../Widgets.cpp" line="1593"/>
+      <location filename="../Widgets.cpp" line="1532"/>
+      <location filename="../Widgets.cpp" line="1599"/>
       <source>An error occurred -- see Report View for information</source>
       <translation>Wystąpił błąd -- zajrzyj do Widoku raportu, aby uzyskać więcej informacji</translation>
     </message>
@@ -11684,7 +11689,7 @@ z konsoli Python do panelu Widoku Raportu</translation>
     <message>
       <location filename="../PreferencePages/DlgSettingsLightSources.ui" line="188"/>
       <source>Main light</source>
-      <translation>Główne światło</translation>
+      <translation>Oświetlenie główne</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsLightSources.ui" line="224"/>
@@ -11795,44 +11800,46 @@ gdy wszystkie piksele wewnątrz regionu są nieprzezroczyste.</translation>
     <message>
       <location filename="../OverlayParams.cpp" line="630"/>
       <source>Auto hide hint visual display length for left panel. Set to zero to fill the space.</source>
-      <translation>Automatyczne ukrywanie długości wizualnej podpowiedzi dla lewego panelu. Ustaw na zero, aby wypełnić przestrzeń.</translation>
+      <translation>Długość wyświetlania podpowiedzi przy automatycznym ukrywaniu w lewym panelu. 
+Ustaw na zero, aby wypełnić przestrzeń.</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="658"/>
       <source>Auto hide hint visual display length for right panel. Set to zero to fill the space.</source>
-      <translation>Automatycznie ukrywa widoczną długość podpowiedzi dla prawej strony panelu. 
-Ustaw zero, aby wypełnić miejsce.</translation>
+      <translation>Długość wyświetlania podpowiedzi przy automatycznym ukrywaniu w prawym panelu. 
+Ustaw na zero, aby wypełnić przestrzeń.</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="686"/>
       <source>Auto hide hint visual display length for top panel. Set to zero to fill the space.</source>
-      <translation>Automatycznie ukrywa widoczną długość podpowiedzi dla góry panelu. 
-Ustaw zero, aby wypełnić miejsce.</translation>
+      <translation>Długość wyświetlania podpowiedzi przy automatycznym ukrywaniu w górnym panelu. 
+Ustaw na zero, aby wypełnić przestrzeń.</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="714"/>
       <source>Auto hide hint visual display length for bottom panel. Set to zero to fill the space.</source>
-      <translation>Automatycznie ukrywa widoczną długość podpowiedzi dla dołu panelu. Ustaw zero, aby wypełnić miejsce.</translation>
+      <translation>Długość wyświetlania podpowiedzi przy automatycznym ukrywaniu w dolnym panelu. 
+Ustaw na zero, aby wypełnić przestrzeń.</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="742"/>
       <source>Auto hide hint visual display offset for left panel</source>
-      <translation>Automatyczne ukrywanie wizualnego przesunięcia podpowiedzi dla lewego panelu</translation>
+      <translation>Przesunięcie wyświetlania podpowiedzi przy automatycznym ukrywaniu w lewym panelu</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="770"/>
       <source>Auto hide hint visual display offset for right panel</source>
-      <translation>Automatyczne ukrywanie widocznego przesunięcia podpowiedzi dla prawego panelu</translation>
+      <translation>Przesunięcie wyświetlania podpowiedzi przy automatycznym ukrywaniu w prawym panelu</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="798"/>
       <source>Auto hide hint visual display offset for top panel</source>
-      <translation>Automatyczne ukrywanie widocznego przesunięcia podpowiedzi dla górnego panelu</translation>
+      <translation>Przesunięcie wyświetlania podpowiedzi przy automatycznym ukrywaniu w górnym panelu</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="826"/>
       <source>Auto hide hint visual display offset for bottom panel</source>
-      <translation>Automatyczne ukrywanie widocznego przesunięcia podpowiedzi dla dolnego panelu</translation>
+      <translation>Przesunięcie wyświetlania podpowiedzi przy automatycznym ukrywaniu w dolnym panelu</translation>
     </message>
     <message>
       <location filename="../OverlayParams.cpp" line="854"/>
@@ -14618,7 +14625,7 @@ ESC, aby zakończyć</translation>
   <context>
     <name>Gui::PropertyEditor::LinkLabel</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4544"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4548"/>
       <source>Changes the linked object</source>
       <translation>Zmienia połączony obiekt</translation>
     </message>

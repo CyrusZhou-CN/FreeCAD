@@ -628,7 +628,7 @@
     <message>
       <location filename="../../Command.cpp" line="554"/>
       <source>Curvature Plot</source>
-      <translation type="unfinished">Curvature Plot</translation>
+      <translation>Gráfica de curvatura</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="555"/>
@@ -1003,7 +1003,7 @@
     <message>
       <location filename="../../DlgEvaluateMeshImp.cpp" line="141"/>
       <source>Settings</source>
-      <translation>Opciones</translation>
+      <translation>Configuración</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateMeshImp.cpp" line="530"/>
@@ -1139,12 +1139,12 @@
     <message>
       <location filename="../../DlgEvaluateSettings.ui" line="14"/>
       <source>Evaluation Settings</source>
-      <translation type="unfinished">Evaluation Settings</translation>
+      <translation>Configuración de evaluación</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateSettings.ui" line="20"/>
       <source>Settings</source>
-      <translation>Opciones</translation>
+      <translation>Configuración</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateSettings.ui" line="26"/>
@@ -1773,7 +1773,7 @@ to a smoother appearance.
       <location filename="../../RemoveComponents.ui" line="89"/>
       <location filename="../../RemoveComponents.ui" line="175"/>
       <source>Pick Triangle</source>
-      <translation type="unfinished">Pick Triangle</translation>
+      <translation>Elija un triángulo</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="192"/>
@@ -1783,7 +1783,7 @@ to a smoother appearance.
     <message>
       <location filename="../../RemoveComponents.ui" line="208"/>
       <source>Respect only triangles with screen-facing normals</source>
-      <translation type="unfinished">Respect only triangles with screen-facing normals</translation>
+      <translation>Solo acepta triángulos con normales mirando hacia la pantalla</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="96"/>
@@ -1816,7 +1816,7 @@ to a smoother appearance.
     <message>
       <location filename="../../Segmentation.ui" line="14"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Segmentación de malla</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="20"/>
@@ -1896,7 +1896,7 @@ to a smoother appearance.
     <message>
       <location filename="../../SegmentationBestFit.ui" line="14"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Segmentación de malla</translation>
     </message>
     <message>
       <location filename="../../SegmentationBestFit.ui" line="29"/>
@@ -2382,7 +2382,7 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Workbench.cpp" line="52"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Segmentación de malla</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="53"/>
