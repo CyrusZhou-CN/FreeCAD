@@ -2775,7 +2775,7 @@ Vea la política de guardado de archivos abajo sobre cómo tratar los conflictos
     <message>
       <location filename="../../DlgSettingsPathColor.ui" line="317"/>
       <source>UI Settings</source>
-      <translation>Ajustes de la Interfaz de Usuario</translation>
+      <translation>Configuración de interfaz</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsPathColor.ui" line="339"/>
@@ -5402,7 +5402,7 @@ Use property KeepToolDown to change this</translation>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="378"/>
       <source>Override to control how loose or tight the threads are milled</source>
-      <translation>Anular para controlar cómo se fresan las roscas sueltas o apretadas</translation>
+      <translation>Sustituir para controlar cómo se fresan las roscas sueltas o apretadas</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/ThreadMilling.py" line="384"/>

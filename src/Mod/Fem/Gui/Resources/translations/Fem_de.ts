@@ -1109,7 +1109,7 @@ Ist nur wirksam, wenn 'Nur Pipeline' aktiviert ist</translation>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="149"/>
       <source>Number of tasks</source>
-      <translation type="unfinished">Number of tasks</translation>
+      <translation>Anzahl der Aufgaben</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="159"/>
@@ -1828,7 +1828,7 @@ iterativen Löser eingesetzt wird und die Fehlermeldung
     <message>
       <location filename="../../TaskFemConstraintBearing.cpp" line="169"/>
       <source>Use only a single reference for bearing constraint</source>
-      <translation type="unfinished">Use only a single reference for bearing constraint</translation>
+      <translation>Nur eine einzige Referenz für die Lagerrandbedingung verwenden</translation>
     </message>
     <message>
       <location filename="../../TaskFemConstraintBearing.cpp" line="173"/>
@@ -3944,7 +3944,7 @@ Siehe das nachfolgende Beschreibungsfeld für mögliche Variablen.</translation>
     <message>
       <location filename="../ui/ResultHints.ui" line="188"/>
       <source>maximum princ. stress vector: s3x, s3y, s3z</source>
-      <translation type="unfinished">maximum princ. stress vector: s3x, s3y, s3z</translation>
+      <translation>maximaler Hauptspannungsvektor: s3x, s3y, s3z</translation>
     </message>
     <message>
       <location filename="../ui/ResultHints.ui" line="198"/>
@@ -3954,17 +3954,17 @@ Siehe das nachfolgende Beschreibungsfeld für mögliche Variablen.</translation>
     <message>
       <location filename="../ui/ResultHints.ui" line="208"/>
       <source>medium princ. stress vector: s2x, s2y, s2z</source>
-      <translation type="unfinished">medium princ. stress vector: s2x, s2y, s2z</translation>
+      <translation>Mittlerer Prinzipialspannungsvektor: s2x, s2y, s2z</translation>
     </message>
     <message>
       <location filename="../ui/ResultHints.ui" line="218"/>
       <source>medium principal stress: P2</source>
-      <translation type="unfinished">medium principal stress: P2</translation>
+      <translation>mittlere Hauptspannung: P2</translation>
     </message>
     <message>
       <location filename="../ui/ResultHints.ui" line="228"/>
       <source>minimum princ. stress vector: s1x, s1y, s1z</source>
-      <translation type="unfinished">minimum princ. stress vector: s1x, s1y, s1z</translation>
+      <translation>Minimaler Hauptspannungsvektor: s1x, s1y, s1z</translation>
     </message>
     <message>
       <location filename="../ui/ResultHints.ui" line="238"/>
@@ -3984,7 +3984,7 @@ Siehe das nachfolgende Beschreibungsfeld für mögliche Variablen.</translation>
     <message>
       <location filename="../ui/ResultHints.ui" line="14"/>
       <source>Hints User-Defined Equations</source>
-      <translation type="unfinished">Hints User-Defined Equations</translation>
+      <translation>Hinweise Benutzerdefinierte Gleichungen</translation>
     </message>
     <message>
       <location filename="../ui/ResultHints.ui" line="20"/>
@@ -7980,7 +7980,7 @@ Leer lassen, um die Standard-Python-Ausführungsdatei zu verwenden</translation>
     <message>
       <location filename="../ui/SolverElmer.ui" line="14"/>
       <source>Solver Elmer Control</source>
-      <translation type="unfinished">Solver Elmer Control</translation>
+      <translation>Löser-Elmer-Steuerung</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="20"/>
@@ -8005,12 +8005,12 @@ Leer lassen, um die Standard-Python-Ausführungsdatei zu verwenden</translation>
     <message>
       <location filename="../ui/SolverElmer.ui" line="74"/>
       <source>Solver Parameters</source>
-      <translation>Löserparameter</translation>
+      <translation>Parameter des Lösers</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="82"/>
       <source>Simulation type</source>
-      <translation type="unfinished">Simulation type</translation>
+      <translation>Simulationsart</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="122"/>
@@ -8020,7 +8020,7 @@ Leer lassen, um die Standard-Python-Ausführungsdatei zu verwenden</translation>
     <message>
       <location filename="../ui/SolverElmer.ui" line="129"/>
       <source>Solver Version</source>
-      <translation>Löserversion</translation>
+      <translation>Version des Lösers</translation>
     </message>
   </context>
 </TS>

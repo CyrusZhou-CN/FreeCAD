@@ -222,7 +222,7 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="115"/>
       <source>Settings</source>
-      <translation>Opciones</translation>
+      <translation>Configuración</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="156"/>

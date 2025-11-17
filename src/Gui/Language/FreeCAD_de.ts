@@ -9,24 +9,24 @@
       <translation>&lt;Leer&gt;</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2380"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2649"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
       <source>Angle</source>
       <translation>Winkel</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2388"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2657"/>
       <source>Axis</source>
       <translation>Achse</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2658"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2662"/>
       <source>Position</source>
       <translation>Position</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2908"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2912"/>
       <location filename="../Dialogs/DlgAddProperty.cpp" line="340"/>
       <source>Enum</source>
       <translation>Aufzählung</translation>
@@ -4117,17 +4117,17 @@ Some navigation styles (OpenInventor, Gesture, OpenSCAD) require Ctrl+LMB instea
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="867"/>
       <source>Enable long press clarify selection</source>
-      <translation type="unfinished">Enable long press clarify selection</translation>
+      <translation>Langes Drücken zur Auswahl bestätigen aktivieren</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="883"/>
       <source>Time in seconds to hold left mouse button before showing clarify selection menu</source>
-      <translation type="unfinished">Time in seconds to hold left mouse button before showing clarify selection menu</translation>
+      <translation>Zeit in Sekunden, die die linke Maustaste gedrückt gehalten werden muss, bevor das Menü zur Auswahl bestätigen angezeigt wird</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="886"/>
       <source>Long press timeout</source>
-      <translation type="unfinished">Long press timeout</translation>
+      <translation>Zeitüberschreitung bei langem Drücken</translation>
     </message>
     <message>
       <location filename="../PreferencePages/DlgSettingsNavigation.ui" line="902"/>
@@ -6033,7 +6033,7 @@ Alle Änderungen speichern?</translation>
   <context>
     <name>Gui::LabelEditor</name>
     <message>
-      <location filename="../Widgets.cpp" line="1422"/>
+      <location filename="../Widgets.cpp" line="1428"/>
       <source>List</source>
       <translation>Liste</translation>
     </message>
@@ -6150,7 +6150,7 @@ Alle Änderungen speichern?</translation>
     <name>Gui::MainWindow</name>
     <message>
       <location filename="../MainWindow.cpp" line="181"/>
-      <location filename="../MainWindow.cpp" line="2260"/>
+      <location filename="../MainWindow.cpp" line="2269"/>
       <source>Dimension</source>
       <translation>Abmessung</translation>
     </message>
@@ -6183,54 +6183,54 @@ Alle Änderungen speichern?</translation>
       <translation>Alles schließen</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1441"/>
-      <location filename="../MainWindow.cpp" line="1442"/>
-      <location filename="../MainWindow.cpp" line="1443"/>
+      <location filename="../MainWindow.cpp" line="1450"/>
+      <location filename="../MainWindow.cpp" line="1451"/>
+      <location filename="../MainWindow.cpp" line="1452"/>
       <source>Toggles this toolbar</source>
       <translation>Symbolleiste ein-/ausschalten</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1462"/>
-      <location filename="../MainWindow.cpp" line="1463"/>
-      <location filename="../MainWindow.cpp" line="1464"/>
+      <location filename="../MainWindow.cpp" line="1471"/>
+      <location filename="../MainWindow.cpp" line="1472"/>
+      <location filename="../MainWindow.cpp" line="1473"/>
       <source>Toggles this dockable window</source>
       <translation>Andockbares Fenster ein-/ausschalten</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1657"/>
+      <location filename="../MainWindow.cpp" line="1666"/>
       <source>Safe mode enabled</source>
       <translation>Abgesicherter Modus aktiviert</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1658"/>
+      <location filename="../MainWindow.cpp" line="1667"/>
       <source>FreeCAD is now running in safe mode.</source>
       <translation>FreeCAD läuft jetzt im abgesicherten Modus.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1662"/>
+      <location filename="../MainWindow.cpp" line="1671"/>
       <source>Safe mode temporarily disables your configurations and addons. Restart the application to exit safe mode.</source>
       <translation>Der abgesicherte Modus deaktiviert vorübergehend Konfigurationen und Addons. Die Anwendung neu starten, um den abgesicherten Modus zu verlassen.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2004"/>
-      <location filename="../MainWindow.cpp" line="2148"/>
+      <location filename="../MainWindow.cpp" line="2013"/>
+      <location filename="../MainWindow.cpp" line="2157"/>
       <source>Unsaved document</source>
       <translation>Nicht gespeichertes Dokument</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2005"/>
+      <location filename="../MainWindow.cpp" line="2014"/>
       <source>The exported object contains external link. Save the documentat least once before exporting.</source>
       <translation>Das exportierte Objekt enthält einen externen Link. Das Dokument mindestens einmal speichern, bevor es exportieren wird.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2149"/>
+      <location filename="../MainWindow.cpp" line="2158"/>
       <source>To link to external objects, the document must be saved at least once.
 Save the document now?</source>
       <translation>Um Verknüpfungen zu externen Objekten herzustellen, muss das Dokument mindestens einmal gespeichert werden.
 Das Dokument jetzt speichern?</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2456"/>
+      <location filename="../MainWindow.cpp" line="2465"/>
       <source>Safe Mode</source>
       <translation>Abgesicherter Modus</translation>
     </message>
@@ -6494,12 +6494,12 @@ ODER ALT-Taste + rechte Maustaste drücken ODER Bild auf/Bild ab auf der Tastatu
   <context>
     <name>Gui::PropertyEditor::LinkSelection</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Error</source>
       <translation>Fehlermeldungen</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Object not found</source>
       <translation>Objekt nicht gefunden</translation>
     </message>
@@ -7802,14 +7802,14 @@ Stattdessen ein anderes Verzeichnis angeben?</translation>
   <context>
     <name>PropertyListDialog</name>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Invalid input</source>
       <translation>Ungültige Eingabe</translation>
     </message>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Input in line %1 is not a number</source>
       <translation>Eingabe in Zeile %1 ist keine Zahl</translation>
     </message>
@@ -9016,7 +9016,7 @@ aktuellen Kopie gehen verloren.
     <message>
       <location filename="../ViewProviderImagePlane.cpp" line="168"/>
       <source>Change Image</source>
-      <translation>Bild ändern</translation>
+      <translation>Bild bearbeiten</translation>
     </message>
     <message>
       <location filename="../ViewProviderPart.cpp" line="72"/>
@@ -9407,7 +9407,7 @@ aktuellen Kopie gehen verloren.
   <context>
     <name>StdCmdNew</name>
     <message>
-      <location filename="../MainWindow.cpp" line="2253"/>
+      <location filename="../MainWindow.cpp" line="2262"/>
       <location filename="../DocumentRecovery.cpp" line="404"/>
       <source>Unnamed</source>
       <translation>Unbenannt</translation>
@@ -10905,8 +10905,8 @@ nachdem FreeCAD gestartet wurde</translation>
   <context>
     <name>Gui::ExpLineEdit</name>
     <message>
-      <location filename="../Widgets.cpp" line="1526"/>
-      <location filename="../Widgets.cpp" line="1593"/>
+      <location filename="../Widgets.cpp" line="1532"/>
+      <location filename="../Widgets.cpp" line="1599"/>
       <source>An error occurred -- see Report View for information</source>
       <translation>Es ist ein Fehler aufgetreten -- siehe Ausgabefenster für Informationen</translation>
     </message>
@@ -11919,7 +11919,7 @@ der Region nicht transparent sind.</translation>
     <message>
       <location filename="../CommandStd.cpp" line="911"/>
       <source>&amp;Reload Stylesheet</source>
-      <translation type="unfinished">&amp;Reload Stylesheet</translation>
+      <translation>Fo&amp;rmatvorlage neu laden</translation>
     </message>
     <message>
       <location filename="../CommandStd.cpp" line="912"/>
@@ -13701,7 +13701,7 @@ Fortfahren?</translation>
     <message>
       <location filename="../CommandView.cpp" line="1576"/>
       <source>&amp;Fit All</source>
-      <translation>Alle &amp;einpassen</translation>
+      <translation>Alles &amp;einpassen</translation>
     </message>
     <message>
       <location filename="../CommandView.cpp" line="1577"/>
@@ -14542,7 +14542,7 @@ Dadurch bleibt das angedockte Fenster jederzeit transparent.</translation>
   <context>
     <name>Gui::PropertyEditor::LinkLabel</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4544"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4548"/>
       <source>Changes the linked object</source>
       <translation>Verknüpftes Objekt ändern</translation>
     </message>

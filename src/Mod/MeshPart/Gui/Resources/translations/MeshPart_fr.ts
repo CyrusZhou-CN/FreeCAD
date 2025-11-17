@@ -292,7 +292,7 @@ Cette commande ne fonctionne qu'avec un objet Mesh, et non avec une face ou une 
     <message>
       <location filename="../../Tessellation.ui" line="74"/>
       <source>Maximal angular deflection of a mesh section to the next section</source>
-      <translation>Déviation angulaire maximale d'une section de maillage à la section suivante</translation>
+      <translation>Déflexion angulaire maximale d'une section de maillage à la section suivante</translation>
     </message>
     <message>
       <location filename="../../Tessellation.ui" line="102"/>

@@ -9,24 +9,24 @@
       <translation>&lt;ცარიელი&gt;</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2380"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2649"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
       <source>Angle</source>
       <translation>კუთხე</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2384"/>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2653"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2388"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2657"/>
       <source>Axis</source>
       <translation>ღერძი</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2658"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2662"/>
       <source>Position</source>
       <translation>მდებარეობა</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="2908"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="2912"/>
       <location filename="../Dialogs/DlgAddProperty.cpp" line="340"/>
       <source>Enum</source>
       <translation>სია</translation>
@@ -6037,7 +6037,7 @@ Save all changes?</source>
   <context>
     <name>Gui::LabelEditor</name>
     <message>
-      <location filename="../Widgets.cpp" line="1422"/>
+      <location filename="../Widgets.cpp" line="1428"/>
       <source>List</source>
       <translation>სია</translation>
     </message>
@@ -6154,7 +6154,7 @@ Save all changes?</source>
     <name>Gui::MainWindow</name>
     <message>
       <location filename="../MainWindow.cpp" line="181"/>
-      <location filename="../MainWindow.cpp" line="2260"/>
+      <location filename="../MainWindow.cpp" line="2269"/>
       <source>Dimension</source>
       <translation>ზომა</translation>
     </message>
@@ -6187,54 +6187,54 @@ Save all changes?</source>
       <translation>ყველას დახურვა</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1441"/>
-      <location filename="../MainWindow.cpp" line="1442"/>
-      <location filename="../MainWindow.cpp" line="1443"/>
+      <location filename="../MainWindow.cpp" line="1450"/>
+      <location filename="../MainWindow.cpp" line="1451"/>
+      <location filename="../MainWindow.cpp" line="1452"/>
       <source>Toggles this toolbar</source>
       <translation>ამ ზოლის ჩართ/გამორთ</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1462"/>
-      <location filename="../MainWindow.cpp" line="1463"/>
-      <location filename="../MainWindow.cpp" line="1464"/>
+      <location filename="../MainWindow.cpp" line="1471"/>
+      <location filename="../MainWindow.cpp" line="1472"/>
+      <location filename="../MainWindow.cpp" line="1473"/>
       <source>Toggles this dockable window</source>
       <translation>მიმაგრებადი ფანჯრის ჩვენების ჩართ/გამორთ</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1657"/>
+      <location filename="../MainWindow.cpp" line="1666"/>
       <source>Safe mode enabled</source>
       <translation>უსაფრთხო რეჟიმი ჩართულია</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1658"/>
+      <location filename="../MainWindow.cpp" line="1667"/>
       <source>FreeCAD is now running in safe mode.</source>
       <translation>FreeCAD ახლა გაშვებულია უსაფრთხო რეჟიმში.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="1662"/>
+      <location filename="../MainWindow.cpp" line="1671"/>
       <source>Safe mode temporarily disables your configurations and addons. Restart the application to exit safe mode.</source>
       <translation>უსაფრთხო რეჟიმი დროებით გამორთავს თქვენს კონფიგურაციას და დამატებების. გადატვირთეთ აპლიკაცია უსაფრთხო რეჟიმიდან გასასვლელად.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2004"/>
-      <location filename="../MainWindow.cpp" line="2148"/>
+      <location filename="../MainWindow.cpp" line="2013"/>
+      <location filename="../MainWindow.cpp" line="2157"/>
       <source>Unsaved document</source>
       <translation>შეუნახავი დოკუმენტი</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2005"/>
+      <location filename="../MainWindow.cpp" line="2014"/>
       <source>The exported object contains external link. Save the documentat least once before exporting.</source>
       <translation type="unfinished">The exported object contains external link. Save the documentat least once before exporting.</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2149"/>
+      <location filename="../MainWindow.cpp" line="2158"/>
       <source>To link to external objects, the document must be saved at least once.
 Save the document now?</source>
       <translation type="unfinished">To link to external objects, the document must be saved at least once.
 Save the document now?</translation>
     </message>
     <message>
-      <location filename="../MainWindow.cpp" line="2456"/>
+      <location filename="../MainWindow.cpp" line="2465"/>
       <source>Safe Mode</source>
       <translation>უსაფრთხო რეჟიმი</translation>
     </message>
@@ -6498,12 +6498,12 @@ How do you want to proceed?</source>
   <context>
     <name>Gui::PropertyEditor::LinkSelection</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Error</source>
       <translation>შეცდომა</translation>
     </message>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4510"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4514"/>
       <source>Object not found</source>
       <translation>ობიექტი ნაპოვნი არაა</translation>
     </message>
@@ -7806,14 +7806,14 @@ Specify another directory?</translation>
   <context>
     <name>PropertyListDialog</name>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Invalid input</source>
       <translation>არასწორი შეტანა</translation>
     </message>
     <message>
-      <location filename="../Widgets.cpp" line="1349"/>
-      <location filename="../Widgets.cpp" line="1360"/>
+      <location filename="../Widgets.cpp" line="1355"/>
+      <location filename="../Widgets.cpp" line="1366"/>
       <source>Input in line %1 is not a number</source>
       <translation>ხაზზე %1 შეყვანილი სტრიქონი რიცხვს არ წარმოადგენს</translation>
     </message>
@@ -9411,7 +9411,7 @@ the current copy will be lost.
   <context>
     <name>StdCmdNew</name>
     <message>
-      <location filename="../MainWindow.cpp" line="2253"/>
+      <location filename="../MainWindow.cpp" line="2262"/>
       <location filename="../DocumentRecovery.cpp" line="404"/>
       <source>Unnamed</source>
       <translation>უსახელო</translation>
@@ -10909,8 +10909,8 @@ after FreeCAD launches</translation>
   <context>
     <name>Gui::ExpLineEdit</name>
     <message>
-      <location filename="../Widgets.cpp" line="1526"/>
-      <location filename="../Widgets.cpp" line="1593"/>
+      <location filename="../Widgets.cpp" line="1532"/>
+      <location filename="../Widgets.cpp" line="1599"/>
       <source>An error occurred -- see Report View for information</source>
       <translation>დაფიქსირდა შეცდომა - ინფორმაციისთვის იხილეთ ანგარიშის ხედი</translation>
     </message>
@@ -14543,7 +14543,7 @@ This makes the docked panel stay transparent at all times.</translation>
   <context>
     <name>Gui::PropertyEditor::LinkLabel</name>
     <message>
-      <location filename="../propertyeditor/PropertyItem.cpp" line="4544"/>
+      <location filename="../propertyeditor/PropertyItem.cpp" line="4548"/>
       <source>Changes the linked object</source>
       <translation>ცვლის მიბმულ ობიექტს</translation>
     </message>

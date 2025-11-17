@@ -11,12 +11,12 @@
     <message>
       <location filename="../../Command.cpp" line="716"/>
       <source>Add Triangle</source>
-      <translation type="unfinished">Add Triangle</translation>
+      <translation>Háromszög hozzáadása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="717"/>
       <source>Adds a triangle manually to a mesh</source>
-      <translation type="unfinished">Adds a triangle manually to a mesh</translation>
+      <translation>Kézzel adj egy háromszöget a hálóhoz</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../../Command.cpp" line="1433"/>
       <source>Bounding Box Info</source>
-      <translation type="unfinished">Bounding Box Info</translation>
+      <translation>Határolókeret információ</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1434"/>
       <source>Shows the bounding box coordinates of the selected mesh</source>
-      <translation type="unfinished">Shows the bounding box coordinates of the selected mesh</translation>
+      <translation>Megmutatja a kiválasztott háló határvonal koordinátáit</translation>
     </message>
   </context>
   <context>
@@ -65,12 +65,12 @@
     <message>
       <location filename="../../Command.cpp" line="953"/>
       <source>Cross-Sections</source>
-      <translation type="unfinished">Cross-Sections</translation>
+      <translation>Keresztmetszet</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="954"/>
       <source>Creates cross-sections of the mesh</source>
-      <translation type="unfinished">Creates cross-sections of the mesh</translation>
+      <translation>Hozzon létre háló keresztmetszeteket</translation>
     </message>
   </context>
   <context>
@@ -83,7 +83,7 @@
     <message>
       <location filename="../../Command.cpp" line="1329"/>
       <source>Decimate</source>
-      <translation type="unfinished">Decimate</translation>
+      <translation>Egyszerűsítés</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1330"/>
@@ -106,7 +106,7 @@
     <message>
       <location filename="../../Command.cpp" line="166"/>
       <source>Creates a boolean difference of the selected meshes</source>
-      <translation type="unfinished">Creates a boolean difference of the selected meshes</translation>
+      <translation>Készít egy logikai különbséget a kiválasztott hálókról</translation>
     </message>
   </context>
   <context>
@@ -119,12 +119,12 @@
     <message>
       <location filename="../../Command.cpp" line="1084"/>
       <source>Face Info</source>
-      <translation type="unfinished">Face Info</translation>
+      <translation>Felület infó</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1085"/>
       <source>Displays information about the selected faces</source>
-      <translation type="unfinished">Displays information about the selected faces</translation>
+      <translation>Információk megjelenítése a kiválasztott felületekről</translation>
     </message>
   </context>
   <context>
@@ -137,7 +137,7 @@
     <message>
       <location filename="../../Command.cpp" line="1259"/>
       <source>Evaluate Solid</source>
-      <translation type="unfinished">Evaluate Solid</translation>
+      <translation>Szilárdtest ellenőrzése</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1260"/>
@@ -155,7 +155,7 @@
     <message>
       <location filename="../../Command.cpp" line="1040"/>
       <source>Evaluate and Repair</source>
-      <translation type="unfinished">Evaluate and Repair</translation>
+      <translation>Ellenőrzés és javítás</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1041"/>
@@ -173,12 +173,12 @@
     <message>
       <location filename="../../Command.cpp" line="374"/>
       <source>Export Mesh…</source>
-      <translation type="unfinished">Export Mesh…</translation>
+      <translation>Háló exportálása…</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="375"/>
       <source>Exports a mesh to a file</source>
-      <translation type="unfinished">Exports a mesh to a file</translation>
+      <translation>Egy fájlba exportálja a hálót</translation>
     </message>
   </context>
   <context>
@@ -191,12 +191,12 @@
     <message>
       <location filename="../../Command.cpp" line="1568"/>
       <source>Close Hole</source>
-      <translation type="unfinished">Close Hole</translation>
+      <translation>Furat bezárása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1569"/>
       <source>Closes a hole interactively in the mesh</source>
-      <translation type="unfinished">Closes a hole interactively in the mesh</translation>
+      <translation>Interaktívan bezárja a furatot a hálóban</translation>
     </message>
   </context>
   <context>
@@ -209,12 +209,12 @@
     <message>
       <location filename="../../Command.cpp" line="1517"/>
       <source>Fill Holes</source>
-      <translation type="unfinished">Fill Holes</translation>
+      <translation>Furatok kitöltése</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1518"/>
       <source>Fills holes in the mesh</source>
-      <translation type="unfinished">Fills holes in the mesh</translation>
+      <translation>A hálón lévő furatok kitöltése</translation>
     </message>
   </context>
   <context>
@@ -227,12 +227,12 @@
     <message>
       <location filename="../../Command.cpp" line="1397"/>
       <source>Flip Normals</source>
-      <translation type="unfinished">Flip Normals</translation>
+      <translation>Aktuálisok tükrözése</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1398"/>
       <source>Flips the normals of the selected mesh</source>
-      <translation type="unfinished">Flips the normals of the selected mesh</translation>
+      <translation>A kiválasztott háló aktuálisának tükrözése</translation>
     </message>
   </context>
   <context>
@@ -245,12 +245,12 @@
     <message>
       <location filename="../../Command.cpp" line="457"/>
       <source>Mesh From Geometry</source>
-      <translation type="unfinished">Mesh From Geometry</translation>
+      <translation>Rács a geometria alapján</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="458"/>
       <source>Creates a mesh from the selected geometry</source>
-      <translation type="unfinished">Creates a mesh from the selected geometry</translation>
+      <translation>Háló létrehozása a kijelölt geometriából</translation>
     </message>
   </context>
   <context>
@@ -263,12 +263,12 @@
     <message>
       <location filename="../../Command.cpp" line="528"/>
       <source>Mesh From Shape</source>
-      <translation type="unfinished">Mesh From Shape</translation>
+      <translation>Formából háló</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="529"/>
       <source>Tessellates the selected shape to a mesh</source>
-      <translation type="unfinished">Tessellates the selected shape to a mesh</translation>
+      <translation>Bontsa fel a kiválasztott formát hálóvá</translation>
     </message>
   </context>
   <context>
@@ -281,7 +281,7 @@
     <message>
       <location filename="../../Command.cpp" line="1361"/>
       <source>Harmonize Normals</source>
-      <translation type="unfinished">Harmonize Normals</translation>
+      <translation>Aktuálisok összehangolása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1362"/>
@@ -299,12 +299,12 @@
     <message>
       <location filename="../../Command.cpp" line="321"/>
       <source>Import Mesh…</source>
-      <translation type="unfinished">Import Mesh…</translation>
+      <translation>Háló importálás…</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="322"/>
       <source>Imports a mesh from a file</source>
-      <translation type="unfinished">Imports a mesh from a file</translation>
+      <translation>A háló importálása fájlból</translation>
     </message>
   </context>
   <context>
@@ -322,7 +322,7 @@
     <message>
       <location filename="../../Command.cpp" line="244"/>
       <source>Creates a boolean intersection from the selected meshes</source>
-      <translation type="unfinished">Creates a boolean intersection from the selected meshes</translation>
+      <translation>Készít egy logikai metszetet a kiválasztott hálókból</translation>
     </message>
   </context>
   <context>
@@ -358,7 +358,7 @@
     <message>
       <location filename="../../Command.cpp" line="766"/>
       <source>Cuts the mesh with a selected polygon</source>
-      <translation type="unfinished">Cuts the mesh with a selected polygon</translation>
+      <translation>Háló kivágása a kiválasztott sokszöggel</translation>
     </message>
   </context>
   <context>
@@ -394,7 +394,7 @@
     <message>
       <location filename="../../Command.cpp" line="983"/>
       <source>Splits a mesh into 2 meshes</source>
-      <translation type="unfinished">Splits a mesh into 2 meshes</translation>
+      <translation>Háló felosztása 2 hálóra</translation>
     </message>
   </context>
   <context>
@@ -412,7 +412,7 @@
     <message>
       <location filename="../../Command.cpp" line="831"/>
       <source>Trims a mesh with a selected polygon</source>
-      <translation type="unfinished">Trims a mesh with a selected polygon</translation>
+      <translation>Háló levágása kiválasztott sokszöggel</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="833"/>
@@ -430,12 +430,12 @@
     <message>
       <location filename="../../Command.cpp" line="1178"/>
       <source>Refinement</source>
-      <translation type="unfinished">Refinement</translation>
+      <translation>Finomítás</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1179"/>
       <source>Refines an existing mesh</source>
-      <translation type="unfinished">Refines an existing mesh</translation>
+      <translation>Létező háló újrahálózása</translation>
     </message>
   </context>
   <context>
@@ -448,12 +448,12 @@
     <message>
       <location filename="../../Command.cpp" line="1212"/>
       <source>Remove Components Manually</source>
-      <translation type="unfinished">Remove Components Manually</translation>
+      <translation>Összetevők kézi eltávolítása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1213"/>
       <source>Marks a component to remove it from the mesh</source>
-      <translation type="unfinished">Marks a component to remove it from the mesh</translation>
+      <translation>Egy összetevő megjelölése a hálóból eltávolításhoz</translation>
     </message>
   </context>
   <context>
@@ -466,12 +466,12 @@
     <message>
       <location filename="../../Command.cpp" line="1130"/>
       <source>Remove Components</source>
-      <translation type="unfinished">Remove Components</translation>
+      <translation>Összetevő eltávolítása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1131"/>
       <source>Removes topologically independent components from the mesh</source>
-      <translation type="unfinished">Removes topologically independent components from the mesh</translation>
+      <translation>Távolítsa el a topológiailag független elemeket a hálóból</translation>
     </message>
   </context>
   <context>
@@ -489,7 +489,7 @@
     <message>
       <location filename="../../Command.cpp" line="1781"/>
       <source>Scales the selected mesh objects</source>
-      <translation type="unfinished">Scales the selected mesh objects</translation>
+      <translation>Méretarányosítja a kiválasztott hálóobjektumokat</translation>
     </message>
   </context>
   <context>
@@ -502,12 +502,12 @@
     <message>
       <location filename="../../Command.cpp" line="924"/>
       <source>Section From Plane</source>
-      <translation type="unfinished">Section From Plane</translation>
+      <translation>Szakasz egy síkból</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="925"/>
       <source>Sections the mesh with the selected plane</source>
-      <translation type="unfinished">Sections the mesh with the selected plane</translation>
+      <translation>A hálót a kiválasztott síkkal metszi</translation>
     </message>
   </context>
   <context>
@@ -525,7 +525,7 @@
     <message>
       <location filename="../../Command.cpp" line="1616"/>
       <source>Creates new mesh segments from the mesh</source>
-      <translation type="unfinished">Creates new mesh segments from the mesh</translation>
+      <translation>A hálóból új hálószakaszokat hoz létre</translation>
     </message>
   </context>
   <context>
@@ -538,12 +538,12 @@
     <message>
       <location filename="../../Command.cpp" line="1651"/>
       <source>Segmentation From Best-Fit Surfaces</source>
-      <translation type="unfinished">Segmentation From Best-Fit Surfaces</translation>
+      <translation>Háló szétválasztása a legjobban illeszkedő felületek alapján</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1652"/>
       <source>Creates new mesh segments from the best-fit surfaces</source>
-      <translation type="unfinished">Creates new mesh segments from the best-fit surfaces</translation>
+      <translation>Létrehoz új háló szakaszokat a legjobban illeszkedő felületekből</translation>
     </message>
   </context>
   <context>
@@ -556,12 +556,12 @@
     <message>
       <location filename="../../Command.cpp" line="1300"/>
       <source>Smooth</source>
-      <translation type="unfinished">Smooth</translation>
+      <translation>Simítás</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1301"/>
       <source>Smoothes the selected meshes</source>
-      <translation type="unfinished">Smoothes the selected meshes</translation>
+      <translation>Kiválasztott hálók simítása</translation>
     </message>
   </context>
   <context>
@@ -574,12 +574,12 @@
     <message>
       <location filename="../../Command.cpp" line="1732"/>
       <source>Split by Components</source>
-      <translation type="unfinished">Split by Components</translation>
+      <translation>Felosztás összetevők szerint</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1733"/>
       <source>Splits the selected mesh into its components</source>
-      <translation type="unfinished">Splits the selected mesh into its components</translation>
+      <translation>Kijelölt háló felosztása összetevőire</translation>
     </message>
   </context>
   <context>
@@ -592,12 +592,12 @@
     <message>
       <location filename="../../Command.cpp" line="895"/>
       <source>Trim With Plane</source>
-      <translation type="unfinished">Trim With Plane</translation>
+      <translation>Síkkal metsz</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="896"/>
       <source>Trims a mesh by removing faces on one side of a selected plane</source>
-      <translation type="unfinished">Trims a mesh by removing faces on one side of a selected plane</translation>
+      <translation>Felvég egy hálót úgy, hogy törli a kiválasztott sík egyik oldalán lévő felületeket</translation>
     </message>
   </context>
   <context>
@@ -615,7 +615,7 @@
     <message>
       <location filename="../../Command.cpp" line="88"/>
       <source>Unifies the selected meshes</source>
-      <translation type="unfinished">Unifies the selected meshes</translation>
+      <translation>Egyesíti a kiválasztott hálózatokat</translation>
     </message>
   </context>
   <context>
@@ -628,7 +628,7 @@
     <message>
       <location filename="../../Command.cpp" line="554"/>
       <source>Curvature Plot</source>
-      <translation type="unfinished">Curvature Plot</translation>
+      <translation>Görbület terv</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="555"/>
@@ -646,12 +646,12 @@
     <message>
       <location filename="../../Command.cpp" line="609"/>
       <source>Curvature Info</source>
-      <translation type="unfinished">Curvature Info</translation>
+      <translation>Görbület információ</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="610"/>
       <source>Displays information about the curvature</source>
-      <translation type="unfinished">Displays information about the curvature</translation>
+      <translation>Információk megjelenítése a kiválasztott görbületről</translation>
     </message>
   </context>
   <context>
@@ -764,7 +764,7 @@
     <message>
       <location filename="../../DlgEvaluateMeshImp.cpp" line="1179"/>
       <source>Repair Mesh</source>
-      <translation type="unfinished">Repair Mesh</translation>
+      <translation>Háló javítás</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.cpp" line="164"/>
@@ -863,7 +863,7 @@
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="745"/>
       <source>Mesh Information</source>
-      <translation type="unfinished">Mesh Information</translation>
+      <translation>Háló információ</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="772"/>
@@ -873,7 +873,7 @@
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="805"/>
       <source>Number of edges</source>
-      <translation type="unfinished">Number of edges</translation>
+      <translation>Élek száma</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="838"/>
@@ -888,7 +888,7 @@
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="14"/>
       <source>Evaluate and Repair Mesh</source>
-      <translation type="unfinished">Evaluate and Repair Mesh</translation>
+      <translation>Háló értékelése &amp; javítása</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateMesh.ui" line="37"/>
@@ -1139,7 +1139,7 @@
     <message>
       <location filename="../../DlgEvaluateSettings.ui" line="14"/>
       <source>Evaluation Settings</source>
-      <translation type="unfinished">Evaluation Settings</translation>
+      <translation>Értékelési beállítások</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateSettings.ui" line="20"/>
@@ -1231,7 +1231,7 @@
       <location filename="../../DlgRegularSolid.ui" line="273"/>
       <location filename="../../DlgRegularSolid.ui" line="424"/>
       <source>Edge length</source>
-      <translation type="unfinished">Edge length</translation>
+      <translation>Él hossz</translation>
     </message>
     <message>
       <location filename="../../DlgRegularSolid.ui" line="293"/>
@@ -1240,7 +1240,7 @@
       <location filename="../../DlgRegularSolid.ui" line="642"/>
       <location filename="../../DlgRegularSolid.ui" line="746"/>
       <source>Sampling</source>
-      <translation type="unfinished">Sampling</translation>
+      <translation>Mintavétel</translation>
     </message>
     <message>
       <location filename="../../DlgRegularSolid.ui" line="353"/>
@@ -1442,12 +1442,12 @@ is used when writing a file in AMF format</source>
     <message>
       <location filename="../../DlgSettingsMeshView.ui" line="14"/>
       <source>Mesh View</source>
-      <translation type="unfinished">Mesh View</translation>
+      <translation>Háló nézet</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsMeshView.ui" line="35"/>
       <source>Default Appearance for New Meshes</source>
-      <translation type="unfinished">Default Appearance for New Meshes</translation>
+      <translation>Új hálók alapértelmezett megjelenítése</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsMeshView.ui" line="251"/>
@@ -1455,10 +1455,10 @@ is used when writing a file in AMF format</source>
 If not checked, it depends on the option "Enable backlight color"
 (preferences section Display -&gt; 3D View). Either the backlight color
 will be used or black.</source>
-      <translation type="unfinished">The bottom side of the surface will be rendered the same way as the top side.
-If not checked, it depends on the option "Enable backlight color"
-(preferences section Display -&gt; 3D View). Either the backlight color
-will be used or black.</translation>
+      <translation>A felület alsó oldala ugyanúgy lesz megjelenítve, mint a felső oldal.
+Ha nincs bejelölve, a megjelenítés a „Hátvilágítás színánek engedélyezése” beállítástól függ
+(lásd a testreszabás szakasz Beállítások → Megjelenítés → 3D nézet). A hátvilágítás színét használja
+vagy fekete lesz.</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsMeshView.ui" line="334"/>
@@ -1469,12 +1469,12 @@ With flat shading the surface normals are not defined per vertex that leads
 to an unreal appearance for curved surfaces while using Phong shading leads
 to a smoother appearance.
 </source>
-      <translation type="unfinished">If this option is set Phong shading is used, otherwise flat shading.
-Shading defines the appearance of surfaces.
+      <translation>Ha ez a beállítás bekapcsolt, Phong árnyékolást használ, egyébként lapos árnyékolás.
+Az árnyékolás határozza meg a felületek megjelenését.
 
-With flat shading the surface normals are not defined per vertex that leads
-to an unreal appearance for curved surfaces while using Phong shading leads
-to a smoother appearance.
+Lapos árnyékolással nem csúcspontokkal határozza meg az aktuális felületeket, amely
+az ívelt felületek irreális megjelenéséhez vezet, azonban a Phong árnyékolás használata simább
+megjelenéshez vezet.
 </translation>
     </message>
     <message>
@@ -1524,12 +1524,12 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../DlgSmoothing.ui" line="72"/>
       <source>Lambda</source>
-      <translation type="unfinished">Lambda</translation>
+      <translation>Lambda</translation>
     </message>
     <message>
       <location filename="../../DlgSmoothing.ui" line="95"/>
       <source>Mu</source>
-      <translation type="unfinished">Mu</translation>
+      <translation>Mu</translation>
     </message>
     <message>
       <location filename="../../DlgSmoothing.ui" line="118"/>
@@ -1562,12 +1562,12 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../RemeshGmsh.cpp" line="104"/>
       <source>Frontal quad</source>
-      <translation type="unfinished">Frontal quad</translation>
+      <translation>Frontális négyszög</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.cpp" line="106"/>
       <source>Quasi-structured quad</source>
-      <translation type="unfinished">Quasi-structured quad</translation>
+      <translation>Kvázistrukturált négyszög</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.cpp" line="200"/>
@@ -1578,7 +1578,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../RemeshGmsh.cpp" line="246"/>
       <source>Running Gmsh…</source>
-      <translation type="unfinished">Running Gmsh…</translation>
+      <translation>Futó gmsh…</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.cpp" line="269"/>
@@ -1596,12 +1596,12 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../MeshEditor.cpp" line="395"/>
       <source>Add Triangle</source>
-      <translation type="unfinished">Add Triangle</translation>
+      <translation>Háromszög hozzáadása</translation>
     </message>
     <message>
       <location filename="../../MeshEditor.cpp" line="396"/>
       <source>Flip Normal</source>
-      <translation type="unfinished">Flip Normal</translation>
+      <translation>Aktuálisok kifordítása</translation>
     </message>
     <message>
       <location filename="../../MeshEditor.cpp" line="397"/>
@@ -1627,7 +1627,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../SegmentationBestFit.cpp" line="172"/>
       <source>Surface Fit</source>
-      <translation type="unfinished">Surface Fit</translation>
+      <translation>Felület illesztés</translation>
     </message>
     <message>
       <location filename="../../SegmentationBestFit.cpp" line="179"/>
@@ -1690,12 +1690,12 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../RemeshGmsh.ui" line="42"/>
       <source>Max element size (0.0 = Auto)</source>
-      <translation type="unfinished">Max element size (0.0 = Auto)</translation>
+      <translation>Maximális elemméret (0.0 = Automatikus)</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.ui" line="68"/>
       <source>Min element size (0.0 = Auto)</source>
-      <translation type="unfinished">Min element size (0.0 = Auto)</translation>
+      <translation>Minimális elemméret (0.0 = Automatikus)</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.ui" line="94"/>
@@ -1715,7 +1715,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../RemeshGmsh.ui" line="141"/>
       <source>Leave empty to use default gmsh executable</source>
-      <translation type="unfinished">Leave empty to use default gmsh executable</translation>
+      <translation>Hagyd üresen az alapértelmezett Gmsh végrehajtható fájl használatához</translation>
     </message>
     <message>
       <location filename="../../RemeshGmsh.ui" line="157"/>
@@ -1738,7 +1738,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../RemoveComponents.ui" line="14"/>
       <source>Remove Components</source>
-      <translation type="unfinished">Remove Components</translation>
+      <translation>Összetevő eltávolítása</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="20"/>
@@ -1772,17 +1772,17 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
       <location filename="../../RemoveComponents.ui" line="89"/>
       <location filename="../../RemoveComponents.ui" line="175"/>
       <source>Pick Triangle</source>
-      <translation type="unfinished">Pick Triangle</translation>
+      <translation>Háromszög választása</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="192"/>
       <source>Region Options</source>
-      <translation type="unfinished">Region Options</translation>
+      <translation>Területi beállítások</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="208"/>
       <source>Respect only triangles with screen-facing normals</source>
-      <translation type="unfinished">Respect only triangles with screen-facing normals</translation>
+      <translation>Csak azokat a háromszögeket vegyük figyelembe, amelyek aktuális vektora a képernyő felé néz</translation>
     </message>
     <message>
       <location filename="../../RemoveComponents.ui" line="96"/>
@@ -1815,7 +1815,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../Segmentation.ui" line="14"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Háló szakaszolás</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="20"/>
@@ -1857,22 +1857,22 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../Segmentation.ui" line="109"/>
       <source>Tolerance (flat)</source>
-      <translation type="unfinished">Tolerance (flat)</translation>
+      <translation>Tűréshatár (lapos)</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="126"/>
       <source>Tolerance (curved)</source>
-      <translation type="unfinished">Tolerance (curved)</translation>
+      <translation>Tűréshatár (görbe)</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="235"/>
       <source>Maximum curvature</source>
-      <translation type="unfinished">Maximum curvature</translation>
+      <translation>Maximális görbület</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="269"/>
       <source>Minimum curvature</source>
-      <translation type="unfinished">Minimum curvature</translation>
+      <translation>Minimális görbület</translation>
     </message>
     <message>
       <location filename="../../Segmentation.ui" line="163"/>
@@ -1895,7 +1895,7 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../SegmentationBestFit.ui" line="14"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Háló szakaszolás</translation>
     </message>
     <message>
       <location filename="../../SegmentationBestFit.ui" line="29"/>
@@ -1977,12 +1977,12 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
     <message>
       <location filename="../../Selection.ui" line="53"/>
       <source>Accept only visible triangles</source>
-      <translation type="unfinished">Accept only visible triangles</translation>
+      <translation>Csak a látható háromszögek figyelembevétele</translation>
     </message>
     <message>
       <location filename="../../Selection.ui" line="63"/>
       <source>Accept only triangles with screen-facing normals</source>
-      <translation type="unfinished">Accept only triangles with screen-facing normals</translation>
+      <translation>Csak azokat a háromszögeket vegyük figyelembe, amelyek aktuális vektora a képernyő felé néz</translation>
     </message>
     <message>
       <location filename="../../Selection.cpp" line="87"/>
@@ -2052,8 +2052,8 @@ Ha a felület szöge ≥ gyűrődésszögét, a feület árnyékolást használj
       <location filename="../../Command.cpp" line="300"/>
       <source>OpenSCAD cannot be found on the system.
 Visit https://openscad.org/ to install it.</source>
-      <translation type="unfinished">OpenSCAD cannot be found on the system.
-Visit https://openscad.org/ to install it.</translation>
+      <translation>OpenSCAD nem található a rendszeren. 
+Kérjük, látogasson el ide: https://openscad.org a telepítéshez.</translation>
     </message>
   </context>
   <context>
@@ -2197,7 +2197,7 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Command.cpp" line="421"/>
       <source>Export Mesh</source>
-      <translation type="unfinished">Export Mesh</translation>
+      <translation>Háló exportálás</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="467"/>
@@ -2232,12 +2232,12 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Command.cpp" line="1531"/>
       <source>Fill Holes</source>
-      <translation type="unfinished">Fill Holes</translation>
+      <translation>Furatok kitöltése</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1532"/>
       <source>Fill holes with maximum number of edges</source>
-      <translation type="unfinished">Fill holes with maximum number of edges</translation>
+      <translation>Töltse ki a furatokat maximális számú élekkel</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1796"/>
@@ -2257,23 +2257,23 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../ViewProvider.cpp" line="794"/>
       <source>Display Components</source>
-      <translation type="unfinished">Display Components</translation>
+      <translation>Összetevők megjelenítése</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="802"/>
       <source>Display Segments</source>
-      <translation type="unfinished">Display Segments</translation>
+      <translation>Szakaszolások megjelenítése</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="810"/>
       <source>Display Colors</source>
-      <translation type="unfinished">Display Colors</translation>
+      <translation>Kijelzőszín</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1680"/>
       <location filename="../../ViewProviderCurvature.cpp" line="539"/>
       <source>Leave Info Mode</source>
-      <translation type="unfinished">Leave Info Mode</translation>
+      <translation>Hagyja az info módot</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1747"/>
@@ -2283,22 +2283,22 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../ViewProvider.cpp" line="1773"/>
       <source>Leave Hole-Filling Mode</source>
-      <translation type="unfinished">Leave Hole-Filling Mode</translation>
+      <translation>Kilépés a furat kitöltő módból</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1821"/>
       <source>Leave Removal Mode</source>
-      <translation type="unfinished">Leave Removal Mode</translation>
+      <translation>Kilépés az eltávolító módból</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1822"/>
       <source>Delete Selected Faces</source>
-      <translation type="unfinished">Delete Selected Faces</translation>
+      <translation>Törli a kijelölt felületeket</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1823"/>
       <source>Clear Selected Faces</source>
-      <translation type="unfinished">Clear Selected Faces</translation>
+      <translation>Törli a kijelölt felületeket</translation>
     </message>
     <message>
       <location filename="../../ViewProviderCurvature.cpp" line="536"/>
@@ -2313,27 +2313,27 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Workbench.cpp" line="72"/>
       <source>Number of facets</source>
-      <translation type="unfinished">Number of facets</translation>
+      <translation>Felszínek száma</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="78"/>
       <source>Minimum bound</source>
-      <translation type="unfinished">Minimum bound</translation>
+      <translation>Minimális határérték</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="81"/>
       <source>Maximum bound</source>
-      <translation type="unfinished">Maximum bound</translation>
+      <translation>Maimális határérték</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="88"/>
       <source>Mesh Info Box</source>
-      <translation type="unfinished">Mesh Info Box</translation>
+      <translation>Háló info mező</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="89"/>
       <source>Mesh Info</source>
-      <translation type="unfinished">Mesh Info</translation>
+      <translation>Háló infó</translation>
     </message>
   </context>
   <context>
@@ -2361,12 +2361,12 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Workbench.cpp" line="48"/>
       <source>Mesh Tools</source>
-      <translation type="unfinished">Mesh Tools</translation>
+      <translation>Háló eszközök</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="49"/>
       <source>Mesh Modify</source>
-      <translation type="unfinished">Mesh Modify</translation>
+      <translation>Háló módosítása</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="50"/>
@@ -2376,17 +2376,17 @@ Visit https://openscad.org/ to install it.</translation>
     <message>
       <location filename="../../Workbench.cpp" line="51"/>
       <source>Mesh Cutting</source>
-      <translation type="unfinished">Mesh Cutting</translation>
+      <translation>Háló vágás</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="52"/>
       <source>Mesh Segmentation</source>
-      <translation type="unfinished">Mesh Segmentation</translation>
+      <translation>Háló szakaszolás</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="53"/>
       <source>Mesh Analyze</source>
-      <translation type="unfinished">Mesh Analyze</translation>
+      <translation>Háló analízis</translation>
     </message>
   </context>
 </TS>

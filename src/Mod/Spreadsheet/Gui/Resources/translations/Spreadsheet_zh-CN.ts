@@ -1139,7 +1139,7 @@ Defaults to: %V = %A
     <message>
       <location filename="../../SpreadsheetView.cpp" line="305"/>
       <source>PDF file</source>
-      <translation>PDF文件</translation>
+      <translation>PDF 文件</translation>
     </message>
   </context>
   <context>

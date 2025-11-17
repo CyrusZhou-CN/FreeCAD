@@ -2921,7 +2921,7 @@ See the file save policy below on how to deal with name conflicts.</translation>
     <message>
       <location filename="../panels/AxisMapEdit.ui" line="44"/>
       <source>The input mapping axis. Coordinates of the first axis will be mapped to the second.</source>
-      <translation type="unfinished">The input mapping axis. Coordinates of the first axis will be mapped to the second.</translation>
+      <translation>入力マッピング軸。1番目の軸の座標が2番目の軸にマッピングされます。</translation>
     </message>
     <message>
       <location filename="../panels/AxisMapEdit.ui" line="51"/>
@@ -3022,7 +3022,7 @@ See the file save policy below on how to deal with name conflicts.</translation>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="107"/>
       <source>Incision</source>
-      <translation type="unfinished">Incision</translation>
+      <translation>彫り込み</translation>
     </message>
     <message>
       <location filename="../panels/DogboneEdit.ui" line="114"/>
@@ -3989,12 +3989,12 @@ Default: 3 mm</source>
     <message>
       <location filename="../../../PathScripts/PathUtils.py" line="645"/>
       <source>Invalid Cutting Edge Angle %.2f, must be &gt;0° and &lt;=180°</source>
-      <translation type="unfinished">Invalid Cutting Edge Angle %.2f, must be &gt;0° and &lt;=180°</translation>
+      <translation>%.2f は無効な切込み角です。0°より大きく、かつ180°以下でなければいけません。</translation>
     </message>
     <message>
       <location filename="../../../PathScripts/PathUtils.py" line="655"/>
       <source>Cutting Edge Angle (%.2f) results in negative tool tip length</source>
-      <translation>切れ刃角 (%.2f) では刃先距離がマイナスになります</translation>
+      <translation>切込み角 (%.2f) では刃先距離がマイナスになります</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/SanityCmd.py" line="79"/>
@@ -6000,7 +6000,7 @@ Use property KeepToolDown to change this</translation>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="101"/>
       <source>BaseBoundBox</source>
-      <translation type="unfinished">BaseBoundBox</translation>
+      <translation>ベースバウンディングボックス</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Waterline.py" line="102"/>
@@ -6446,7 +6446,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="1362"/>
       <source>Lead In/Out</source>
-      <translation type="unfinished">Lead In/Out</translation>
+      <translation>進入</translation>
     </message>
     <message>
       <location filename="../../../Path/Dressup/Gui/LeadInOut.py" line="54"/>
@@ -7396,7 +7396,7 @@ Aborting op creation</translation>
     <message>
       <location filename="../../../Path/Main/Gui/SanityCmd.py" line="54"/>
       <source>Sanity Check</source>
-      <translation type="unfinished">Sanity Check</translation>
+      <translation>正常性チェック</translation>
     </message>
     <message>
       <location filename="../../../Path/Main/Gui/SanityCmd.py" line="56"/>
@@ -8278,7 +8278,7 @@ This will not delete the toolbits contained within it.</translation>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="434"/>
       <source>BaseBoundBox</source>
-      <translation type="unfinished">BaseBoundBox</translation>
+      <translation>ベースバウンディングボックス</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Surface.py" line="435"/>
@@ -8501,12 +8501,12 @@ This will not delete the toolbits contained within it.</translation>
     <message>
       <location filename="../../../Path/Op/Vcarve.py" line="559"/>
       <source>VCarve requires an engraving cutter with a cutting edge angle</source>
-      <translation>VCarveには切削エッジ角度を持つ彫刻加工カッターが必要です</translation>
+      <translation>VCarveには切込み角を持つ彫刻加工カッターが必要です</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Vcarve.py" line="565"/>
       <source>Engraver cutting edge angle must be &lt; 180 degrees.</source>
-      <translation>彫刻加工の切削エッジ角度は180度未満でなければなりません。</translation>
+      <translation>彫刻加工の切込み角は180度未満でなければなりません。</translation>
     </message>
     <message>
       <location filename="../../../Path/Op/Gui/Vcarve.py" line="222"/>
@@ -9184,7 +9184,7 @@ This will not delete the toolbits contained within it.</translation>
       <location filename="../../../Path/Tool/shape/models/chamfer.py" line="37"/>
       <location filename="../../../Path/Tool/shape/models/vbit.py" line="37"/>
       <source>Cutting edge angle</source>
-      <translation type="unfinished">Cutting edge angle</translation>
+      <translation>切込み角</translation>
     </message>
     <message>
       <location filename="../../../Path/Tool/shape/models/chamfer.py" line="61"/>

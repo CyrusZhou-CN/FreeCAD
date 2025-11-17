@@ -21,7 +21,7 @@
     <message>
       <location filename="../../DlgPrefsMeasureAppearanceImp.ui" line="59"/>
       <source>Text size</source>
-      <translation type="unfinished">Text size</translation>
+      <translation>Tekststørrelse</translation>
     </message>
     <message>
       <location filename="../../DlgPrefsMeasureAppearanceImp.ui" line="66"/>
@@ -31,12 +31,12 @@
     <message>
       <location filename="../../DlgPrefsMeasureAppearanceImp.ui" line="76"/>
       <source> px</source>
-      <translation type="unfinished"> px</translation>
+      <translation> px</translation>
     </message>
     <message>
       <location filename="../../DlgPrefsMeasureAppearanceImp.ui" line="112"/>
       <source>Background color</source>
-      <translation type="unfinished">Background color</translation>
+      <translation>Baggrundsfarve</translation>
     </message>
   </context>
   <context>
@@ -44,7 +44,7 @@
     <message>
       <location filename="../../../MeasureCOM.py" line="62"/>
       <source>Element to measure</source>
-      <translation type="unfinished">Element to measure</translation>
+      <translation>Element som skal opmåles</translation>
     </message>
   </context>
   <context>
@@ -52,7 +52,7 @@
     <message>
       <location filename="../../../MeasureCOM.py" line="69"/>
       <source>The result location</source>
-      <translation type="unfinished">The result location</translation>
+      <translation>Resultatets placering</translation>
     </message>
   </context>
   <context>
@@ -60,63 +60,63 @@
     <message>
       <location filename="../../QuickMeasure.cpp" line="210"/>
       <source>Total area: %1</source>
-      <translation type="unfinished">Total area: %1</translation>
+      <translation>Samlet areal: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="221"/>
       <location filename="../../QuickMeasure.cpp" line="255"/>
       <source>Nominal distance: %1</source>
-      <translation type="unfinished">Nominal distance: %1</translation>
+      <translation>Nominel afstand: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="224"/>
       <source>Area: %1</source>
-      <translation type="unfinished">Area: %1</translation>
+      <translation>Areal: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="228"/>
       <source>Area: %1, Radius: %2</source>
-      <translation type="unfinished">Area: %1, Radius: %2</translation>
+      <translation>Areal: %1, Radius: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="232"/>
       <source>Area: %1, Diameter: %2</source>
-      <translation type="unfinished">Area: %1, Diameter: %2</translation>
+      <translation>Areal: %1, Diameter: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="240"/>
       <source>Total area: %1, Axis distance: %2</source>
-      <translation type="unfinished">Total area: %1, Axis distance: %2</translation>
+      <translation>Samlet areal: %1, Aksial afstand: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="245"/>
       <source>Total area: %1, Axis distance: %2, Axis angle: %3</source>
-      <translation type="unfinished">Total area: %1, Axis distance: %2, Axis angle: %3</translation>
+      <translation>Samlet areal: %1, Aksial afstand: %2, Vinkel mellem akser: %3</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="252"/>
       <source>Total length: %1</source>
-      <translation type="unfinished">Total length: %1</translation>
+      <translation>Samlet længde: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="258"/>
       <source>Angle: %1, Total length: %2</source>
-      <translation type="unfinished">Angle: %1, Total length: %2</translation>
+      <translation>Vinkel: %1, Samlet længde: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="262"/>
       <source>Length: %1</source>
-      <translation type="unfinished">Length: %1</translation>
+      <translation>Længde: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="265"/>
       <source>Radius: %1</source>
-      <translation type="unfinished">Radius: %1</translation>
+      <translation>Radius: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="268"/>
       <source>Diameter: %1</source>
-      <translation type="unfinished">Diameter: %1</translation>
+      <translation>Diameter: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="271"/>
@@ -126,28 +126,28 @@
     <message>
       <location filename="../../QuickMeasure.cpp" line="274"/>
       <source>Minimum distance: %1</source>
-      <translation type="unfinished">Minimum distance: %1</translation>
+      <translation>Mindste afstand: %1</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="277"/>
       <source>Minimum distance: %1, Axis distance: %2</source>
-      <translation type="unfinished">Minimum distance: %1, Axis distance: %2</translation>
+      <translation>Mindste afstand: %1, Aksiel afstand: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="282"/>
       <source>Minimum distance: %1, Center distance: %2</source>
-      <translation type="unfinished">Minimum distance: %1, Center distance: %2</translation>
+      <translation>Mindste afstand: %1, Centerafstand: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="289"/>
       <location filename="../../QuickMeasure.cpp" line="301"/>
       <source>Total length: %1, Center distance: %2</source>
-      <translation type="unfinished">Total length: %1, Center distance: %2</translation>
+      <translation>Samlet længde: %1, Centerafstand: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="294"/>
       <source>Total length: %1, Center distance: %2, Axis angle: %3</source>
-      <translation type="unfinished">Total length: %1, Center distance: %2, Axis angle: %3</translation>
+      <translation>Samlet længde: %1, Centerafstand: %2, Vinkel mellem akser: %3</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="307"/>
@@ -178,13 +178,13 @@
     <message>
       <location filename="../../Command.cpp" line="51"/>
       <source>&amp;Measure</source>
-      <translation type="unfinished">&amp;Measure</translation>
+      <translation>Opmål</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="52"/>
       <location filename="../../Command.cpp" line="54"/>
       <source>Measure a feature</source>
-      <translation type="unfinished">Measure a feature</translation>
+      <translation>Opmål en geometri</translation>
     </message>
   </context>
   <context>
@@ -192,7 +192,7 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="66"/>
       <source>Measurement</source>
-      <translation type="unfinished">Measurement</translation>
+      <translation>Opmåling</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="86"/>
@@ -202,7 +202,7 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="92"/>
       <source>Auto Save</source>
-      <translation type="unfinished">Auto Save</translation>
+      <translation>Gem automatisk</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="96"/>
@@ -222,7 +222,7 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="115"/>
       <source>Settings</source>
-      <translation type="unfinished">Settings</translation>
+      <translation>Indstillinger</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="156"/>
@@ -232,12 +232,12 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="158"/>
       <source>Result:</source>
-      <translation type="unfinished">Result:</translation>
+      <translation>Resultat:</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="186"/>
       <source>Saves the measurement in the active document</source>
-      <translation type="unfinished">Saves the measurement in the active document</translation>
+      <translation>Gemmer opmålingen i det aktive dokument</translation>
     </message>
     <message>
       <location filename="../../TaskMeasure.cpp" line="192"/>
@@ -247,7 +247,7 @@
     <message>
       <location filename="../../TaskMeasure.cpp" line="193"/>
       <source>Close the measurement task.</source>
-      <translation type="unfinished">Close the measurement task.</translation>
+      <translation>Luk måleværktøjet.</translation>
     </message>
   </context>
   <context>

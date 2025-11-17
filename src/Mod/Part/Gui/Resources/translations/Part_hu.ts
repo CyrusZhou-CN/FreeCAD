@@ -877,37 +877,37 @@
       <location filename="../../AttacherTexts.cpp" line="89"/>
       <source>Align XY-plane to osculating circle of an edge. Optional vertex link defines where.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation type="unfinished">Align XY-plane to osculating circle of an edge. Optional vertex link defines where.</translation>
+      <translation>Igazítsa az XY síkot egy él érintőkörére. A választható csomópont kapcsolat határozza meg a helyet.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="94"/>
       <source>XY-plane by 3 points</source>
       <comment>Attachment3D mode caption</comment>
-      <translation type="unfinished">XY-plane by 3 points</translation>
+      <translation>XY sík 3 ponttal</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="95"/>
       <source>Align XY-plane to pass through three vertices.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation type="unfinished">Align XY-plane to pass through three vertices.</translation>
+      <translation>Igazítsa az XY síkot három csúcspontra.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="97"/>
       <source>XZ-plane by 3 points</source>
       <comment>Attachment3D mode caption</comment>
-      <translation type="unfinished">XZ-plane by 3 points</translation>
+      <translation>XZ sík 3 ponttal</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="98"/>
       <source>Align XZ-plane to pass through 3 points; X axis will pass through two first points.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation type="unfinished">Align XZ-plane to pass through 3 points; X axis will pass through two first points.</translation>
+      <translation>Igazítsa az XZ síkot úgy, hogy 3 ponton haladjon át; az X tengely a két első ponton haladjon át.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="101"/>
       <source>Specialty mode for folding polyhedra. Select 4 edges in order: foldable edge, fold line, other fold line, other foldable edge. XY-plane will be aligned to folding the first edge.</source>
       <comment>Attachment3D mode tooltip</comment>
-      <translation type="unfinished">Specialty mode for folding polyhedra. Select 4 edges in order: foldable edge, fold line, other fold line, other foldable edge. XY-plane will be aligned to folding the first edge.</translation>
+      <translation>Speciális mód az összehajtható poliéderekhez, sok-lapokhoz. Válasszon 4 élet sorrendben: összehajtható él, behajtható egyenes, más összehajtható egyenes, egyéb összecsukható él. XY sík igazodni fog az első összecsukható élhez.</translation>
     </message>
     <message>
       <location filename="../../AttacherTexts.cpp" line="103"/>
@@ -1061,12 +1061,12 @@
     <message>
       <location filename="../../DlgBlock.ui" line="14"/>
       <source>Block Definition</source>
-      <translation type="unfinished">Block Definition</translation>
+      <translation>Blokk meghatározása</translation>
     </message>
     <message>
       <location filename="../../DlgBlock.ui" line="20"/>
       <source>First Limit</source>
-      <translation type="unfinished">First Limit</translation>
+      <translation>Első határérték</translation>
     </message>
     <message>
       <location filename="../../DlgBlock.ui" line="40"/>
@@ -1114,7 +1114,7 @@
       <location filename="../../DlgBlock.ui" line="93"/>
       <location filename="../../DlgBlock.ui" line="254"/>
       <source>Limit</source>
-      <translation type="unfinished">Limit</translation>
+      <translation>Határérték</translation>
     </message>
     <message>
       <location filename="../../DlgBlock.ui" line="135"/>
@@ -1124,7 +1124,7 @@
     <message>
       <location filename="../../DlgBlock.ui" line="181"/>
       <source>Second Limit</source>
-      <translation type="unfinished">Second Limit</translation>
+      <translation>Második határérték</translation>
     </message>
     <message>
       <location filename="../../DlgBlock.ui" line="83"/>
@@ -1181,12 +1181,12 @@
     <message>
       <location filename="../../Command.cpp" line="2139"/>
       <source>Box Selection</source>
-      <translation type="unfinished">Box Selection</translation>
+      <translation>Négyzet kiválasztás</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2140"/>
       <source>Selects elements in the 3D view using a box selection</source>
-      <translation type="unfinished">Selects elements in the 3D view using a box selection</translation>
+      <translation>Jelölje ki az elemeket a 3D nézetben egy kijelölő mezővel</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2142"/>
@@ -1209,7 +1209,7 @@
     <message>
       <location filename="../../Command.cpp" line="2070"/>
       <source>Analyzes the selected shapes for errors</source>
-      <translation type="unfinished">Analyzes the selected shapes for errors</translation>
+      <translation>A kiválasztott formákat hibák szempontjából elemzi</translation>
     </message>
   </context>
   <context>
@@ -1222,12 +1222,12 @@
     <message>
       <location filename="../../Command.cpp" line="2102"/>
       <source>Appearance per &amp;Face</source>
-      <translation type="unfinished">Appearance per &amp;Face</translation>
+      <translation>&amp;Felületenkénti megjelenés</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2103"/>
       <source>Sets the appearance of individual faces of the selected object</source>
-      <translation type="unfinished">Sets the appearance of individual faces of the selected object</translation>
+      <translation>Beállítja a kiválasztott objektum egyes felületeinek megjelenését</translation>
     </message>
   </context>
   <context>
@@ -1245,7 +1245,7 @@
     <message>
       <location filename="../../Command.cpp" line="1238"/>
       <source>Applies a boolean operations with the selected shapes</source>
-      <translation type="unfinished">Applies a boolean operations with the selected shapes</translation>
+      <translation>Boolean műveletet végez a kiválasztott formákon</translation>
     </message>
   </context>
   <context>
@@ -1265,7 +1265,7 @@
     <message>
       <location filename="../../CommandParametric.cpp" line="108"/>
       <source>Creates a solid cube</source>
-      <translation type="unfinished">Creates a solid cube</translation>
+      <translation>Szilárd kockát hoz létre</translation>
     </message>
   </context>
   <context>
@@ -1278,12 +1278,12 @@
     <message>
       <location filename="../../Command.cpp" line="134"/>
       <source>Box Fix 1</source>
-      <translation type="unfinished">Box Fix 1</translation>
+      <translation>Rögzített doboz 1</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="135"/>
       <source>Creates a solid box</source>
-      <translation type="unfinished">Creates a solid box</translation>
+      <translation>Szilárd kockát hoz létre</translation>
     </message>
   </context>
   <context>
@@ -1296,12 +1296,12 @@
     <message>
       <location filename="../../Command.cpp" line="175"/>
       <source>Box Fix 2</source>
-      <translation type="unfinished">Box Fix 2</translation>
+      <translation>Rögzített doboz 2</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="176"/>
       <source>Creates a solid box</source>
-      <translation type="unfinished">Creates a solid box</translation>
+      <translation>Szilárd kockát hoz létre</translation>
     </message>
   </context>
   <context>
@@ -1337,7 +1337,7 @@
     <message>
       <location filename="../../Command.cpp" line="1434"/>
       <source>Chamfers the selected edges of a shape</source>
-      <translation type="unfinished">Chamfers the selected edges of a shape</translation>
+      <translation>A forma kijelölt éleinek letörése</translation>
     </message>
   </context>
   <context>
@@ -1355,7 +1355,7 @@
     <message>
       <location filename="../../Command.cpp" line="362"/>
       <source>Intersects the selected shapes</source>
-      <translation type="unfinished">Intersects the selected shapes</translation>
+      <translation>Átfedi a kiválasztott formákat</translation>
     </message>
   </context>
   <context>
@@ -1368,12 +1368,12 @@
     <message>
       <location filename="../../Command.cpp" line="725"/>
       <source>Compound Tools</source>
-      <translation type="unfinished">Compound Tools</translation>
+      <translation>Egyesítő eszközök</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="726"/>
       <source>Compound tools for working with multiple shapes</source>
-      <translation type="unfinished">Compound tools for working with multiple shapes</translation>
+      <translation>Egyesítő eszközök több alakzat kezeléséhez</translation>
     </message>
   </context>
   <context>
@@ -1386,12 +1386,12 @@
     <message>
       <location filename="../../Command.cpp" line="499"/>
       <source>Join Shapes</source>
-      <translation type="unfinished">Join Shapes</translation>
+      <translation>Formák csatlakoztatása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="501"/>
       <source>Joins the selected walled shapes</source>
-      <translation type="unfinished">Joins the selected walled shapes</translation>
+      <translation>Csatlakoztatja a kiválasztott falakkal határolt formákat</translation>
     </message>
   </context>
   <context>
@@ -1422,12 +1422,12 @@
     <message>
       <location filename="../../Command.cpp" line="606"/>
       <source>Split Shapes</source>
-      <translation type="unfinished">Split Shapes</translation>
+      <translation>Formák felosztása</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="608"/>
       <source>Shape splitting and compsolid creation tools</source>
-      <translation type="unfinished">Shape splitting and compsolid creation tools</translation>
+      <translation>Forma felosztó és összetett szilárd test létrehozó eszközök</translation>
     </message>
   </context>
   <context>
@@ -1445,7 +1445,7 @@
     <message>
       <location filename="../../Command.cpp" line="833"/>
       <source>Compounds the selected shapes</source>
-      <translation type="unfinished">Compounds the selected shapes</translation>
+      <translation>Hozzon létre egy egyesítést a kiválasztott formákkal</translation>
     </message>
   </context>
   <context>
@@ -1478,7 +1478,7 @@
     <message>
       <location filename="../../Command.cpp" line="1489"/>
       <source>Cross-Sections</source>
-      <translation type="unfinished">Cross-Sections</translation>
+      <translation>Keresztmetszet</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="1490"/>
@@ -2383,12 +2383,12 @@ Note: The placement is expressed in local space of object being attached.</trans
     <message>
       <location filename="../../CrossSections.ui" line="14"/>
       <source>Cross Sections</source>
-      <translation type="unfinished">Cross Sections</translation>
+      <translation>Keresztmetszet</translation>
     </message>
     <message>
       <location filename="../../CrossSections.ui" line="20"/>
       <source>Guiding Plane</source>
-      <translation type="unfinished">Guiding Plane</translation>
+      <translation>Irányadó sík</translation>
     </message>
     <message>
       <location filename="../../CrossSections.ui" line="26"/>
@@ -5459,7 +5459,7 @@ Egyedi logikai művelet ellenőrzés:</translation>
     <message>
       <location filename="../../TaskShapeBuilder.ui" line="101"/>
       <source>Box Selection</source>
-      <translation type="unfinished">Box Selection</translation>
+      <translation>Négyzet kiválasztás</translation>
     </message>
     <message>
       <location filename="../../TaskShapeBuilder.ui" line="122"/>
@@ -6695,7 +6695,7 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../TaskFaceAppearances.ui" line="74"/>
       <source>Custom appearance</source>
-      <translation type="unfinished">Custom appearance</translation>
+      <translation>Egyedi megjelenítés</translation>
     </message>
     <message>
       <location filename="../../TaskFaceAppearances.ui" line="88"/>
@@ -6715,7 +6715,7 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../TaskFaceAppearances.ui" line="101"/>
       <source>Box Selection</source>
-      <translation type="unfinished">Box Selection</translation>
+      <translation>Négyzet kiválasztás</translation>
     </message>
   </context>
   <context>

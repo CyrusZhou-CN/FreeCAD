@@ -9499,7 +9499,7 @@ This will not delete the toolbits contained within it.</source>
     <message>
       <location filename="../../../InitGui.py" line="176"/>
       <source>Simulators</source>
-      <translation type="unfinished">Simulators</translation>
+      <translation>Szimulátorok</translation>
     </message>
   </context>
 </TS>

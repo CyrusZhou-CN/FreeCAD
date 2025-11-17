@@ -184,7 +184,7 @@
     <message>
       <location filename="../../DlgPointsRead.ui" line="101"/>
       <source>Cluster by lines starting with</source>
-      <translation type="unfinished">Cluster by lines starting with</translation>
+      <translation>Clúster por líneas que comienzan con</translation>
     </message>
     <message>
       <location filename="../../DlgPointsRead.ui" line="111"/>

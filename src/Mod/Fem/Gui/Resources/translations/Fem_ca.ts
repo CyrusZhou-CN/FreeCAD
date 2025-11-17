@@ -1109,7 +1109,7 @@ Només té afecte si l'opció 'Només canonada' està marcada</translation>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="149"/>
       <source>Number of tasks</source>
-      <translation type="unfinished">Number of tasks</translation>
+      <translation>Nombre de tasques</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="159"/>
@@ -1119,12 +1119,12 @@ Només té afecte si l'opció 'Només canonada' està marcada</translation>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="175"/>
       <source>Threads per task</source>
-      <translation type="unfinished">Threads per task</translation>
+      <translation>Fils per tasca</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="185"/>
       <source>Number of threads per task. Take effect if Elmer uses OpenMP.</source>
-      <translation type="unfinished">Number of threads per task. Take effect if Elmer uses OpenMP.</translation>
+      <translation>Nombre de fils per tasca. Tindrà efecte si Elmer utilitza OpenMP.</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="206"/>
@@ -7988,7 +7988,7 @@ Deixeu-ho en blanc per a utilitzar l'executable de Python predeterminat</transla
     <message>
       <location filename="../ui/SolverElmer.ui" line="14"/>
       <source>Solver Elmer Control</source>
-      <translation type="unfinished">Solver Elmer Control</translation>
+      <translation>Control del solucionador Elmer</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="20"/>
@@ -8018,7 +8018,7 @@ Deixeu-ho en blanc per a utilitzar l'executable de Python predeterminat</transla
     <message>
       <location filename="../ui/SolverElmer.ui" line="82"/>
       <source>Simulation type</source>
-      <translation type="unfinished">Simulation type</translation>
+      <translation>Tipus de simulació</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="122"/>

@@ -1176,7 +1176,7 @@ Domyślnie %V = %A
     <message>
       <location filename="../../Workbench.cpp" line="50"/>
       <source>Spreadsheet</source>
-      <translation>Arkusz kalkulacyjny</translation>
+      <translation>Arkusz Kalkulacyjny</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="51"/>

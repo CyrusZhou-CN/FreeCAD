@@ -6948,7 +6948,7 @@ Overlapping volumes of the shapes will be removed.</source>
     <message>
       <location filename="../../../BOPTools/SplitFeatures.py" line="335"/>
       <source>Slice to Compound</source>
-      <translation>Нарезать в Составной объект</translation>
+      <translation>Нарезать, чтобы соединить</translation>
     </message>
     <message>
       <location filename="../../../BOPTools/SplitFeatures.py" line="340"/>

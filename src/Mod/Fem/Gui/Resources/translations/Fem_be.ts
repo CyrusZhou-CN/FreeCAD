@@ -1110,7 +1110,7 @@ Only takes effect if 'Pipeline only' is enabled</source>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="149"/>
       <source>Number of tasks</source>
-      <translation type="unfinished">Number of tasks</translation>
+      <translation>Колькасць задач</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="159"/>
@@ -1123,12 +1123,13 @@ Only takes effect if 'Pipeline only' is enabled</source>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="175"/>
       <source>Threads per task</source>
-      <translation type="unfinished">Threads per task</translation>
+      <translation>Патокаў выканання для задачы</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="185"/>
       <source>Number of threads per task. Take effect if Elmer uses OpenMP.</source>
-      <translation type="unfinished">Number of threads per task. Take effect if Elmer uses OpenMP.</translation>
+      <translation>Колькасць патокаў у задачы.
+Уступіць у сілу, калі Elmer ужывае OpenMP.</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="206"/>
@@ -7982,7 +7983,7 @@ Leave blank to use default Python executable</source>
     <message>
       <location filename="../ui/SolverElmer.ui" line="14"/>
       <source>Solver Elmer Control</source>
-      <translation type="unfinished">Solver Elmer Control</translation>
+      <translation>Кіраваць сродка рашэння Elmer</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="20"/>
@@ -8012,7 +8013,7 @@ Leave blank to use default Python executable</source>
     <message>
       <location filename="../ui/SolverElmer.ui" line="82"/>
       <source>Simulation type</source>
-      <translation type="unfinished">Simulation type</translation>
+      <translation>Тып мадэлявання</translation>
     </message>
     <message>
       <location filename="../ui/SolverElmer.ui" line="122"/>

@@ -3710,7 +3710,7 @@ Although you will be able to migrate any moment later with 'Part Design -&gt; Mi
     <message>
       <location filename="../../ViewProviderScaled.cpp" line="38"/>
       <source>Edit Scale</source>
-      <translation>Éditer la mise à l'échelle</translation>
+      <translation>Modifier l'échelle</translation>
     </message>
     <message>
       <location filename="../../ViewProviderThickness.cpp" line="40"/>

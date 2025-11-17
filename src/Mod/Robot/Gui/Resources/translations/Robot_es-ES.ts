@@ -227,12 +227,12 @@
     <message>
       <location filename="../../Command.cpp" line="109"/>
       <source>Move to Home</source>
-      <translation type="unfinished">Move to Home</translation>
+      <translation>Mover a inicio</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="110"/>
       <source>Moves to the home position</source>
-      <translation type="unfinished">Moves to the home position</translation>
+      <translation>Mover a la posición de inicio</translation>
     </message>
   </context>
   <context>
@@ -245,7 +245,7 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="234"/>
       <source>Set Default Orientation</source>
-      <translation type="unfinished">Set Default Orientation</translation>
+      <translation>Establecer orientación por defecto</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="236"/>
@@ -340,7 +340,7 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="426"/>
       <source>Creates a dress-up object that overrides aspects of a trajectory</source>
-      <translation type="unfinished">Creates a dress-up object that overrides aspects of a trajectory</translation>
+      <translation>Crea un objeto de retoque que sustituye aspectos de una trayectoria</translation>
     </message>
   </context>
   <context>
@@ -353,7 +353,7 @@
     <message>
       <location filename="../../Workbench.cpp" line="50"/>
       <source>Robot Tools</source>
-      <translation type="unfinished">Robot Tools</translation>
+      <translation>Herramientas de robot</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="51"/>
@@ -563,7 +563,7 @@
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="29"/>
       <source>Hide/Show</source>
-      <translation type="unfinished">Hide/Show</translation>
+      <translation>Mostrar/ocultar</translation>
     </message>
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="47"/>

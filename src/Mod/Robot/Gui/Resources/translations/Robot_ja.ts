@@ -16,7 +16,7 @@
     <message>
       <location filename="../../CommandInsertRobot.cpp" line="240"/>
       <source>Adds a tool shape to the robot</source>
-      <translation type="unfinished">Adds a tool shape to the robot</translation>
+      <translation>ロボットにツール形状を追加する</translation>
     </message>
   </context>
   <context>
@@ -29,12 +29,12 @@
     <message>
       <location filename="../../Command.cpp" line="162"/>
       <source>Place Robot</source>
-      <translation type="unfinished">Place Robot</translation>
+      <translation>ロボットを配置</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="163"/>
       <source>Places a robot in the scene</source>
-      <translation type="unfinished">Places a robot in the scene</translation>
+      <translation>シーン内にロボットを配置する</translation>
     </message>
   </context>
   <context>
@@ -52,7 +52,7 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="55"/>
       <source>Creates a new empty trajectory</source>
-      <translation type="unfinished">Creates a new empty trajectory</translation>
+      <translation>新しい空の軌道を作成する</translation>
     </message>
   </context>
   <context>
@@ -65,12 +65,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="359"/>
       <source>Edge to Trajectory</source>
-      <translation type="unfinished">Edge to Trajectory</translation>
+      <translation>エッジを軌道に変換</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="360"/>
       <source>Generates a trajectory from the selected edges</source>
-      <translation type="unfinished">Generates a trajectory from the selected edges</translation>
+      <translation>選択したエッジから軌道を生成する</translation>
     </message>
   </context>
   <context>
@@ -83,12 +83,13 @@
     <message>
       <location filename="../../CommandExport.cpp" line="45"/>
       <source>Kuka Compact Subroutine</source>
-      <translation type="unfinished">Kuka Compact Subroutine</translation>
+      <translation>KUKAコンパクトサブルーチン</translation>
     </message>
     <message>
       <location filename="../../CommandExport.cpp" line="46"/>
       <source>Exports the trajectory as a compact KRL subroutine</source>
-      <translation type="unfinished">Exports the trajectory as a compact KRL subroutine</translation>
+      <translation>軌道をコンパクトなKRLサブルーティーンとしてエクスポートする
+</translation>
     </message>
   </context>
   <context>
@@ -101,12 +102,12 @@
     <message>
       <location filename="../../CommandExport.cpp" line="120"/>
       <source>Kuka Full Subroutine</source>
-      <translation type="unfinished">Kuka Full Subroutine</translation>
+      <translation>KUKAフルサブルーチン</translation>
     </message>
     <message>
       <location filename="../../CommandExport.cpp" line="121"/>
       <source>Exports the trajectory as a full KRL subroutine</source>
-      <translation type="unfinished">Exports the trajectory as a full KRL subroutine</translation>
+      <translation>軌道をフルKRLサブルーティーンとしてエクスポートする</translation>
     </message>
   </context>
   <context>
@@ -124,7 +125,7 @@
     <message>
       <location filename="../../CommandInsertRobot.cpp" line="192"/>
       <source>Inserts a Kuka IR125 robot into the scene</source>
-      <translation type="unfinished">Inserts a Kuka IR125 robot into the scene</translation>
+      <translation>KUKA IR125ロボットをシーンに挿入する</translation>
     </message>
   </context>
   <context>
@@ -142,7 +143,7 @@
     <message>
       <location filename="../../CommandInsertRobot.cpp" line="97"/>
       <source>Inserts a Kuka IR16 robot into the scene</source>
-      <translation type="unfinished">Inserts a Kuka IR16 robot into the scene</translation>
+      <translation>KUKA IR16ロボットをシーンに挿入する</translation>
     </message>
   </context>
   <context>
@@ -160,7 +161,7 @@
     <message>
       <location filename="../../CommandInsertRobot.cpp" line="145"/>
       <source>Inserts a Kuka IR210 robot into the scene</source>
-      <translation type="unfinished">Inserts a Kuka IR210 robot into the scene</translation>
+      <translation>KUKA IR210ロボットをシーンに挿入する</translation>
     </message>
   </context>
   <context>
@@ -178,7 +179,7 @@
     <message>
       <location filename="../../CommandInsertRobot.cpp" line="46"/>
       <source>Inserts a Kuka IR500 into the document</source>
-      <translation type="unfinished">Inserts a Kuka IR500 into the document</translation>
+      <translation>KUKA IR500をドキュメントに挿入する</translation>
     </message>
   </context>
   <context>
@@ -191,12 +192,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="88"/>
       <source>Insert in Trajectory</source>
-      <translation type="unfinished">Insert in Trajectory</translation>
+      <translation>軌道に挿入</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="89"/>
       <source>Inserts the robot tool location into the trajectory</source>
-      <translation type="unfinished">Inserts the robot tool location into the trajectory</translation>
+      <translation>ロボットツールの位置を軌道に挿入する</translation>
     </message>
   </context>
   <context>
@@ -209,12 +210,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="157"/>
       <source>Insert in Trajectory</source>
-      <translation type="unfinished">Insert in Trajectory</translation>
+      <translation>軌道に挿入</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="158"/>
       <source>Inserts the preselection position into the trajectory (W)</source>
-      <translation type="unfinished">Inserts the preselection position into the trajectory (W)</translation>
+      <translation>事前選択した位置を軌道に挿入する（W）</translation>
     </message>
   </context>
   <context>
@@ -227,12 +228,12 @@
     <message>
       <location filename="../../Command.cpp" line="109"/>
       <source>Move to Home</source>
-      <translation type="unfinished">Move to Home</translation>
+      <translation>ホーム位置に移動</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="110"/>
       <source>Moves to the home position</source>
-      <translation type="unfinished">Moves to the home position</translation>
+      <translation>ホーム位置へ移動する</translation>
     </message>
   </context>
   <context>
@@ -245,12 +246,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="234"/>
       <source>Set Default Orientation</source>
-      <translation type="unfinished">Set Default Orientation</translation>
+      <translation>デフォルトの向きを設定</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="236"/>
       <source>Sets the default orientation for subsequent commands for waypoint creation</source>
-      <translation type="unfinished">Sets the default orientation for subsequent commands for waypoint creation</translation>
+      <translation>以降のウェイポイント作成コマンドに使用するデフォルトの向きを設定する</translation>
     </message>
   </context>
   <context>
@@ -263,12 +264,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="278"/>
       <source>Set Default Values</source>
-      <translation type="unfinished">Set Default Values</translation>
+      <translation>デフォルト値を設定</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="279"/>
       <source>Sets the default values for speed, acceleration, and continuity for subsequent commands of waypoint creation</source>
-      <translation type="unfinished">Sets the default values for speed, acceleration, and continuity for subsequent commands of waypoint creation</translation>
+      <translation>以降のウェイポイント作成コマンドで使用する速度、加速度、連続性のデフォルト値を設定する</translation>
     </message>
   </context>
   <context>
@@ -281,12 +282,12 @@
     <message>
       <location filename="../../Command.cpp" line="50"/>
       <source>Set Home Position</source>
-      <translation type="unfinished">Set Home Position</translation>
+      <translation>ホーム位置を設定</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="51"/>
       <source>Sets the home position</source>
-      <translation type="unfinished">Sets the home position</translation>
+      <translation>ホーム位置を設定する</translation>
     </message>
   </context>
   <context>
@@ -299,12 +300,12 @@
     <message>
       <location filename="../../Command.cpp" line="211"/>
       <source>Simulate Trajectory</source>
-      <translation type="unfinished">Simulate Trajectory</translation>
+      <translation>軌道をシミュレーション</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="212"/>
       <source>Simulates robot movement along a selected trajectory</source>
-      <translation type="unfinished">Simulates robot movement along a selected trajectory</translation>
+      <translation>選択した軌道に沿ってロボットの動きをシミュレーションする</translation>
     </message>
   </context>
   <context>
@@ -317,12 +318,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="481"/>
       <source>Trajectory Compound</source>
-      <translation type="unfinished">Trajectory Compound</translation>
+      <translation>複合軌道</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="482"/>
       <source>Groups and connects multiple trajectories into one</source>
-      <translation type="unfinished">Groups and connects multiple trajectories into one</translation>
+      <translation>複数の軌道をグループ化して1つに接続する</translation>
     </message>
   </context>
   <context>
@@ -335,12 +336,12 @@
     <message>
       <location filename="../../CommandTrajectory.cpp" line="425"/>
       <source>Dress-Up Trajectory</source>
-      <translation type="unfinished">Dress-Up Trajectory</translation>
+      <translation>ドレスアップ軌道</translation>
     </message>
     <message>
       <location filename="../../CommandTrajectory.cpp" line="426"/>
       <source>Creates a dress-up object that overrides aspects of a trajectory</source>
-      <translation type="unfinished">Creates a dress-up object that overrides aspects of a trajectory</translation>
+      <translation>軌道の一部の特性を上書きするドレスアップオブジェクトを作成する</translation>
     </message>
   </context>
   <context>
@@ -348,12 +349,12 @@
     <message>
       <location filename="../../Workbench.cpp" line="49"/>
       <source>Trajectory Tools</source>
-      <translation type="unfinished">Trajectory Tools</translation>
+      <translation>軌道ツール</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="50"/>
       <source>Robot Tools</source>
-      <translation type="unfinished">Robot Tools</translation>
+      <translation>ロボットツール</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="51"/>
@@ -492,7 +493,7 @@
     <message>
       <location filename="../../Workbench.cpp" line="72"/>
       <source>Visit %1 and copy the robot VRML and CSV files to %2</source>
-      <translation type="unfinished">Visit %1 and copy the robot VRML and CSV files to %2</translation>
+      <translation>%1 にアクセスし、ロボットの VRML および CSV ファイルを %2 にコピーする</translation>
     </message>
   </context>
   <context>
@@ -563,7 +564,7 @@
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="29"/>
       <source>Hide/Show</source>
-      <translation type="unfinished">Hide/Show</translation>
+      <translation>表示／非表示</translation>
     </message>
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="47"/>
@@ -578,7 +579,7 @@
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="72"/>
       <source>Sizing Value</source>
-      <translation type="unfinished">Sizing Value</translation>
+      <translation>サイズ値</translation>
     </message>
     <message>
       <location filename="../../TaskEdge2TracParameter.ui" line="103"/>
@@ -850,7 +851,7 @@
     <message>
       <location filename="../../TaskTrajectory.cpp" line="38"/>
       <source>Trajectory</source>
-      <translation type="unfinished">Trajectory</translation>
+      <translation>軌道</translation>
     </message>
   </context>
   <context>
@@ -869,7 +870,7 @@
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="20"/>
       <source>Speed &amp; acceleration</source>
-      <translation type="unfinished">Speed &amp; acceleration</translation>
+      <translation>速度と加速度</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="29"/>
@@ -879,12 +880,12 @@
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="66"/>
       <source>Acceleration</source>
-      <translation type="unfinished">Acceleration</translation>
+      <translation>加速度</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="102"/>
       <source>Do not change continuous mode</source>
-      <translation type="unfinished">Do not change continuous mode</translation>
+      <translation>連続モードを変更しない</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="108"/>
@@ -899,27 +900,27 @@
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="128"/>
       <source>Position and orientation</source>
-      <translation type="unfinished">Position and orientation</translation>
+      <translation>位置と向き</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="160"/>
       <source>Do not change position &amp; orientation</source>
-      <translation type="unfinished">Do not change position &amp; orientation</translation>
+      <translation>位置と向きを変更しない</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="165"/>
       <source>Use orientation</source>
-      <translation type="unfinished">Use orientation</translation>
+      <translation>向きを使用</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="170"/>
       <source>Add position</source>
-      <translation type="unfinished">Add position</translation>
+      <translation>位置を追加</translation>
     </message>
     <message>
       <location filename="../../TaskTrajectoryDressUpParameter.ui" line="175"/>
       <source>Add orientation</source>
-      <translation type="unfinished">Add orientation</translation>
+      <translation>向きを追加</translation>
     </message>
   </context>
   <context>
@@ -937,7 +938,7 @@
     <message>
       <location filename="../../Workbench.cpp" line="48"/>
       <source>Export Trajectory</source>
-      <translation type="unfinished">Export Trajectory</translation>
+      <translation>軌道をエクスポート</translation>
     </message>
     <message>
       <location filename="../../Workbench.cpp" line="47"/>

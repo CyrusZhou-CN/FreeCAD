@@ -2316,12 +2316,12 @@ Bitte die Parameter anpassen und erneut versuchen.</translation>
     <message>
       <location filename="../../TaskPadParameters.cpp" line="72"/>
       <source>To last</source>
-      <translation>Bis letzte Fläche</translation>
+      <translation>Bis zur letzten Fläche</translation>
     </message>
     <message>
       <location filename="../../TaskPadParameters.cpp" line="73"/>
       <source>To first</source>
-      <translation>Bis zur dichtesten Objektbegrenzung</translation>
+      <translation>Bis zur nächsten Fläche</translation>
     </message>
     <message>
       <location filename="../../TaskPadParameters.cpp" line="74"/>
@@ -2750,7 +2750,7 @@ entlang der angegebenen Richtung gemessen</translation>
     <message>
       <location filename="../../TaskPocketParameters.cpp" line="73"/>
       <source>To first</source>
-      <translation>Bis zur dichtesten Objektbegrenzung</translation>
+      <translation>Bis zur nächsten Fläche</translation>
     </message>
     <message>
       <location filename="../../TaskPocketParameters.cpp" line="74"/>
@@ -2845,7 +2845,7 @@ entlang der angegebenen Richtung gemessen</translation>
     <message>
       <location filename="../../TaskRevolutionParameters.cpp" line="193"/>
       <source>To last</source>
-      <translation>Bis letzte Fläche</translation>
+      <translation>Bis zur letzten Fläche</translation>
     </message>
     <message>
       <location filename="../../TaskRevolutionParameters.cpp" line="196"/>
@@ -2855,7 +2855,7 @@ entlang der angegebenen Richtung gemessen</translation>
     <message>
       <location filename="../../TaskRevolutionParameters.cpp" line="198"/>
       <source>To first</source>
-      <translation>Bis zur dichtesten Objektbegrenzung</translation>
+      <translation>Bis zur nächsten Fläche</translation>
     </message>
     <message>
       <location filename="../../TaskRevolutionParameters.cpp" line="199"/>

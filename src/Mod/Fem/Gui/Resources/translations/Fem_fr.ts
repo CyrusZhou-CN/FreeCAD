@@ -541,7 +541,7 @@
     <message>
       <location filename="../../Command.cpp" line="2665"/>
       <source>Creates a post processing pipeline from a result object</source>
-      <translation>Crée un pipeline de post-traitement à partir d'un objet résultat.</translation>
+      <translation>Crée un pipeline de post-traitement à partir d'un résultat.</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2743"/>
@@ -551,7 +551,7 @@
     <message>
       <location filename="../../Command.cpp" line="2744"/>
       <source>Select a result object.</source>
-      <translation>Sélectionner un objet résultat</translation>
+      <translation>Sélectionner un résultat</translation>
     </message>
   </context>
   <context>
@@ -881,12 +881,12 @@
     <message>
       <location filename="../../DlgSettingsFemCcx.ui" line="278"/>
       <source>Initial time increment</source>
-      <translation>Incrément de temps initial</translation>
+      <translation>Incrément du temps initial</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemCcx.ui" line="285"/>
       <source>Time period</source>
-      <translation>Période de temps</translation>
+      <translation>Durée de la simulation</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemCcx.ui" line="331"/>
@@ -1080,7 +1080,7 @@ Cela n'a d'effet que si l'option « Pipeline uniquement » est activée.</transl
     <message>
       <location filename="../../DlgSettingsFemCcxImp.cpp" line="151"/>
       <source>Executable '%1' not found</source>
-      <translation>Exécutable '%1' introuvable</translation>
+      <translation>L'exécutable « %1 » est introuvable.</translation>
     </message>
   </context>
   <context>
@@ -1094,7 +1094,7 @@ Cela n'a d'effet que si l'option « Pipeline uniquement » est activée.</transl
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="44"/>
       <source>ElmerSolver path</source>
-      <translation>Chemin d'accès de ElmerSolver</translation>
+      <translation>Chemin d'accès d'ElmerSolver</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="75"/>
@@ -1114,7 +1114,7 @@ Cela n'a d'effet que si l'option « Pipeline uniquement » est activée.</transl
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="159"/>
       <source>Number of parallel tasks. Set to `1` if Elmer does not use MPI.&lt;br&gt;It is recommended to use an even number of cores to benefit from mesh symmetries&lt;br&gt;(Using 8 cores can be faster than 9 cores).&lt;br&gt;In extreme cases ElmerSolver might not converge if the core number is too high.</source>
-      <translation>Nombre de tâches parallèles.
+      <translation>Nombre de tâches en parallèle.
 Mettre cette valeur à « 1 » si Elmer n'utilise pas MPI.
 Il est recommandé d'utiliser un nombre pair de cœurs afin de tirer parti des symétries du maillage (l'utilisation de 8 cœurs peut être
 plus rapide que celle de 9 cœurs).
@@ -1153,7 +1153,7 @@ Dans les cas extrêmes, ElmerSolver peut ne pas converger si le nombre de cœurs
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="234"/>
       <source>Save geometry IDs</source>
-      <translation>Enregistrer les identifiants des géométries</translation>
+      <translation>Enregistrer les index géométriques</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsFemElmer.ui" line="125"/>
@@ -1173,7 +1173,7 @@ Dans les cas extrêmes, ElmerSolver peut ne pas converger si le nombre de cœurs
     <message>
       <location filename="../../DlgSettingsFemElmerImp.cpp" line="92"/>
       <source>Executable '%1' not found</source>
-      <translation>Exécutable '%1' introuvable</translation>
+      <translation>L'exécutable « %1 » est introuvable.</translation>
     </message>
   </context>
   <context>
@@ -1428,7 +1428,7 @@ adding an analysis container</source>
     <message>
       <location filename="../../DlgSettingsFemGmshImp.cpp" line="87"/>
       <source>Executable '%1' not found</source>
-      <translation>Exécutable '%1' introuvable</translation>
+      <translation>L'exécutable « %1 » est introuvable.</translation>
     </message>
   </context>
   <context>
@@ -1539,7 +1539,7 @@ Remarque : ce réglage nécessite les noms exacts des composants du résultat et
     <message>
       <location filename="../../DlgSettingsFemMystranImp.cpp" line="76"/>
       <source>Executable '%1' not found</source>
-      <translation>Exécutable '%1' introuvable</translation>
+      <translation>L'exécutable « %1 » est introuvable.</translation>
     </message>
   </context>
   <context>
@@ -1632,7 +1632,7 @@ et que vous avez le message d'erreur indiquant que "MAXKOI" doit être augmenté
     <message>
       <location filename="../../DlgSettingsFemZ88Imp.cpp" line="102"/>
       <source>Executable '%1' not found</source>
-      <translation>Exécutable '%1' introuvable</translation>
+      <translation>L'exécutable « %1 » est introuvable.</translation>
     </message>
   </context>
   <context>

@@ -1737,7 +1737,7 @@
     <message>
       <location filename="../../Command.cpp" line="1462"/>
       <source>Mirrors the selected shape</source>
-      <translation type="unfinished">Mirrors the selected shape</translation>
+      <translation>Refleja la forma seleccionada</translation>
     </message>
   </context>
   <context>
@@ -2183,17 +2183,17 @@ of the projection.</translation>
     <message>
       <location filename="../../Command.cpp" line="2305"/>
       <source>Add datum plane</source>
-      <translation type="unfinished">Add datum plane</translation>
+      <translation>Añadir plano de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2338"/>
       <source>Add datum line</source>
-      <translation type="unfinished">Add datum line</translation>
+      <translation>Añadir línea de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2371"/>
       <source>Add datum point</source>
-      <translation type="unfinished">Add datum point</translation>
+      <translation>Añadir punto de referencia</translation>
     </message>
     <message>
       <location filename="../../CommandSimple.cpp" line="70"/>
@@ -2631,7 +2631,7 @@ it inside the placement property.</translation>
     <message>
       <location filename="../../DlgExportStep.ui" line="14"/>
       <source>STEP Export Settings</source>
-      <translation>Preferencias de exportación de STEP</translation>
+      <translation>Configuración de importación de STEP</translation>
     </message>
     <message>
       <location filename="../../DlgExportStep.ui" line="126"/>
@@ -3174,7 +3174,7 @@ Primero seleccione una o más aristas.</translation>
     <message>
       <location filename="../../DlgImportStep.ui" line="14"/>
       <source>STEP Import Settings</source>
-      <translation>Preferencias de importación de STEP</translation>
+      <translation>Configuración de importación de STEP</translation>
     </message>
     <message>
       <location filename="../../DlgImportStep.ui" line="23"/>
@@ -4044,7 +4044,7 @@ Primero seleccione una o más aristas.</translation>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="20"/>
       <source>Model Settings</source>
-      <translation type="unfinished">Model Settings</translation>
+      <translation>Configuración del modelo</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="58"/>
@@ -4059,7 +4059,7 @@ Primero seleccione una o más aristas.</translation>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="127"/>
       <source>Features Settings</source>
-      <translation type="unfinished">Features Settings</translation>
+      <translation>Configuración de características</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="135"/>
@@ -4109,7 +4109,7 @@ Primero seleccione una o más aristas.</translation>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="266"/>
       <source>These settings are experimental and may result in decreased stability, problems and undefined behaviors</source>
-      <translation type="unfinished">These settings are experimental and may result in decreased stability, problems and undefined behaviors</translation>
+      <translation>Esta configuración es experimental y puede resultar en una menor estabilidad, más problemas y comportamientos indefinidos</translation>
     </message>
     <message>
       <location filename="../../DlgSettingsGeneral.ui" line="276"/>
@@ -5306,7 +5306,7 @@ Comprobación de operaciones booleanas individuales:</translation>
     <message>
       <location filename="../../TaskAttacher.cpp" line="1344"/>
       <source>Datum dialog: input error</source>
-      <translation type="unfinished">Datum dialog: input error</translation>
+      <translation>Diálogo de referencia: error de entrada</translation>
     </message>
   </context>
   <context>
@@ -6694,7 +6694,7 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../TaskFaceAppearances.ui" line="74"/>
       <source>Custom appearance</source>
-      <translation type="unfinished">Custom appearance</translation>
+      <translation>Apariencia personalizada</translation>
     </message>
     <message>
       <location filename="../../TaskFaceAppearances.ui" line="88"/>
@@ -6796,7 +6796,7 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../Command.cpp" line="2396"/>
       <source>Creates a datum object (coordinate system, plane, line, or point) that can be attached to other objects</source>
-      <translation type="unfinished">Creates a datum object (coordinate system, plane, line, or point) that can be attached to other objects</translation>
+      <translation>Crea un objeto de referencia (sistema de coordenadas, plano, línea, punto) que se puede adjuntar a otros objetos</translation>
     </message>
   </context>
   <context>
@@ -6817,12 +6817,12 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../Command.cpp" line="2294"/>
       <source>Datum Plane</source>
-      <translation type="unfinished">Datum Plane</translation>
+      <translation>Plano de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2295"/>
       <source>Creates a datum plane that can be attached to other objects</source>
-      <translation type="unfinished">Creates a datum plane that can be attached to other objects</translation>
+      <translation>Crea un plano de referencia que se puede adjuntar a otros objetos</translation>
     </message>
   </context>
   <context>
@@ -6835,12 +6835,12 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../Command.cpp" line="2327"/>
       <source>Datum Line</source>
-      <translation type="unfinished">Datum Line</translation>
+      <translation>Línea de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2328"/>
       <source>Creates a datum line that can be attached to other objects</source>
-      <translation type="unfinished">Creates a datum line that can be attached to other objects</translation>
+      <translation>Crea una línea de referencia que se puede adjuntar a otros objetos</translation>
     </message>
   </context>
   <context>
@@ -6853,12 +6853,12 @@ Overlapping volumes of the shapes will be removed.</translation>
     <message>
       <location filename="../../Command.cpp" line="2360"/>
       <source>Datum Point</source>
-      <translation type="unfinished">Datum Point</translation>
+      <translation>Punto de referencia</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="2361"/>
       <source>Creates a datum point that can be attached to other objects</source>
-      <translation type="unfinished">Creates a datum point that can be attached to other objects</translation>
+      <translation>Crea un punto de referencia que se puede adjuntar a otros objetos</translation>
     </message>
   </context>
   <context>
