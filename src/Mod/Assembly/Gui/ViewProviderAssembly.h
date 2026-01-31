@@ -25,7 +25,7 @@
 #define ASSEMBLYGUI_VIEWPROVIDER_ViewProviderAssembly_H
 
 #include <QCoreApplication>
-#include <boost/signals2.hpp>
+#include <fastsignals/signal.h>
 
 #include <Mod/Assembly/AssemblyGlobal.h>
 
@@ -247,7 +247,7 @@ public:
     SoFieldSensor* translationSensor = nullptr;
     SoFieldSensor* rotationSensor = nullptr;
 
-    boost::signals2::signal<
+    fastsignals::signal<
         void(const QString& state, const QString& msg, const QString& url, const QString& linkText)>
         signalSetUp;
 
@@ -263,6 +263,7 @@ private:
     );
 
     void slotAboutToOpenTransaction(const std::string& cmdName);
+    void slotActivatedVP(const Gui::ViewProviderDocumentObject* vp, const char* name);
 
     struct ComponentState
     {
@@ -277,6 +278,9 @@ private:
     App::DocumentObject* isolatedJoint {nullptr};
     bool isolatedJointVisibilityBackup {false};
 
+    void highlightJointElements(App::DocumentObject* joint);
+    void clearJointElementHighlight();
+
     void applyIsolationRecursively(
         App::DocumentObject* current,
         std::set<App::DocumentObject*>& isolateSet,
@@ -285,8 +289,10 @@ private:
     );
 
     TaskAssemblyMessages* taskSolver;
-    boost::signals2::connection connectSolverUpdate;
-    boost::signals2::scoped_connection m_preTransactionConn;
+
+    fastsignals::connection connectActivatedVP;
+    fastsignals::connection connectSolverUpdate;
+    fastsignals::scoped_connection m_preTransactionConn;
 };
 
 }  // namespace AssemblyGui
