@@ -1634,7 +1634,14 @@ void ViewProviderSketch::initDragging(int geoId, Sketcher::PointPos pos, Gui::Vi
             // 2 cases : either the edge was added or a point of it.
             // If its a point then we replace it by the edge.
             // If it's the edge it's replaced by itself so it's ok.
-            drag.Dragged[0].Pos = Sketcher::PointPos::none;
+
+            // for arcs preserve mid point drags for rigid movement
+            const Part::Geometry* geo = getSketchObject()->getGeometry(geoIdi);
+            bool isArcMidDrag = (pos == Sketcher::PointPos::mid) && isArcOfCircle(*geo);
+
+            if (!isArcMidDrag) {
+                drag.Dragged[0].Pos = Sketcher::PointPos::none;
+            }
         }
         else {
             // For group dragging, we skip the internal geos.
@@ -1753,7 +1760,9 @@ void ViewProviderSketch::initDragging(int geoId, Sketcher::PointPos pos, Gui::Vi
             }
         }
 
-        if (geo->is<Part::GeomLineSegment>() || geo->is<Part::GeomBSplineCurve>()) {
+        if (geo->is<Part::GeomLineSegment>() || geo->is<Part::GeomBSplineCurve>()
+            || isEllipse(*geo) || isArcOfEllipse(*geo)
+            || isArcOfHyperbola(*geo) || isArcOfParabola(*geo)) {
             setRelative();
         }
 
@@ -3314,6 +3323,23 @@ void ViewProviderSketch::slotSolverUpdate()
     }
 }
 
+void ViewProviderSketch::slotConstraintAdded(Sketcher::Constraint* constraint)
+{
+    if (!constraint) {
+        return;
+    }
+
+    // Auto-scale label distance for dimensional constraints
+    if (constraint->Type == Distance || constraint->Type == DistanceX || constraint->Type == DistanceY) {
+        // If label distance is default (10.0), scale it based on view.
+        // We use a small epsilon for float comparison.
+        if (std::abs(constraint->LabelDistance - 10.f) < 1e-5) {
+            float scale = getScaleFactor();
+            constraint->LabelDistance = 2.f * scale;
+        }
+    }
+}
+
 void ViewProviderSketch::onChanged(const App::Property* prop)
 {
     ViewProvider2DObject::onChanged(prop);
@@ -3605,6 +3631,8 @@ bool ViewProviderSketch::setEdit(int ModNum)
     }
 
     //NOLINTBEGIN
+    connectConstraintAdded = getSketchObject()->signalConstraintAdded.connect(
+        std::bind(&ViewProviderSketch::slotConstraintAdded, this, sp::_1));
     connectUndoDocument = getDocument()->signalUndoDocument.connect(
         std::bind(&ViewProviderSketch::slotUndoDocument, this, sp::_1));
     connectRedoDocument = getDocument()->signalRedoDocument.connect(
@@ -3821,6 +3849,7 @@ void ViewProviderSketch::unsetEdit(int ModNum)
     connectUndoDocument.disconnect();
     connectRedoDocument.disconnect();
     connectSolverUpdate.disconnect();
+    connectConstraintAdded.disconnect();
 
     // when pressing ESC make sure to close the dialog
     Gui::Control().closeDialog();
