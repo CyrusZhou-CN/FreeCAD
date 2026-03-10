@@ -22,8 +22,7 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef SKETCHER_SKETCHOBJECT_H
-#define SKETCHER_SKETCHOBJECT_H
+#pragma once
 
 #include <App/FeaturePython.h>
 #include <App/IndexedName.h>
@@ -291,6 +290,8 @@ public:
     {
         return ExternalGeo.getSize();
     }
+    /// Ensure ExternalGeo contains H/V axis. Must be called when rebuilding external or restoring.
+    void fixMissingAxisInExternalGeo();
     /// auto fix external geometry references
     void fixExternalGeometry(const std::vector<int>& geoIds = {});
 
@@ -1265,6 +1266,3 @@ using SketchObjectPython = App::FeaturePythonT<SketchObject>;
 
 // ---------------------------------------------------------
 }  // namespace Sketcher
-
-
-#endif  // SKETCHER_SKETCHOBJECT_H

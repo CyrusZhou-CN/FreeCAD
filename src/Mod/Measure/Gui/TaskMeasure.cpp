@@ -37,6 +37,9 @@
 #include <Gui/BitmapFactory.h>
 #include <Gui/Control.h>
 #include <Gui/ViewProvider.h>
+#include <Gui/InputHint.h>
+
+using enum Gui::InputHint::UserInput;
 
 #include <QFormLayout>
 #include <QVBoxLayout>
@@ -95,7 +98,6 @@ QString extractUnitFromResultString(const QString& resultString)
 
 TaskMeasure::TaskMeasure()
 {
-    this->setButtonPosition(TaskMeasure::South);
     auto taskbox = new Gui::TaskView::TaskBox(
         Gui::BitmapFactory().pixmap("umf-measurement"),
         tr("Measurement"),
@@ -175,7 +177,7 @@ TaskMeasure::TaskMeasure()
     connect(modeSwitch, qOverload<int>(&QComboBox::currentIndexChanged), this, &TaskMeasure::onModeChanged);
 
     unitSwitch = new QComboBox();
-    unitSwitch->addItem("-");
+    unitSwitch->addItem(QLatin1String("-"));
     connect(unitSwitch, qOverload<int>(&QComboBox::currentIndexChanged), this, &TaskMeasure::onUnitChanged);
 
 
@@ -478,7 +480,9 @@ void TaskMeasure::updateResultWithUnit()
     if (currentUnit != QLatin1String("-") && !resultString.isEmpty()) {
         Base::Quantity resultQty = Base::Quantity::parse(resultString.toStdString());
         // Parse unit string like "1 mm" to get the target quantity
-        Base::Quantity targetUnit = Base::Quantity::parse(("1 " + currentUnit).toStdString());
+        Base::Quantity targetUnit = Base::Quantity::parse(
+            (QLatin1String("1 ") + currentUnit).toStdString()
+        );
         double convertedValue = resultQty.getValueAs(targetUnit);
 
         QString formattedValue;
@@ -490,7 +494,7 @@ void TaskMeasure::updateResultWithUnit()
             formattedValue = QString::number(convertedValue, 'f', 4);
         }
 
-        QString formattedResult = formattedValue + " " + currentUnit;
+        QString formattedResult = formattedValue + QLatin1String(" ") + currentUnit;
         valueResult->setText(formattedResult);
     }
     else {
@@ -527,6 +531,7 @@ void TaskMeasure::initViewObject(Measure::MeasureBase* measure)
 void TaskMeasure::closeDialog()
 {
     Gui::Control().closeDialog();
+    Gui::getMainWindow()->hideHints();
 }
 
 
@@ -558,6 +563,20 @@ void TaskMeasure::ensureGroup(Measure::MeasureBase* measurement)
 void TaskMeasure::invoke()
 {
     update();
+
+    bool greedy = Gui::Selection().getSelectionStyle() == SelectionStyle::GreedySelection;
+    std::list<Gui::InputHint> hints;
+    if (greedy) {
+        hints = std::list<Gui::InputHint> {
+            {tr("%1 start new measurement, %2 toggle auto-save"), {{ModifierCtrl}, {ModifierShift}}}
+        };
+    }
+    else {
+        hints = std::list<Gui::InputHint> {
+            {tr("%1 add to measurement, %2 toggle auto-save"), {{ModifierCtrl}, {ModifierShift}}}
+        };
+    }
+    Gui::getMainWindow()->showHints(hints);
 }
 
 bool TaskMeasure::apply()
@@ -587,6 +606,11 @@ bool TaskMeasure::reject()
     // Abort transaction
     App::GetApplication().closeActiveTransaction(true);
     return false;
+}
+
+void TaskMeasure::closed()
+{
+    reject();
 }
 
 void TaskMeasure::reset()
@@ -754,6 +778,19 @@ void TaskMeasure::newMeasurementBehaviourChanged(bool checked)
         settings.setValue(QLatin1String(taskMeasureGreedySelection), true);
     }
     settings.endGroup();
+
+    std::list<Gui::InputHint> hints;
+    if (checked) {
+        hints = std::list<Gui::InputHint> {
+            {tr("%1 new measurement, %2 toggle auto-save"), {{ModifierCtrl}, {ModifierShift}}}
+        };
+    }
+    else {
+        hints = std::list<Gui::InputHint> {
+            {tr("%1 add to measurement, %2 toggle auto-save"), {{ModifierCtrl}, {ModifierShift}}}
+        };
+    }
+    Gui::getMainWindow()->showHints(hints);
 }
 
 void TaskMeasure::setModeSilent(App::MeasureType* mode)

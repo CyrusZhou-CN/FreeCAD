@@ -22,6 +22,7 @@
  *                                                                         *
  ***************************************************************************/
 
+#include <boost/bind/bind.hpp>
 #include <boost/core/ignore_unused.hpp>
 #include <Inventor/SbBox3f.h>
 #include <Inventor/SbLine.h>
@@ -779,11 +780,6 @@ void ViewProviderSketch::moveCursorToSketchPoint(Base::Vector2d point)
 
     QPoint newPos = viewer->getGLWidget()->mapToGlobal(QPoint(x, height - y));
 
-
-    // QScreen *screen = view->windowHandle()->screen();
-    // QScreen *screen = QGuiApplication::primaryScreen();
-
-    // QCursor::setPos(screen, newPos);
     QCursor::setPos(newPos);
 }
 
@@ -1013,22 +1009,18 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                 case STATUS_NONE: {
                     bool done = false;
                     if (preselection.isPreselectPointValid()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Point);
                         done = true;
                     }
                     else if (preselection.isPreselectCurveValid()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Edge);
                         done = true;
                     }
                     else if (preselection.isCrossPreselected()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Cross);
                         done = true;
                     }
                     else if (!preselection.PreselectConstraintSet.empty()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Constraint);
                         done = true;
                     }
@@ -1077,7 +1069,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
             switch (Mode) {
                 case STATUS_SELECT_Point:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         //  Do selection
                         std::stringstream ss;
                         ss << "Vertex" << preselection.getPreselectionVertexIndex();
@@ -1088,7 +1079,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                     return true;
                 case STATUS_SELECT_Edge:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         std::stringstream ss;
                         if (preselection.isEdge())
                             ss << "Edge" << preselection.getPreselectionEdgeIndex();
@@ -1101,7 +1091,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                     return true;
                 case STATUS_SELECT_Cross:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         std::stringstream ss;
                         switch (preselection.PreselectCross) {
                             case Preselection::Axes::RootPoint:
@@ -1215,19 +1204,15 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
             switch (Mode) {
                 case STATUS_NONE: {
                     if (preselection.isPreselectPointValid()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Point);
                     }
                     else if (preselection.isPreselectCurveValid()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Edge);
                     }
                     else if (preselection.isCrossPreselected()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Cross);
                     }
                     else if (!preselection.PreselectConstraintSet.empty()) {
-                        // Base::Console().log("start dragging, point:%d\n",this->DragPoint);
                         setSketchMode(STATUS_SELECT_Constraint);
                     }
                     break;
@@ -1257,7 +1242,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                     return true;
                 case STATUS_SELECT_Point:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         //  Do selection
                         std::stringstream ss;
                         ss << "Vertex" << preselection.getPreselectionVertexIndex();
@@ -1269,7 +1253,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                     return true;
                 case STATUS_SELECT_Edge:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         std::stringstream ss;
                         if (preselection.isEdge()) {
                             ss << "Edge" << preselection.getPreselectionEdgeIndex();
@@ -1285,7 +1268,6 @@ bool ViewProviderSketch::mouseButtonPressed(int Button, bool pressed, const SbVe
                     return true;
                 case STATUS_SELECT_Cross:
                     if (pp) {
-                        // Base::Console().log("Select Point:%d\n",this->DragPoint);
                         std::stringstream ss;
                         switch (preselection.PreselectCross) {
                             case Preselection::Axes::RootPoint:
@@ -4245,9 +4227,16 @@ bool ViewProviderSketch::onDelete(const std::vector<std::string>& subList)
             stream.str(std::string());
         }
 
-        for (rit = delExternalGeometries.rbegin(); rit != delExternalGeometries.rend(); ++rit) {
+        if (!delExternalGeometries.empty()) {
+            std::stringstream stream;
+            auto endit = std::prev(delExternalGeometries.end());
+            for (auto it = delExternalGeometries.begin(); it != endit; ++it) {
+                stream << *it << ",";
+            }
+            stream << *endit;
+
             try {
-                Gui::cmdAppObjectArgs(getObject(), "delExternal(%d)", *rit);
+                Gui::cmdAppObjectArgs(getObject(), "delExternals([%s])", stream.str().c_str());
             }
             catch (const Base::Exception& e) {
                 Base::Console().developerError("ViewProviderSketch", "%s\n", e.what());
