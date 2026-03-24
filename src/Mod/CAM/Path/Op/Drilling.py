@@ -96,7 +96,7 @@ class ObjectDrilling(PathCircularHoleBase.ObjectOp):
         """circularHoleFeatures(obj) ... drilling works on anything, turn on all Base geometries and Locations."""
         return PathOp.FeatureBaseGeometry | PathOp.FeatureLocations | PathOp.FeatureCoolant
 
-    def onDocumentRestored(self, obj):
+    def opOnDocumentRestored(self, obj):
         # Add Strategy property if missing (old drilling operations)
         if not hasattr(obj, "Strategy"):
             obj.addProperty(
@@ -359,8 +359,7 @@ class ObjectDrilling(PathCircularHoleBase.ObjectOp):
                         solids=solids,
                     )
                     self.commandlist.extend(linking_moves)
-                    for move in linking_moves:
-                        machinestate.addCommand(move)
+                    machinestate.addCommands(linking_moves)
                 # else: no collision - G99 cycle continues, tool stays at retract plane
 
             # Perform drilling
@@ -576,9 +575,5 @@ def Create(name, obj=None, parentJob=None):
     """Create(name) ... Creates and returns a Drilling operation."""
     if obj is None:
         obj = FreeCAD.ActiveDocument.addObject("Path::FeaturePython", name)
-
     obj.Proxy = ObjectDrilling(obj, name, parentJob)
-    if obj.Proxy:
-        obj.Proxy.findAllHoles(obj)
-
     return obj
