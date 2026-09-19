@@ -169,6 +169,7 @@ class ProcessingOptions:
     tool_change: bool = True  # Enable tool change commands
     translate_drill_cycles: bool = False  # Expand canned drill cycles to G0/G1 moves
     translate_rapid_moves: bool = False
+    f_for_rapid_moves = False
     xy_before_z_after_tool_change: bool = (
         False  # Decompose first move after tool change: XY first, then Z
     )
@@ -388,6 +389,18 @@ class ToolheadType(Enum):
     LASER = "laser"  # Laser cutting/engraving
     WATERJET = "waterjet"  # Waterjet cutting
     PLASMA = "plasma"  # Plasma cutting
+    WIRE_EDM = "wire_edm"  # Wire electrical discharge machining
+
+    @property
+    def display_name(self) -> str:
+        """Human-readable label for UI display."""
+        return {
+            ToolheadType.ROTARY: "Rotary",
+            ToolheadType.LASER: "Laser",
+            ToolheadType.WATERJET: "Waterjet",
+            ToolheadType.PLASMA: "Plasma",
+            ToolheadType.WIRE_EDM: "Wire EDM",
+        }[self]
 
 
 @dataclass
@@ -474,6 +487,20 @@ class ToolheadCapabilities:
                 has_probing=False,
                 has_auto_focus=False,
             ),
+            ToolheadType.WIRE_EDM: cls(
+                can_rotate=False,
+                can_move_z=True,
+                can_move_xy=False,
+                has_power_control=True,
+                has_speed_control=False,
+                has_pulse_control=True,
+                uses_coolant=False,
+                uses_assist_gas=False,
+                uses_water=True,
+                can_turn_on_off=True,
+                has_probing=False,
+                has_auto_focus=False,
+            ),
         }
         return capabilities.get(toolhead_type, capabilities[ToolheadType.ROTARY])
 
@@ -542,6 +569,10 @@ class Toolhead:
     def is_plasma(self) -> bool:
         """Check if this is a plasma toolhead."""
         return self.toolhead_type == ToolheadType.PLASMA
+
+    def is_wire_edm(self) -> bool:
+        """Check if this is a wire EDM toolhead."""
+        return self.toolhead_type == ToolheadType.WIRE_EDM
 
     def can_use_coolant(self) -> bool:
         """Check if this toolhead can use coolant."""

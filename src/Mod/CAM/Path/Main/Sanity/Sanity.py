@@ -233,7 +233,8 @@ class CAMSanity:
         else:
             if os.path.isfile(obj.LastPostProcessOutput):
                 data["filesize"] = str(os.path.getsize(obj.LastPostProcessOutput) / 1000)
-                data["linecount"] = str(sum(1 for line in open(obj.LastPostProcessOutput)))
+                with open(obj.LastPostProcessOutput) as gcode_file:
+                    data["linecount"] = str(sum(1 for _ in gcode_file))
             else:
                 data["filesize"] = str(0.0)
                 data["linecount"] = str(0)
@@ -557,8 +558,12 @@ class CAMSanity:
                             postprocessor.apply_configuration_bundle(overrides=overrides)
                         pp_squawks = postprocessor.get_sanity_checks(self.job)
                         all_squawks.extend(pp_squawks)
-            except Exception as e:
-                Path.Log.warning(f"Failed to get postprocessor sanity checks: {e}")
+            except FileNotFoundError as e:
+                if "Available machines:" in str(e):
+                    # a missing machine means "don't do sanity"
+                    Path.Log.warning(f"Failed to get postprocessor sanity checks: {e}")
+                else:
+                    raise e
 
         critical = [s for s in all_squawks if s["squawkType"] in ("WARNING", "CAUTION")]
         Path.Log.debug(f"get_all_squawks: {len(all_squawks)} squawks, {len(critical)} critical")

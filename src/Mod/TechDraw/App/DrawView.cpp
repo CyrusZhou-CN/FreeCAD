@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: LGPL-2.1-or-later
+
 /***************************************************************************
  *   Copyright (c) 2002 Jürgen Riegel <juergen.riegel@web.de>              *
  *                                                                         *
@@ -198,8 +200,9 @@ void DrawView::onChanged(const App::Property* prop)
         }
         if (ScaleType.isValue("Page")) {
             Scale.setStatus(App::Property::ReadOnly, true);
-            if(std::abs(page->Scale.getValue() - getScale()) > std::numeric_limits<float>::epsilon()) {
-               Scale.setValue(page->Scale.getValue());
+            if (std::abs(page->Scale.getValue() - Scale.getValue())
+                > std::numeric_limits<float>::epsilon()) {
+                Scale.setValue(page->Scale.getValue());
             }
         } else if ( ScaleType.isValue("Custom") ) {
             //don't change Scale

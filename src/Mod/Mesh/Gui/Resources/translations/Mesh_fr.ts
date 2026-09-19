@@ -729,7 +729,7 @@
     <message>
       <location filename="../../DlgEvaluateMeshImp.cpp" line="666"/>
       <source>Remove non-manifolds</source>
-      <translation>Supprimer les maillages non-manifolds</translation>
+      <translation>Supprimer des maillages non-manifolds</translation>
     </message>
     <message>
       <location filename="../../DlgEvaluateMeshImp.cpp" line="773"/>
@@ -824,7 +824,7 @@
     <message>
       <location filename="../../DlgDecimating.ui" line="57"/>
       <source>Full</source>
-      <translation>Totale</translation>
+      <translation>Tout</translation>
     </message>
     <message>
       <location filename="../../DlgDecimating.ui" line="66"/>
@@ -1567,6 +1567,10 @@ Avec l'ombrage plat, les normales de la surface ne sont pas définies par les so
     </message>
     <message>
       <location filename="../../RemeshGmsh.cpp" line="201"/>
+      <source>Time</source>
+      <translation>Temps</translation>
+    </message>
+    <message>
       <location filename="../../RemeshGmsh.cpp" line="259"/>
       <source>Time:</source>
       <translation>Temps :</translation>
@@ -2171,7 +2175,7 @@ Visit https://openscad.org/ to install it.</source>
     <message>
       <location filename="../../Command.cpp" line="440"/>
       <source>Asymptote Format</source>
-      <translation>Format Asymptote</translation>
+      <translation>Format d'Asymptote</translation>
     </message>
     <message>
       <location filename="../../Command.cpp" line="441"/>
@@ -2254,15 +2258,35 @@ Visit https://openscad.org/ to install it.</source>
       <translation>Afficher les couleurs</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderCurvature.cpp" line="535"/>
+      <location filename="../../ViewProviderCurvature.cpp" line="475"/>
       <location filename="../../ViewProvider.cpp" line="1701"/>
       <source>Leave Info Mode</source>
       <translation>Quitter le mode Information</translation>
     </message>
     <message>
-      <location filename="../../ViewProvider.cpp" line="1770"/>
+      <location filename="../../ViewProvider.cpp" line="1745"/>
+      <source>Mesh: %1</source>
+      <translation>Maillage : %1</translation>
+    </message>
+    <message>
+      <location filename="../../ViewProvider.cpp" line="1748"/>
       <source>Index: %1</source>
       <translation>Index : %1</translation>
+    </message>
+    <message>
+      <location filename="../../ViewProvider.cpp" line="1751"/>
+      <source>Points: &lt;%1, %2, %3&gt;</source>
+      <translation>Points : &lt;%1, %2, %3&gt;</translation>
+    </message>
+    <message>
+      <location filename="../../ViewProvider.cpp" line="1758"/>
+      <source>Neighbours: &lt;%1, %2, %3&gt;</source>
+      <translation>Voisins : &lt;%1, %2, %3&gt;</translation>
+    </message>
+    <message>
+      <location filename="../../ViewProvider.cpp" line="1764"/>
+      <source>Triangle:</source>
+      <translation>Triangle :</translation>
     </message>
     <message>
       <location filename="../../ViewProvider.cpp" line="1798"/>
@@ -2285,7 +2309,7 @@ Visit https://openscad.org/ to install it.</source>
       <translation>Effacer les faces sélectionnées</translation>
     </message>
     <message>
-      <location filename="../../ViewProviderCurvature.cpp" line="532"/>
+      <location filename="../../ViewProviderCurvature.cpp" line="472"/>
       <source>Annotation</source>
       <translation>Annotation</translation>
     </message>

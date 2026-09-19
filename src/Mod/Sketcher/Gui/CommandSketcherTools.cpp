@@ -210,7 +210,8 @@ Sketcher::SketchObject* getSketchObject()
 
 // Copy
 
-bool copySelectionToClipboard(Sketcher::SketchObject* obj) {
+bool copySelectionToClipboard(Sketcher::SketchObject* obj)
+{
     std::vector<int> listOfGeoId = getListOfSelectedGeoIds(true);
     if (listOfGeoId.empty()) { return false; }
 
@@ -230,19 +231,31 @@ bool copySelectionToClipboard(Sketcher::SketchObject* obj) {
     std::sort(listOfGeoId.begin(), listOfGeoId.end());
     listOfGeoId.erase(std::unique(listOfGeoId.begin(), listOfGeoId.end()), listOfGeoId.end());
 
-    std::vector<Part::Geometry*> shapeGeometry;
+    std::vector<std::unique_ptr<Part::Geometry>> shapeGeometry;
+    shapeGeometry.reserve(listOfGeoId.size());
     for (auto geoId : listOfGeoId) {
-        Part::Geometry* geoNew = obj->getGeometry(geoId)->copy();
-        shapeGeometry.push_back(geoNew);
+        shapeGeometry.emplace_back(obj->getGeometry(geoId)->copy());
+    }
+    std::vector<Part::Geometry*> rawGeos;
+    rawGeos.reserve(shapeGeometry.size());
+    for (const auto& g : shapeGeometry) {
+        rawGeos.push_back(g.get());
     }
 
     std::string geosAsStr = Sketcher::PythonConverter::convert(
         "objectStr",
-        shapeGeometry,
+        rawGeos,
         Sketcher::PythonConverter::Mode::OmitInternalGeometry);
 
     // Export constraints of selected geos.
-    std::vector<Sketcher::Constraint*> shapeConstraints;
+    // Map each original geo id once; remapping in-place can cascade when new ids overlap old ids.
+    std::unordered_map<int, int> copiedGeoIds;
+    copiedGeoIds.reserve(listOfGeoId.size());
+    for (size_t j = 0; j < listOfGeoId.size(); j++) {
+        copiedGeoIds.emplace(listOfGeoId[j], static_cast<int>(j));
+    }
+
+    std::vector<std::unique_ptr<Sketcher::Constraint>> shapeConstraints;
     for (auto constr : obj->Constraints.getValues()) {
 
         auto isSelectedGeoOrAxis = [](const std::vector<int>& vec, int value) {
@@ -267,21 +280,31 @@ bool copySelectionToClipboard(Sketcher::SketchObject* obj) {
             continue;
         }
 
-        Constraint* temp = constr->copy();
-        for (size_t j = 0; j < listOfGeoId.size(); j++) {
-            for (int i = 0; temp->hasElement(i); ++i) {
-                int geoid = temp->getGeoId(i);
-                if (geoid != GeoEnum::GeoUndef && geoid == listOfGeoId[j]) {
-                    temp->setGeoId(i, j);
-                }
+        std::unique_ptr<Constraint> temp(constr->copy());
+        for (int i = 0; temp->hasElement(i); ++i) {
+            const auto mappedGeoId = copiedGeoIds.find(temp->getGeoId(i));
+            if (mappedGeoId != copiedGeoIds.end()) {
+                temp->setGeoId(i, mappedGeoId->second);
             }
         }
-        shapeConstraints.push_back(temp);
+        shapeConstraints.push_back(std::move(temp));
     }
-    std::string cstrAsStr = Sketcher::PythonConverter::convert("objectStr", shapeConstraints, Sketcher::PythonConverter::GeoIdMode::AddLastGeoIdToGeoIds);
+    std::vector<Sketcher::Constraint*> rawCstrs;
+    rawCstrs.reserve(shapeConstraints.size());
+    for (const auto& c : shapeConstraints) {
+        rawCstrs.push_back(c.get());
+    }
+    std::string cstrAsStr = Sketcher::PythonConverter::convert(
+        "objectStr",
+        rawCstrs,
+        Sketcher::PythonConverter::GeoIdMode::AddLastGeoIdToGeoIds);
 
-    std::string exportedData = "# Copied from sketcher. From:\n#objectStr = " + Gui::Command::getObjectCmd(obj) + "\n"
-        + geosAsStr + "\n" + cstrAsStr;
+    std::string exportedData = "# Copied from sketcher. From:\n#objectStr = ";
+    exportedData.append(Gui::Command::getObjectCmd(obj));
+    exportedData.append("\n");
+    exportedData.append(geosAsStr);
+    exportedData.append("\n");
+    exportedData.append(cstrAsStr);
 
     if (!exportedData.empty()) {
         QClipboard* clipboard = QGuiApplication::clipboard();
@@ -891,6 +914,8 @@ void CmdSketcherSelectElementsAssociatedWithConstraints::activated(int iMsg)
                     ss.str(std::string());
 
                     switch (vals[ConstrId]->FirstPos) {
+                        case Sketcher::PointPos::NumPointPos:
+                            break;
                         case Sketcher::PointPos::none:
                             ss << "Edge" << vals[ConstrId]->First + 1;
                             break;
@@ -910,6 +935,8 @@ void CmdSketcherSelectElementsAssociatedWithConstraints::activated(int iMsg)
                     ss.str(std::string());
 
                     switch (vals[ConstrId]->SecondPos) {
+                        case Sketcher::PointPos::NumPointPos:
+                            break;
                         case Sketcher::PointPos::none:
                             ss << "Edge" << vals[ConstrId]->Second + 1;
                             break;
@@ -930,6 +957,8 @@ void CmdSketcherSelectElementsAssociatedWithConstraints::activated(int iMsg)
                     ss.str(std::string());
 
                     switch (vals[ConstrId]->ThirdPos) {
+                        case Sketcher::PointPos::NumPointPos:
+                            break;
                         case Sketcher::PointPos::none:
                             ss << "Edge" << vals[ConstrId]->Third + 1;
                             break;
@@ -2487,7 +2516,7 @@ CmdSketcherRotate::CmdSketcherRotate()
     sAppModule = "Sketcher";
     sGroup = "Sketcher";
     sMenuText = QT_TR_NOOP("Rotate / Polar Transform");
-    sToolTipText = QT_TR_NOOP("Rotates the selected geometry by creating 'n' copies, enabling circular pattern creation");
+    sToolTipText = QT_TR_NOOP("Rotates the selected geometry by creating 'n' total elements, enabling circular pattern creation");
     sWhatsThis = "Sketcher_Rotate";
     sStatusTip = sToolTipText;
     sPixmap = "Sketcher_Rotate";
@@ -2555,7 +2584,7 @@ CmdSketcherTranslate::CmdSketcherTranslate()
     sAppModule = "Sketcher";
     sGroup = "Sketcher";
     sMenuText = QT_TR_NOOP("Move / Array Transform");
-    sToolTipText = QT_TR_NOOP("Translates the selected geometries and enables the creation of 'i' * 'j' copies");
+    sToolTipText = QT_TR_NOOP("Translates the selected geometries and enables the creation of 'i' * 'j' total elements");
     sWhatsThis = "Sketcher_Translate";
     sStatusTip = sToolTipText;
     sPixmap = "Sketcher_Translate";

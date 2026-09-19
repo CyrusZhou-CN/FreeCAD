@@ -33,6 +33,7 @@
 #include "ViewProviderDocumentObject.h"
 #include "ViewProviderExtension.h"
 #include "ViewProviderFeaturePython.h"
+#include "ViewProviderSuppressibleExtension.h"
 
 
 class SoBase;
@@ -287,6 +288,7 @@ public:
 
     ViewProvider* startEditing(int ModNum) override;
     bool doubleClicked() override;
+    std::optional<bool> doubleClickedOccurrence(const App::SubObjectT& reference) override;
 
     PyObject* getPyObject() override;
     PyObject* getPyLinkView();
@@ -346,6 +348,14 @@ public:
     void setTransformation(const SbMatrix& rcMatrix) override;
 
 protected:
+    Base::BoundBox3d _getBoundingBox(
+        const char* subname = nullptr,
+        const Base::Matrix4D* mat = nullptr,
+        bool transform = true,
+        const View3DInventorViewer* view = nullptr,
+        int depth = 0
+    ) const override;
+
     bool setEdit(int ModNum) override;
     void setEditViewer(View3DInventorViewer*, int ModNum) override;
     void unsetEditViewer(View3DInventorViewer*) override;
@@ -415,6 +425,7 @@ protected:
 
 private:
     SoPickStyle* pcPickStyle {nullptr};
+    Gui::ViewProviderSuppressibleExtension suppressibleExt;
 };
 
 using ViewProviderLinkPython = ViewProviderFeaturePythonT<ViewProviderLink>;

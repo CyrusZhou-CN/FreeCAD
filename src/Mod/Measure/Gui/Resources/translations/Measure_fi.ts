@@ -113,7 +113,7 @@
     <message>
       <location filename="../../QuickMeasure.cpp" line="265"/>
       <source>Angle: %1, Total length: %2</source>
-      <translation type="unfinished">Angle: %1, Total length: %2</translation>
+      <translation>Kulma: %1, Kokonaispituus: %2</translation>
     </message>
     <message>
       <location filename="../../QuickMeasure.cpp" line="269"/>
@@ -195,8 +195,8 @@
     <message>
       <location filename="../../Command.cpp" line="52"/>
       <location filename="../../Command.cpp" line="54"/>
-      <source>Measure a feature</source>
-      <translation type="unfinished">Measure a feature</translation>
+      <source>Measures a feature</source>
+      <translation type="unfinished">Measures a feature</translation>
     </message>
   </context>
   <context>
@@ -315,7 +315,7 @@
     <message>
       <location filename="../../../App/AppMeasure.cpp" line="127"/>
       <source>Distance Free</source>
-      <translation type="unfinished">Distance Free</translation>
+      <translation>Vapaa pituus</translation>
     </message>
     <message>
       <location filename="../../../App/AppMeasure.cpp" line="135"/>
@@ -336,6 +336,11 @@
       <location filename="../../../App/AppMeasure.cpp" line="159"/>
       <source>Area</source>
       <translation>Pinta-ala</translation>
+    </message>
+    <message>
+      <location filename="../../../App/AppMeasure.cpp" line="167"/>
+      <source>Diameter</source>
+      <translation>Halkaisija</translation>
     </message>
     <message>
       <location filename="../../../App/AppMeasure.cpp" line="175"/>
@@ -408,7 +413,7 @@
     <message>
       <location filename="../../TaskMassProperties.ui" line="214"/>
       <source>Surface area</source>
-      <translation type="unfinished">Surface area</translation>
+      <translation>Pinta-ala</translation>
     </message>
     <message>
       <location filename="../../TaskMassProperties.ui" line="254"/>
@@ -503,47 +508,47 @@
   <context>
     <name>MassPropertiesGui::TaskMassProperties</name>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="280"/>
+      <location filename="../../TaskMassProperties.cpp" line="345"/>
       <source>Parameters</source>
       <translation>Muuttujat</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="283"/>
+      <location filename="../../TaskMassProperties.cpp" line="348"/>
       <source>Physical Properties</source>
       <translation type="unfinished">Physical Properties</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="286"/>
+      <location filename="../../TaskMassProperties.cpp" line="351"/>
       <source>Center of Gravity</source>
-      <translation type="unfinished">Center of Gravity</translation>
+      <translation>Painopiste</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="287"/>
+      <location filename="../../TaskMassProperties.cpp" line="352"/>
       <source>Center of Volume</source>
       <translation type="unfinished">Center of Volume</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="288"/>
+      <location filename="../../TaskMassProperties.cpp" line="353"/>
       <source>Inertia</source>
       <translation type="unfinished">Inertia</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="360"/>
+      <location filename="../../TaskMassProperties.cpp" line="434"/>
       <source>Close</source>
       <translation>Sulje</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="363"/>
+      <location filename="../../TaskMassProperties.cpp" line="437"/>
       <source>Save</source>
       <translation>Tallenna</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="367"/>
+      <location filename="../../TaskMassProperties.cpp" line="441"/>
       <source>Reset</source>
       <translation>Palauta</translation>
     </message>
     <message>
-      <location filename="../../TaskMassProperties.cpp" line="1119"/>
+      <location filename="../../TaskMassProperties.cpp" line="1218"/>
       <source> (Average)</source>
       <translation type="unfinished"> (Average)</translation>
     </message>

@@ -59,6 +59,7 @@
 #include <App/Link.h>
 #include <Base/Console.h>
 #include <Base/Parameter.h>
+#include <Base/Tools.h>
 
 #include "Base/Tools2D.h"
 #include "Command.h"
@@ -1423,17 +1424,7 @@ StdCmdViewHome::StdCmdViewHome()
 void StdCmdViewHome::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-
-    auto hGrp = App::GetApplication().GetParameterGroupByPath(
-        "User parameter:BaseApp/Preferences/View"
-    );
-    std::string default_view = hGrp->GetASCII("NewDocumentCameraOrientation", "Top");
-    doCommand(
-        Command::Gui,
-        "Gui.activeDocument().activeView().viewDefaultOrientation('%s',0)",
-        default_view.c_str()
-    );
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewFit\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewHome\")");
 }
 
 //===========================================================================
@@ -1457,7 +1448,7 @@ StdCmdViewBottom::StdCmdViewBottom()
 void StdCmdViewBottom::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewBottom\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewBottom\")");
 }
 
 bool StdCmdViewBottom::isActive()
@@ -1486,7 +1477,7 @@ StdCmdViewFront::StdCmdViewFront()
 void StdCmdViewFront::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewFront\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewFront\")");
 }
 
 bool StdCmdViewFront::isActive()
@@ -1515,7 +1506,7 @@ StdCmdViewLeft::StdCmdViewLeft()
 void StdCmdViewLeft::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewLeft\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewLeft\")");
 }
 
 bool StdCmdViewLeft::isActive()
@@ -1544,7 +1535,7 @@ StdCmdViewRear::StdCmdViewRear()
 void StdCmdViewRear::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewRear\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewRear\")");
 }
 
 bool StdCmdViewRear::isActive()
@@ -1573,7 +1564,7 @@ StdCmdViewRight::StdCmdViewRight()
 void StdCmdViewRight::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewRight\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewRight\")");
 }
 
 bool StdCmdViewRight::isActive()
@@ -1602,7 +1593,7 @@ StdCmdViewTop::StdCmdViewTop()
 void StdCmdViewTop::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewTop\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewTop\")");
 }
 
 bool StdCmdViewTop::isActive()
@@ -1632,7 +1623,7 @@ StdCmdViewIsometric::StdCmdViewIsometric()
 void StdCmdViewIsometric::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewAxo\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewAxo\")");
 }
 
 bool StdCmdViewIsometric::isActive()
@@ -1660,7 +1651,7 @@ StdCmdViewDimetric::StdCmdViewDimetric()
 void StdCmdViewDimetric::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewDimetric\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewDimetric\")");
 }
 
 bool StdCmdViewDimetric::isActive()
@@ -1688,7 +1679,7 @@ StdCmdViewTrimetric::StdCmdViewTrimetric()
 void StdCmdViewTrimetric::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewTrimetric\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewTrimetric\")");
 }
 
 bool StdCmdViewTrimetric::isActive()
@@ -1767,7 +1758,7 @@ StdCmdViewFitAll::StdCmdViewFitAll()
 void StdCmdViewFitAll::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewFit\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewFit\")");
 }
 
 bool StdCmdViewFitAll::isActive()
@@ -1796,7 +1787,7 @@ StdCmdViewFitSelection::StdCmdViewFitSelection()
 void StdCmdViewFitSelection::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewSelection\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"ViewSelection\")");
 }
 
 bool StdCmdViewFitSelection::isActive()
@@ -2015,11 +2006,6 @@ Action* StdViewDockUndockFullscreen::createAction()
 
 void StdViewDockUndockFullscreen::activated(int iMsg)
 {
-    // Check if main window is in fullscreen mode.
-    if (getMainWindow()->isFullScreen()) {
-        getMainWindow()->showNormal();
-    }
-
     MDIView* view = getMainWindow()->activeWindow();
     if (!view) {  // no active view
         return;
@@ -2037,8 +2023,9 @@ void StdViewDockUndockFullscreen::activated(int iMsg)
         return;
     }
 
-    // Change the view mode after an mdi view was already visible doesn't
-    // work well with Qt5 any more because of some strange OpenGL behaviour.
+    // Changing the view mode after an mdi view was already visible causes
+    // the window to reload strangely while flashing to black, identified
+    // as an OpenGL problem.
     // A workaround is to clone the mdi view, set its view mode and delete
     // the original view.
 
@@ -2048,13 +2035,14 @@ void StdViewDockUndockFullscreen::activated(int iMsg)
     if (clone) {
         if (mode == MDIView::Child) {
             getMainWindow()->addWindow(clone);
+            getMainWindow()->setActiveWindow(clone);
+            qApp->processEvents();  // let the close and any queued activation settle
+            view->deleteSelf();
         }
         else {
+            view->deleteSelf();
             clone->setCurrentViewMode(mode);
         }
-
-        // destroy the old view
-        view->deleteSelf();
     }
     else {
         // no clone needed, simply change the view mode
@@ -2082,35 +2070,6 @@ bool StdViewDockUndockFullscreen::isActive()
 
     return true;
 }
-
-
-//===========================================================================
-// Std_ViewVR
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewVR)
-
-StdCmdViewVR::StdCmdViewVR()
-    : Command("Std_ViewVR")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("FreeCAD VR");
-    sToolTipText = QT_TR_NOOP("Extends the FreeCAD 3D Window to a VR device");
-    sWhatsThis = "Std_ViewVR";
-    sStatusTip = sToolTipText;
-    eType = Alter3DView;
-}
-
-void StdCmdViewVR::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"ViewVR\")");
-}
-
-bool StdCmdViewVR::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("ViewVR");
-}
-
 
 //===========================================================================
 // Std_ViewScreenShot
@@ -2237,29 +2196,27 @@ void StdViewScreenShot::activated(int iMsg)
             }
             hExt->SetInt("OffscreenImageBackground", opt->backgroundType());
 
+            std::string imageFile = Base::Tools::escapeEncodeFilename(fn.toStdString());
             QString comment = opt->comment();
             if (!comment.isEmpty()) {
-                // Replace newline escape sequence through '\\n' string to build one big string,
-                // otherwise Python would interpret it as an invalid command.
-                // Python does the decoding for us.
-                QStringList lines = comment.split(QLatin1String("\n"), Qt::KeepEmptyParts);
-
-                comment = lines.join(QLatin1String("\\n"));
+                std::string escapedComment = Base::Tools::escapeEncodeString(
+                    comment.toUtf8().toStdString()
+                );
                 doCommand(
                     Gui,
                     "Gui.activeDocument().activeView().saveImage('%s',%d,%d,'%s','%s')",
-                    fn.toUtf8().constData(),
+                    imageFile.c_str(),
                     w,
                     h,
                     background,
-                    comment.toUtf8().constData()
+                    escapedComment.c_str()
                 );
             }
             else {
                 doCommand(
                     Gui,
                     "Gui.activeDocument().activeView().saveImage('%s',%d,%d,'%s')",
-                    fn.toUtf8().constData(),
+                    imageFile.c_str(),
                     w,
                     h,
                     background
@@ -2450,6 +2407,7 @@ StdCmdAxisCross::StdCmdAxisCross()
     sStatusTip = sToolTipText;
     sWhatsThis = "Std_AxisCross";
     sPixmap = "Std_AxisCross";
+    eType = Alter3DView;
     sAccel = "A,C";
 }
 
@@ -2506,7 +2464,7 @@ StdCmdViewExample1::StdCmdViewExample1()
 void StdCmdViewExample1::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"Example1\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"Example1\")");
 }
 
 bool StdCmdViewExample1::isActive()
@@ -2534,7 +2492,7 @@ StdCmdViewExample2::StdCmdViewExample2()
 void StdCmdViewExample2::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"Example2\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"Example2\")");
 }
 
 bool StdCmdViewExample2::isActive()
@@ -2562,154 +2520,12 @@ StdCmdViewExample3::StdCmdViewExample3()
 void StdCmdViewExample3::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"Example3\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"Example3\")");
 }
 
 bool StdCmdViewExample3::isActive()
 {
     return getGuiApplication()->sendHasMsgToActiveView("Example3");
-}
-
-
-//===========================================================================
-// Std_ViewIvStereoOff
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewIvStereoOff)
-
-StdCmdViewIvStereoOff::StdCmdViewIvStereoOff()
-    : Command("Std_ViewIvStereoOff")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("Stereo &Off");
-    sToolTipText = QT_TR_NOOP("Switches stereo viewing off");
-    sWhatsThis = "Std_ViewIvStereoOff";
-    sStatusTip = sToolTipText;
-    sPixmap = "Std_ViewIvStereoOff";
-    eType = Alter3DView;
-}
-
-void StdCmdViewIvStereoOff::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.activeDocument().activeView().setStereoType(\"Mono\")");
-}
-
-bool StdCmdViewIvStereoOff::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("SetStereoOff");
-}
-
-
-//===========================================================================
-// Std_ViewIvStereoRedGreen
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewIvStereoRedGreen)
-
-StdCmdViewIvStereoRedGreen::StdCmdViewIvStereoRedGreen()
-    : Command("Std_ViewIvStereoRedGreen")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("Stereo Re&d/Cyan");
-    sToolTipText = QT_TR_NOOP("Switches stereo viewing to red/cyan");
-    sWhatsThis = "Std_ViewIvStereoRedGreen";
-    sStatusTip = sToolTipText;
-    sPixmap = "Std_ViewIvStereoRedGreen";
-    eType = Alter3DView;
-}
-
-void StdCmdViewIvStereoRedGreen::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.activeDocument().activeView().setStereoType(\"Anaglyph\")");
-}
-
-bool StdCmdViewIvStereoRedGreen::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("SetStereoRedGreen");
-}
-
-//===========================================================================
-// Std_ViewIvStereoQuadBuff
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewIvStereoQuadBuff)
-
-StdCmdViewIvStereoQuadBuff::StdCmdViewIvStereoQuadBuff()
-    : Command("Std_ViewIvStereoQuadBuff")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("Stereo &Quad Buffer");
-    sToolTipText = QT_TR_NOOP("Switches stereo viewing to quad buffer");
-    sWhatsThis = "Std_ViewIvStereoQuadBuff";
-    sStatusTip = sToolTipText;
-    sPixmap = "Std_ViewIvStereoQuadBuff";
-    eType = Alter3DView;
-}
-
-void StdCmdViewIvStereoQuadBuff::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.activeDocument().activeView().setStereoType(\"QuadBuffer\")");
-}
-
-bool StdCmdViewIvStereoQuadBuff::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("SetStereoQuadBuff");
-}
-
-//===========================================================================
-// Std_ViewIvStereoInterleavedRows
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewIvStereoInterleavedRows)
-
-StdCmdViewIvStereoInterleavedRows::StdCmdViewIvStereoInterleavedRows()
-    : Command("Std_ViewIvStereoInterleavedRows")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("Stereo Interleaved &Rows");
-    sToolTipText = QT_TR_NOOP("Switches stereo viewing to interleaved rows");
-    sWhatsThis = "Std_ViewIvStereoInterleavedRows";
-    sStatusTip = sToolTipText;
-    sPixmap = "Std_ViewIvStereoInterleavedRows";
-    eType = Alter3DView;
-}
-
-void StdCmdViewIvStereoInterleavedRows::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.activeDocument().activeView().setStereoType(\"InterleavedRows\")");
-}
-
-bool StdCmdViewIvStereoInterleavedRows::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("SetStereoInterleavedRows");
-}
-
-//===========================================================================
-// Std_ViewIvStereoInterleavedColumns
-//===========================================================================
-DEF_STD_CMD_A(StdCmdViewIvStereoInterleavedColumns)
-
-StdCmdViewIvStereoInterleavedColumns::StdCmdViewIvStereoInterleavedColumns()
-    : Command("Std_ViewIvStereoInterleavedColumns")
-{
-    sGroup = "Standard-View";
-    sMenuText = QT_TR_NOOP("Stereo Interleaved &Columns");
-    sToolTipText = QT_TR_NOOP("Switches stereo viewing to interleaved columns");
-    sWhatsThis = "Std_ViewIvStereoInterleavedColumns";
-    sStatusTip = sToolTipText;
-    sPixmap = "Std_ViewIvStereoInterleavedColumns";
-    eType = Alter3DView;
-}
-
-void StdCmdViewIvStereoInterleavedColumns::activated(int iMsg)
-{
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.activeDocument().activeView().setStereoType(\"InterleavedColumns\")");
-}
-
-bool StdCmdViewIvStereoInterleavedColumns::isActive()
-{
-    return getGuiApplication()->sendHasMsgToActiveView("SetStereoInterleavedColumns");
 }
 
 
@@ -4148,7 +3964,7 @@ StdStoreWorkingView::StdStoreWorkingView()
 void StdStoreWorkingView::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"StoreWorkingView\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"StoreWorkingView\")");
 }
 
 bool StdStoreWorkingView::isActive()
@@ -4176,7 +3992,7 @@ StdRecallWorkingView::StdRecallWorkingView()
 void StdRecallWorkingView::activated(int iMsg)
 {
     Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"RecallWorkingView\")");
+    doCommand(Command::Gui, "Gui.getMainWindow().getActiveWindow().sendMessage(\"RecallWorkingView\")");
 }
 
 bool StdRecallWorkingView::isActive()
@@ -4200,15 +4016,21 @@ StdCmdAlignToSelection::StdCmdAlignToSelection()
     eType = Alter3DView;
 }
 
-void StdCmdAlignToSelection::activated(int iMsg)
+void StdCmdAlignToSelection::activated(int /*iMsg*/)
 {
-    Q_UNUSED(iMsg);
-    doCommand(Command::Gui, "Gui.SendMsgToActiveView(\"AlignToSelection\")");
+    auto view = freecad_cast<View3DInventor*>(getGuiApplication()->activeView());
+    if (view && view->getViewer()) {
+        view->getViewer()->alignToSelection();
+    }
+    else {
+        Base::Console().developerError("StdCmdAlignToSelection", "active view is not a 3D view");
+    }
 }
 
 bool StdCmdAlignToSelection::isActive()
 {
-    return getGuiApplication()->sendHasMsgToActiveView("AlignToSelection");
+    auto view = freecad_cast<View3DInventor*>(getGuiApplication()->activeView());
+    return view && view->getViewer();
 }
 
 //===========================================================================
@@ -4417,7 +4239,6 @@ void CreateViewStdCommands()
     rcCmdMgr.addCommand(new StdCmdViewDimetric());
     rcCmdMgr.addCommand(new StdCmdViewTrimetric());
     rcCmdMgr.addCommand(new StdCmdViewFitAll());
-    rcCmdMgr.addCommand(new StdCmdViewVR());
     rcCmdMgr.addCommand(new StdCmdViewFitSelection());
     rcCmdMgr.addCommand(new StdCmdViewRotateLeft());
     rcCmdMgr.addCommand(new StdCmdViewRotateRight());
@@ -4430,12 +4251,6 @@ void CreateViewStdCommands()
     rcCmdMgr.addCommand(new StdCmdViewExample1());
     rcCmdMgr.addCommand(new StdCmdViewExample2());
     rcCmdMgr.addCommand(new StdCmdViewExample3());
-
-    rcCmdMgr.addCommand(new StdCmdViewIvStereoQuadBuff());
-    rcCmdMgr.addCommand(new StdCmdViewIvStereoRedGreen());
-    rcCmdMgr.addCommand(new StdCmdViewIvStereoInterleavedColumns());
-    rcCmdMgr.addCommand(new StdCmdViewIvStereoInterleavedRows());
-    rcCmdMgr.addCommand(new StdCmdViewIvStereoOff());
 
     rcCmdMgr.addCommand(new StdCmdViewIvIssueCamPos());
 

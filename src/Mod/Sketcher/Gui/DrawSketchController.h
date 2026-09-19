@@ -24,6 +24,8 @@
 
 #pragma once
 
+#include <cmath>
+
 #include <Base/Console.h>
 #include <Base/Tools2D.h>
 #include <Gui/EditableDatumLabel.h>
@@ -286,16 +288,20 @@ public:
     }
 
     /** @brief function triggered by the handler to ensure its operating position takes into
-     * account widget mandated parameters */
-    void enforceControlParameters(Base::Vector2d& onSketchPos)
+     * account widget mandated parameters. Returns false if the enforced position is not finite. */
+    bool enforceControlParameters(Base::Vector2d& onSketchPos)
     {
-        prevCursorPosition = onSketchPos;
-
         doEnforceControlParameters(onSketchPos);  // specialisation interface
 
+        if (!isFiniteSketchPosition(onSketchPos)) {
+            return false;
+        }
+
+        prevCursorPosition = onSketchPos;
         lastControlEnforcedPosition = onSketchPos;  // store enforced cursor position.
 
         afterEnforceControlParameters();  // NVI
+        return true;
     }
 
     /** function that is called by the handler when the construction mode changed */
@@ -685,6 +691,11 @@ protected:
                 }
             });
 
+            // Keep DSH active parameter index in sync with Qt widget focus
+            QObject::connect(parameter, &Gui::EditableDatumLabel::focusGained, [this, i]() {
+                parameterWithFocus = i;
+            });
+
             // this gets triggered whenever user deletes content in OVP, we remove the
             // constraints and unset everything to give user another change to select stuff
             // with mouse
@@ -729,26 +740,21 @@ protected:
         // before each mode change we reset the dynamic override
         ovpVisibilityManager.resetDynamicOverride();
 
-        bool firstOfMode = true;
-        parameterWithFocus = -1;
-
+        // 1. Deactivate parameters not in the current mode
         for (size_t i = 0; i < onViewParameters.size(); i++) {
-
             if (!isOnViewParameterOfCurrentMode(i)) {
                 onViewParameters[i]->stopEdit();
                 if (!onViewParameters[i]->isSet || handler->state() == SelectMode::End) {
                     onViewParameters[i]->deactivate();
                 }
             }
-            else {
+        }
 
-                if (firstOfMode) {
-                    parameterWithFocus = static_cast<int>(i);
-                    firstOfMode = false;
-                }
-
+        // 2. Activate current mode parameters in REVERSE order
+        // This guarantees parameter 0 is activated last and retains initial focus
+        for (int i = static_cast<int>(onViewParameters.size()) - 1; i >= 0; i--) {
+            if (isOnViewParameterOfCurrentMode(i)) {
                 bool visible = isOnViewParameterVisible(i);
-
                 if (visible) {
                     activateOnViewParameter(i);
                 }
@@ -759,12 +765,18 @@ protected:
     void activateOnViewParameter(size_t i)
     {
         if (i < onViewParameters.size()) {
-            onViewParameters[i]->activate();
+            auto* parameter = onViewParameters[i].get();
 
-            // points/value will be overridden by the mouseMove triggered by the mode
-            // change.
-            onViewParameters[i]->setPoints(Base::Vector3d(), Base::Vector3d());
-            onViewParameters[i]->startEdit(0.0, keymanager.get());
+            if (!parameter->isActive()) {
+                // Set the initial points before making the label visible. The points/value will be
+                // overridden by the mouseMove triggered by the mode change. Seeding at the
+                // previous cursor position prevents a redraw from flashing at the origin.
+                const Base::Vector3d cursorPosition(prevCursorPosition.x, prevCursorPosition.y, 0.0);
+                parameter->setPoints(cursorPosition, cursorPosition);
+                parameter->activate();
+            }
+
+            parameter->startEdit(0.0, keymanager.get());
         }
     }
 
@@ -878,6 +890,11 @@ private:
         return (ovpVisibilityManager.isVisibility(
             OnViewParameterVisibilityManager::OnViewParameterVisibility::Hidden
         ));
+    }
+
+    static bool isFiniteSketchPosition(const Base::Vector2d& onSketchPos)
+    {
+        return std::isfinite(onSketchPos.x) && std::isfinite(onSketchPos.y);
     }
     //@}
 

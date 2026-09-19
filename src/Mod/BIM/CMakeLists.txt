@@ -10,7 +10,11 @@ find_package(PythonInterp REQUIRED)
 # resource file will NOT be regenerated automatically. To work around this,
 # use `touch` on the .qrc file to force regeneration.
 IF (BUILD_GUI)
-    PYSIDE_WRAP_RC(Arch_QRC_SRCS Resources/Arch.qrc)
+    PYSIDE_WRAP_RC(
+        RELATIVE Arch_QRC_SRCS_REL
+        ABSOLUTE Arch_QRC_SRCS
+        RESOURCES Resources/Arch.qrc
+    )
 ENDIF (BUILD_GUI)
 
 SET(Arch_SRCS
@@ -137,6 +141,7 @@ SET(bimcommands_SRCS
     bimcommands/BimEquipment.py
     bimcommands/BimExamples.py
     bimcommands/BimExtrude.py
+    bimcommands/BimExtrudeFace.py
     bimcommands/BimFence.py
     bimcommands/BimFrame.py
     bimcommands/BimFuse.py
@@ -182,6 +187,7 @@ SET(bimcommands_SRCS
     bimcommands/BimTDView.py
     bimcommands/BimText.py
     bimcommands/BimTrash.py
+    bimcommands/BimTrimex.py
     bimcommands/BimTruss.py
     bimcommands/BimTutorial.py
     bimcommands/BimUnclone.py
@@ -229,6 +235,7 @@ SET(bimtests_SRCS
     bimtests/TestArchAxisGui.py
     bimtests/TestArchBase.py
     bimtests/TestArchBaseGui.py
+    bimtests/TestBimTrimexGui.py
     bimtests/TestArchComponent.py
     bimtests/TestArchCovering.py
     bimtests/TestArchCoveringGui.py
@@ -241,8 +248,10 @@ SET(bimtests_SRCS
     bimtests/TestArchMaterial.py
     bimtests/TestArchPanel.py
     bimtests/TestArchWindow.py
+    bimtests/TestArchWindowGui.py
     bimtests/TestArchStairs.py
     bimtests/TestArchStructure.py
+    bimtests/test_structure_column_flip_v1_0_v1_1.FCStd
     bimtests/TestArchPipe.py
     bimtests/TestArchCurtainWall.py
     bimtests/TestArchProfile.py
@@ -330,8 +339,8 @@ add_custom_command(
 #   BIM target. Thus building the BIM target triggers populating the build tree
 #   with the workbench sources and resources, if needed.
 ADD_CUSTOM_TARGET(BIM ALL
+    DEPENDS ${Arch_QRC_SRCS}
     SOURCES ${Arch_SRCS}
-            ${Arch_QRC_SRCS}
             ${Dice3DS_SRCS}
             ${Arch_presets}
             ${ArchGuiIcon_SVG}
@@ -361,16 +370,16 @@ fc_copy_sources(BIM "${CMAKE_BINARY_DIR}/Mod/BIM" ${nativeifc_SRCS})
 fc_copy_sources(BIM "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/BIM" ${BIMGuiIcon_SVG})
 fc_copy_sources(BIM "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/BIM" ${Arch_presets})
 fc_copy_sources(BIM "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/BIM" ${BIM_templates})
-fc_copy_sources(BIM "${CMAKE_SOURCE_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/BIM" ${ArchSql_resources})
+fc_copy_sources(BIM "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/BIM" ${ArchSql_resources})
 
 # For generated resources, we cannot rely on `fc_copy_sources` in case
 # INSTALL_PREFER_SYMLINKS=ON has been specified, since we're generating a new
 # file not present in the source tree and thus cannot create a symlink to it.
 IF (BUILD_GUI)
     fc_target_copy_resource(BIM
-        ${CMAKE_CURRENT_BINARY_DIR}
-        ${CMAKE_BINARY_DIR}/Mod/BIM
-        Arch_rc.py)
+        "${CMAKE_CURRENT_BINARY_DIR}"
+        "${CMAKE_BINARY_DIR}/Mod/BIM"
+        ${Arch_QRC_SRCS_REL})
 ENDIF (BUILD_GUI)
 
 # ==============================================================================

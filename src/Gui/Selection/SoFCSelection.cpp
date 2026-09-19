@@ -385,7 +385,9 @@ void SoFCSelection::handleEvent(SoHandleEventAction* action)
                             subElementName.getValue().getString(),
                             pp->getPoint()[0],
                             pp->getPoint()[1],
-                            pp->getPoint()[2]
+                            pp->getPoint()[2],
+                            SelectionChanges::MsgSource::Any,
+                            SelectionChanges::PickedPoint::Valid
                         )) {
                         SoFCSelection::turnoffcurrent(action);
                         SoFCSelection::currenthighlight = Gui::toFullPath(action->getCurPath()->copy());
@@ -421,7 +423,7 @@ void SoFCSelection::handleEvent(SoHandleEventAction* action)
             }
         }
     }  // key press events
-    else if (event->isOfType(SoKeyboardEvent ::getClassTypeId())) {
+    else if (event->isOfType(SoKeyboardEvent::getClassTypeId())) {
         auto const e = static_cast<const SoKeyboardEvent*>(event);
         if (SoKeyboardEvent::isKeyPressEvent(e, SoKeyboardEvent::LEFT_SHIFT)
             || SoKeyboardEvent::isKeyPressEvent(e, SoKeyboardEvent::RIGHT_SHIFT)) {
@@ -468,7 +470,10 @@ void SoFCSelection::handleEvent(SoHandleEventAction* action)
                             subElementName.getValue().getString(),
                             pt[0],
                             pt[1],
-                            pt[2]
+                            pt[2],
+                            nullptr,
+                            true,
+                            Gui::SelectionChanges::PickedPoint::Valid
                         );
 
                         if (mymode == OFF) {
@@ -501,7 +506,10 @@ void SoFCSelection::handleEvent(SoHandleEventAction* action)
                             subElementName.getValue().getString(),
                             pt[0],
                             pt[1],
-                            pt[2]
+                            pt[2],
+                            nullptr,
+                            true,
+                            Gui::SelectionChanges::PickedPoint::Valid
                         );
                     }
                     else {
@@ -512,7 +520,10 @@ void SoFCSelection::handleEvent(SoHandleEventAction* action)
                             nullptr,
                             pt[0],
                             pt[1],
-                            pt[2]
+                            pt[2],
+                            nullptr,
+                            true,
+                            Gui::SelectionChanges::PickedPoint::Valid
                         );
                     }
 
@@ -562,7 +573,14 @@ void SoFCSelection::GLRenderBelowPath(SoGLRenderAction* action)
     }
 
     // check if preselection is active
-    if (this->setOverride(action, ctx)) {
+    if (this->style.getValue() == SoFCSelection::BOX
+        || ViewParams::instance()->getShowSelectionBoundingBox()) {
+        inherited::GLRenderBelowPath(action);
+        if (this->setOverride(action, ctx)) {
+            state->pop();
+        }
+    }
+    else if (this->setOverride(action, ctx)) {
         inherited::GLRenderBelowPath(action);
         state->pop();
     }
